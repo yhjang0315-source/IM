@@ -1,0 +1,30 @@
+:root{
+  --ink:#141A22; --ink2:#3C4654; --ink3:#6B7789;
+  --line:#DFE3E9; --line2:#ECEFF3;
+  --bg:#F6F7F9; --surface:#FFFFFF; --surface2:#F0F2F5;
+  --accent:#0B6E63; --accent-soft:#E2F0EC; --accent-ink:#075349;
+  --bad:#9C3223; --bad-soft:#F7E4E0;
+  --warn:#A9640C; --warn-soft:#F7EBD8;
+  --muted:#8C97A6;
+  --sans:"IBM Plex Sans KR",system-ui,-apple-system,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,monospace;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --ink:#E8ECF1; --ink2:#B4BECC; --ink3:#8792A3;
+    --line:#2B333F; --line2:#222932;
+    --bg:#12161C; --surface:#1A1F27; --surface2:#222833;
+    --accent:#4FBFAE; --accent-soft:#12332F; --accent-ink:#8FD8CB;
+    --bad:#D98A7C; --bad-soft:#331F1B;
+    --warn:#D9A253; --warn-soft:#33291A;
+    --muted:#6C7787;
+    color-scheme:dark;
+  }
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.6;
+  -webkit-font-smoothing:antialiased}
+h1,h2{margin:0;line-height:1.3;text-wrap:balance}
+button{font-family:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}

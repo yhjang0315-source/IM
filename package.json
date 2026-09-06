@@ -1,0 +1,20 @@
+{
+  "name": "revenue-lease",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "hardhat test",
+    "chain": "hardhat node",
+    "deploy": "hardhat run scripts/deploy-dev.js --network localhost",
+    "sim": "hardhat run scripts/simulate.js",
+    "web": "npm --prefix web run dev"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^5.0.0",
+    "hardhat": "^2.29.1"
+  }
+}
