@@ -8,7 +8,8 @@
     "chain": "hardhat node",
     "deploy": "hardhat run scripts/deploy-dev.js --network localhost",
     "sim": "hardhat run scripts/simulate.js",
-    "web": "npm --prefix web run dev"
+    "web": "npm --prefix web run dev",
+    "market": "node scripts/analyze/build-market.js"
   },
   "keywords": [],
   "author": "",

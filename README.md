@@ -32,6 +32,7 @@ DB로 만들면 "그 DB를 왜 믿나"로 되돌아온다.
 npm install
 npm test          # 컨트랙트 테스트 10개
 npm run sim       # 12개월 정산 시뮬레이션 (콘솔)
+npm run market    # 상권 분석 (data/raw/ 에 CSV를 넣은 뒤)
 
 # 화면까지 — 터미널 3개
 npm run chain     # 1) 로컬 체인
@@ -51,7 +52,8 @@ cd web && npm install && npm run dev   # 3) http://localhost:5173
 | `scripts/deploy-dev.js` | 배포 + 활성화 + 프런트 설정 생성 |
 | `web/src/lease.js` | 체인 연결 계층 |
 | `web/src/App.jsx` | 임차인 / 임대인 / 결제 게이트웨이 3화면 |
-| `docs/` | 대회 요건, 선정 근거, 발표 대비 |
+| `scripts/analyze/` | 상가정보 분기 비교 → 업종별 소멸률·권장 연동률 산출 |
+| `docs/` | 대회 요건, 선정 근거, 발표 대비, 법적 검토 |
 | `data/` | 공공데이터 원본 자리 (gitignore) |
 
 ## 컨트랙트 설계 요지
@@ -78,7 +80,9 @@ cd web && npm install && npm run dev   # 3) http://localhost:5173
 
 - **결제 게이트웨이는 목업.** `gateway` 주소로 추상화만 되어 있고 실제 카드 매출 연동은 불가.
   제안서에 "iM뱅크 가맹점 결제 인프라 연동 전제"로 명시할 것.
-- **실데이터 미연결.** `data/README.md` 참조. 공실률·업종별 소멸률로 권장 연동률을 산출하는 단계가 남았다.
+- **실데이터 미연결.** 분석 스크립트는 준비돼 있다 — `data/raw/` 에 상가정보 분기 스냅샷 CSV를 2개 이상 넣고
+  `npm run market` 을 돌리면 대구 업종별 소멸률과 권장 연동률이 `web/public/market.json` 으로 나온다.
+  CSV 다운로드에 data.go.kr 로그인이 필요해 수동으로 받아야 한다. `scripts/analyze/README.md` 참조.
 - **현금 매출 누락은 구조적으로 못 푼다.** "카드·간편결제 비중 90% 이상 업종부터"로 범위를 한정할 것.
 
 ## 주의
