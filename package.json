@@ -17,5 +17,8 @@
   "devDependencies": {
     "@nomicfoundation/hardhat-toolbox": "^5.0.0",
     "hardhat": "^2.29.1"
+  },
+  "dependencies": {
+    "yauzl": "^3.4.0"
   }
 }

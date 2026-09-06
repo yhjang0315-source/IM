@@ -5,7 +5,8 @@
  *
  *   node scripts/analyze/build-market.js
  *
- * 입력  data/raw/*.csv  (파일명에 YYYYMMDD 기준일이 들어 있어야 한다)
+ * 입력  data/raw/*.csv 또는 *.zip  (파일명에 YYYYMMDD 기준일이 들어 있어야 한다)
+ *        공공데이터포털에서 받은 zip을 풀지 않고 그대로 넣어도 된다.
  * 출력  web/public/market.json
  *
  * 주의: 이 데이터에는 공식 폐업 플래그가 없다. "직전 스냅샷에 있던 상가업소번호가
@@ -14,7 +15,7 @@
  */
 const fs = require("fs");
 const path = require("path");
-const readline = require("readline");
+const yauzl = require("yauzl");
 
 const ROOT = path.join(__dirname, "..", "..");
 const RAW = path.join(ROOT, "data", "raw");
@@ -65,29 +66,101 @@ function snapshotDate(filename) {
   return m ? m[1] : null;
 }
 
+// ---------- 인코딩: 공공데이터 CSV는 UTF-8일 때도, CP949(euc-kr)일 때도 있다 ----------
+function sniffEncoding(head) {
+  const utf8 = new TextDecoder("utf-8", { fatal: false }).decode(head);
+  if (utf8.includes("상가업소번호")) return "utf-8";
+  const euckr = new TextDecoder("euc-kr", { fatal: false }).decode(head);
+  if (euckr.includes("상가업소번호")) return "euc-kr";
+  return null;
+}
+
+/** 바이트 스트림을 인코딩 자동판별해 한 줄씩 흘려보낸다 */
+async function* linesOf(stream) {
+  const SNIFF = 64 * 1024;
+  let head = [], headLen = 0, decoder = null, rest = "", encoding = null;
+  for await (const chunk of stream) {
+    if (!decoder) {
+      head.push(chunk); headLen += chunk.length;
+      if (headLen < SNIFF) continue;
+      const buf = Buffer.concat(head);
+      encoding = sniffEncoding(buf);
+      if (!encoding) throw new Error("헤더에서 '상가업소번호'를 찾지 못했습니다. 상가(상권)정보 파일이 맞는지 확인하세요.");
+      decoder = new TextDecoder(encoding);
+      rest += decoder.decode(buf, { stream: true });
+      head = null;
+    } else {
+      rest += decoder.decode(chunk, { stream: true });
+    }
+    let nl;
+    while ((nl = rest.indexOf("\n")) >= 0) {
+      yield { line: rest.slice(0, nl).replace(/\r$/, ""), encoding };
+      rest = rest.slice(nl + 1);
+    }
+  }
+  if (!decoder && head) {                       // 파일이 64KB보다 작은 경우
+    const buf = Buffer.concat(head);
+    encoding = sniffEncoding(buf);
+    if (!encoding) throw new Error("헤더에서 '상가업소번호'를 찾지 못했습니다.");
+    rest += new TextDecoder(encoding).decode(buf);
+  } else if (decoder) {
+    rest += decoder.decode();
+  }
+  for (const l of rest.split("\n")) if (l) yield { line: l.replace(/\r$/, ""), encoding };
+}
+
+/** zip 안에서 가장 큰 .csv 엔트리의 읽기 스트림을 연다 */
+function openZipCsv(file) {
+  return new Promise((resolve, reject) => {
+    yauzl.open(file, { lazyEntries: true, autoClose: false }, (err, zip) => {
+      if (err) return reject(err);
+      const entries = [];
+      zip.on("entry", (e) => { if (/\.csv$/i.test(e.fileName)) entries.push(e); zip.readEntry(); });
+      zip.on("end", () => {
+        if (!entries.length) return reject(new Error(`${path.basename(file)} 안에 .csv 가 없습니다.`));
+        entries.sort((a, b) => b.uncompressedSize - a.uncompressedSize);
+        zip.openReadStream(entries[0], (e2, rs) => e2 ? reject(e2) : resolve({ stream: rs, name: entries[0].fileName, zip }));
+      });
+      zip.on("error", reject);
+      zip.readEntry();
+    });
+  });
+}
+
+async function openSnapshot(file) {
+  if (/\.zip$/i.test(file)) {
+    const { stream, name, zip } = await openZipCsv(file);
+    return { stream, inner: name, close: () => zip.close() };
+  }
+  return { stream: fs.createReadStream(file), inner: null, close: () => {} };
+}
+
 /** 한 스냅샷을 읽어 { sectorKey -> Set(상가업소번호) } 로 만든다 */
 async function readSnapshot(file) {
-  const rl = readline.createInterface({ input: fs.createReadStream(file, "utf8"), crlfDelay: Infinity });
-  let idx = null, n = 0, kept = 0;
+  const { stream, inner, close } = await openSnapshot(file);
+  let idx = null, n = 0, kept = 0, enc = null;
   const bySector = new Map();
   const byDistrict = new Map();
-  for await (const rawLine of rl) {
-    if (!rawLine.trim()) continue;
-    const cells = splitCsvLine(rawLine);
-    if (!idx) { idx = resolveHeader(cells); continue; }
-    n++;
-    if (cells[idx.sido] !== REGION) continue;
-    kept++;
-    const id = cells[idx.id];
-    const sector = [cells[idx.big], cells[idx.mid], cells[idx.small]].join(" > ");
-    const district = `${cells[idx.sgg]}${idx.dong >= 0 ? " " + cells[idx.dong] : ""}`;
-    if (!bySector.has(sector)) bySector.set(sector, new Set());
-    bySector.get(sector).add(id);
-    const dkey = `${district}||${cells[idx.small]}`;
-    if (!byDistrict.has(dkey)) byDistrict.set(dkey, new Set());
-    byDistrict.get(dkey).add(id);
-  }
-  return { bySector, byDistrict, total: n, kept };
+  try {
+    for await (const { line, encoding } of linesOf(stream)) {
+      if (!line.trim()) continue;
+      enc = enc || encoding;
+      const cells = splitCsvLine(line);
+      if (!idx) { idx = resolveHeader(cells); continue; }
+      n++;
+      if (cells[idx.sido] !== REGION) continue;
+      kept++;
+      const id = cells[idx.id];
+      const sector = [cells[idx.big], cells[idx.mid], cells[idx.small]].join(" > ");
+      const district = `${cells[idx.sgg]}${idx.dong >= 0 ? " " + cells[idx.dong] : ""}`;
+      if (!bySector.has(sector)) bySector.set(sector, new Set());
+      bySector.get(sector).add(id);
+      const dkey = `${district}||${cells[idx.small]}`;
+      if (!byDistrict.has(dkey)) byDistrict.set(dkey, new Set());
+      byDistrict.get(dkey).add(id);
+    }
+  } finally { close(); }
+  return { bySector, byDistrict, total: n, kept, encoding: enc, inner };
 }
 
 /**
@@ -119,9 +192,9 @@ function rate(prevSet, nextSet) {
 
 (async () => {
   if (!fs.existsSync(RAW)) { console.error(`${RAW} 가 없습니다.`); process.exit(1); }
-  const files = fs.readdirSync(RAW).filter((f) => f.toLowerCase().endsWith(".csv")).sort();
+  const files = fs.readdirSync(RAW).filter((f) => /\.(csv|zip)$/i.test(f)).sort();
   if (files.length < 2) {
-    console.error(`data/raw/ 에 CSV가 ${files.length}개뿐입니다. 서로 다른 분기 2개 이상이 필요합니다.`);
+    console.error(`data/raw/ 에 CSV/ZIP이 ${files.length}개뿐입니다. 서로 다른 분기 2개 이상이 필요합니다.`);
     console.error(`받는 곳: https://www.data.go.kr/data/15083033/fileData.do (하단 "주기성 과거 데이터" 탭)`);
     process.exit(1);
   }
@@ -132,7 +205,8 @@ function rate(prevSet, nextSet) {
     if (!date) { console.warn(`기준일을 못 읽어 건너뜁니다: ${f}`); continue; }
     process.stdout.write(`  읽는 중 ${f} … `);
     const s = await readSnapshot(path.join(RAW, f));
-    console.log(`전국 ${s.total.toLocaleString()}행 중 ${REGION} ${s.kept.toLocaleString()}행`);
+    console.log(`전국 ${s.total.toLocaleString()}행 중 ${REGION} ${s.kept.toLocaleString()}행  [${s.encoding}${s.inner ? " · " + s.inner : ""}]`);
+    if (s.kept === 0) console.warn(`    ! ${REGION} 행이 0건입니다. 시도명 컬럼 값을 확인하세요.`);
     snaps.push({ date, ...s });
   }
   snaps.sort((a, b) => a.date.localeCompare(b.date));
