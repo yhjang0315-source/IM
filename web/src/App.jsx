@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   read, site, roles, ROLE_LABEL, FIXED_RENT, won, pct, bpsPct, short, monthLabel, quoteLocal,
-  loadLease, loadMonths, loadActivity, makeProof, monthDue, DISPUTE_DAYS, MEDIATION_DAYS, ZERO,
+  loadLease, loadMonths, loadActivity, makeProof, monthDue, siteParts, DISPUTE_DAYS, MEDIATION_DAYS, ZERO,
   chainName, explorer, txLink, address as contractAddress,
   fund, postRevenue, settle, dispute, agree, repay, payDeposit, mediate, runMonth,
 } from "./lease";
@@ -114,6 +114,7 @@ export default function App() {
     return { rent, rev, fixed: FIXED_RENT * BigInt(settled.length), n: settled.length };
   }, [months]);
 
+  const sp = siteParts(lease?.site);
   const hasMediator = !!lease?.mediator && lease.mediator !== ZERO;
   useEffect(() => { if (!hasMediator && role === "mediator") setRole("landlord"); }, [hasMediator]);
   const stateLabel = ["미체결 · 조건 작성 중", "체결됨 · 진행 중", "종료"][lease?.state ?? 0];
@@ -129,8 +130,8 @@ export default function App() {
       <header className="hd">
         <div className="hd-l">
           <span className="eyebrow">매출연동 임대차 · RevenueLease</span>
-          <h1>{site.name}</h1>
-          <p className="sub">{site.district} · 중대형 상가 공실률 <b>{site.vacancyPct}%</b></p>
+          <h1>{sp.name}</h1>
+          <p className="sub">{sp.rest} · 중대형 상가 공실률 <b>{site.vacancyPct}%</b></p>
           <p className="chainline">
             {chainName === "kairos" ? "Kaia Kairos 테스트넷" : "로컬 체인"} ·{" "}
             {explorer

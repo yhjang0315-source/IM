@@ -10,9 +10,12 @@ const T = {
   totalPeriods: 12,
   deposit: 10_000_000n,    // 보증금 1,000만
 };
+/** 컨트랙트의 Terms 구조체 순서대로 */
+const tuple = (t) => [t.baseRent, t.pctBps, t.floorRent, t.capRent, t.totalPeriods, t.deposit];
 
 const PROOF = ethers.keccak256(ethers.toUtf8Bytes("PG정산파일-테스트"));
 const NO_MEDIATOR = "0x0000000000000000000000000000000000000000";
+const SITE = "동성로 15평 매장 · 대구 중구 동성로 12-3 · 49.5㎡";
 const DAY = 24 * 60 * 60;
 
 const jump = async (secs) => {
@@ -21,11 +24,12 @@ const jump = async (secs) => {
 };
 
 /** 양측이 서명하는 조건 해시. 보증금과 조정인까지 포함해야 사후에 끼워 넣을 수 없다. */
-function digestOf(addr, t, mediator) {
+function digestOf(addr, t, mediator, site = SITE) {
   return ethers.keccak256(
     ethers.AbiCoder.defaultAbiCoder().encode(
-      ["address", "uint256", "uint16", "uint256", "uint256", "uint16", "uint256", "address"],
-      [addr, t.baseRent, t.pctBps, t.floorRent, t.capRent, t.totalPeriods, t.deposit, mediator]
+      ["address", "uint256", "uint16", "uint256", "uint256", "uint16", "uint256", "address", "bytes32"],
+      [addr, t.baseRent, t.pctBps, t.floorRent, t.capRent, t.totalPeriods, t.deposit, mediator,
+       ethers.keccak256(ethers.toUtf8Bytes(site))]
     )
   );
 }
@@ -40,7 +44,7 @@ async function deployAndActivate(opts = {}) {
   const digest = digestOf(await c.getAddress(), T, mediator);
   const sigL = await landlord.signMessage(ethers.getBytes(digest));
   const sigT = await tenant.signMessage(ethers.getBytes(digest));
-  await c.activate(T.baseRent, T.pctBps, T.floorRent, T.capRent, T.totalPeriods, T.deposit, mediator, sigL, sigT);
+  await c.activate(tuple(T), mediator, SITE, sigL, sigT);
   return { c, landlord, tenant, gateway, outsider, mediator: mediatorAcct };
 }
 
@@ -53,7 +57,7 @@ describe("RevenueLease", function () {
     const sigL = await landlord.signMessage(ethers.getBytes(digest));
     const sigBad = await outsider.signMessage(ethers.getBytes(digest));
     await expect(
-      c.activate(T.baseRent, T.pctBps, T.floorRent, T.capRent, T.totalPeriods, T.deposit, NO_MEDIATOR, sigL, sigBad)
+      c.activate(tuple(T), NO_MEDIATOR, SITE, sigL, sigBad)
     ).to.be.revertedWithCustomError(c, "NotAuthorized");
   });
 
@@ -64,7 +68,7 @@ describe("RevenueLease", function () {
     const sigL = await landlord.signMessage(ethers.getBytes(digest));
     const sigT = await tenant.signMessage(ethers.getBytes(digest));
     await expect(
-      c.activate(alt.baseRent, alt.pctBps, alt.floorRent, alt.capRent, alt.totalPeriods, alt.deposit, NO_MEDIATOR, sigL, sigT)
+      c.activate(tuple(alt), NO_MEDIATOR, SITE, sigL, sigT)
     ).to.be.revertedWithCustomError(c, "BadState");
     // 컨트랙트 ABI에 조건 변경 함수가 존재하지 않음을 확인
     const names = c.interface.fragments.filter(f => f.type === "function").map(f => f.name);
@@ -312,9 +316,41 @@ describe("RevenueLease", function () {
       const sigL = await landlord.signMessage(ethers.getBytes(digest));
       const sigT = await tenant.signMessage(ethers.getBytes(digest));
       await expect(
-        c.activate(T.baseRent, T.pctBps, T.floorRent, T.capRent, T.totalPeriods, T.deposit, bad, sigL, sigT)
+        c.activate(tuple(T), bad, SITE, sigL, sigT)
       ).to.be.revertedWithCustomError(c, "BadTerms");
     }
+  });
+
+  // ---------------- 계약 목적물 ----------------
+
+  it("목적물이 계약에 기록되고 서명 대상에 들어간다", async () => {
+    const { c } = await deployAndActivate();
+    expect(await c.site()).to.equal(SITE);
+  });
+
+  it("양측이 서명하지 않은 목적물로는 확정할 수 없다", async () => {
+    const [landlord, tenant, gateway] = await ethers.getSigners();
+    const F = await ethers.getContractFactory("RevenueLease");
+    const c = await F.deploy(landlord.address, tenant.address, gateway.address);
+    // 양측은 SITE 에 서명했는데 제출은 다른 매장으로 바꿔치기했다
+    const signed = digestOf(await c.getAddress(), T, NO_MEDIATOR, SITE);
+    const sigL = await landlord.signMessage(ethers.getBytes(signed));
+    const sigT = await tenant.signMessage(ethers.getBytes(signed));
+    await expect(
+      c.activate(tuple(T), NO_MEDIATOR, "다른 매장 · 수성구 어딘가", sigL, sigT)
+    ).to.be.revertedWithCustomError(c, "NotAuthorized");
+  });
+
+  it("목적물이 비어 있으면 확정할 수 없다", async () => {
+    const [landlord, tenant, gateway] = await ethers.getSigners();
+    const F = await ethers.getContractFactory("RevenueLease");
+    const c = await F.deploy(landlord.address, tenant.address, gateway.address);
+    const digest = digestOf(await c.getAddress(), T, NO_MEDIATOR, "");
+    const sigL = await landlord.signMessage(ethers.getBytes(digest));
+    const sigT = await tenant.signMessage(ethers.getBytes(digest));
+    await expect(
+      c.activate(tuple(T), NO_MEDIATOR, "", sigL, sigT)
+    ).to.be.revertedWithCustomError(c, "BadTerms");
   });
 
   it("양측이 서명하지 않은 조정인은 지정될 수 없다", async () => {
@@ -326,7 +362,7 @@ describe("RevenueLease", function () {
     const sigL = await landlord.signMessage(ethers.getBytes(signed));
     const sigT = await tenant.signMessage(ethers.getBytes(signed));
     await expect(
-      c.activate(T.baseRent, T.pctBps, T.floorRent, T.capRent, T.totalPeriods, T.deposit, mediatorAcct.address, sigL, sigT)
+      c.activate(tuple(T), mediatorAcct.address, SITE, sigL, sigT)
     ).to.be.revertedWithCustomError(c, "NotAuthorized");
   });
 });

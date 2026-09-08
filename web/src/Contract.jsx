@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import {
   site, suggested, FIXED_RENT, won, pct, quoteLocal, termsDigest, signTerms, activate, endLease,
   loadDraft, saveDraft, clearDraft, roles, ROLE_LABEL, short, monthLabel, ZERO, MEDIATION_DAYS, DISPUTE_DAYS, bpsPct,
+  siteLine,
 } from "./lease";
 
 const DEMO_REV = [12, 10, 16, 19, 21, 18, 15, 14, 20, 22, 24, 26]; // 백만원, 미리보기용
@@ -11,6 +12,8 @@ const n = (v) => Number(v || 0);
 function freshDraft() {
   const s = suggested || {};
   return {
+    siteName: site.name || "", siteAddress: site.district || "",
+    siteArea: site.areaPyeong || "", siteUse: "",
     sector: "", district: "",
     marketRent: FIXED_RENT.toString(), expectedRev: "20000000",
     baseRent: s.baseRent || "800000", pctBps: s.pctBps ?? 800,
@@ -67,6 +70,7 @@ function Wizard({ market, role, setRole, act, busy }) {
   if (n(d.floorRent) > n(d.capRent)) problems.push("하한이 상한보다 큽니다.");
   if (n(d.pctBps) < 0 || n(d.pctBps) > 10_000) problems.push("연동률은 0~100% 사이여야 합니다.");
   if (n(d.totalPeriods) < 1) problems.push("계약 기간은 1개월 이상이어야 합니다.");
+  if (!siteLine(d)) problems.push("계약 목적물(매장)을 적어야 합니다. 무엇을 빌리는지가 특정되지 않으면 계약이 성립하지 않습니다.");
   const valid = problems.length === 0;
 
   const preview = DEMO_REV.map((v, i) => {
@@ -110,6 +114,26 @@ function Wizard({ market, role, setRole, act, busy }) {
       </p>
 
       <div className="frm">
+        <div className="fgroup">
+          <span className="ftitle">계약 목적물 {locked && <em>서명됨 · 잠김</em>}</span>
+          <label>매장명
+            <input value={d.siteName} disabled={locked} onChange={(e) => set("siteName", e.target.value)} placeholder="예: 동성로 15평 매장" />
+          </label>
+          <label>주소
+            <input value={d.siteAddress} disabled={locked} onChange={(e) => set("siteAddress", e.target.value)} placeholder="예: 대구 중구 동성로 12-3" />
+          </label>
+          <label>전용면적 (평)
+            <input type="number" min="0" step="0.5" value={d.siteArea} disabled={locked} onChange={(e) => set("siteArea", e.target.value)} />
+          </label>
+          <label>용도 <span className="opt">선택</span>
+            <input value={d.siteUse} disabled={locked} onChange={(e) => set("siteUse", e.target.value)} placeholder="예: 일반음식점" />
+          </label>
+          <p className="sitepv">
+            계약서에 기록될 문구 — <b>{siteLine(d) || "(비어 있음)"}</b><br />
+            <span className="hint">이 문구도 양측 서명 대상입니다. 확정 후에는 바꿀 수 없습니다.</span>
+          </p>
+        </div>
+
         <div className="fgroup">
           <span className="ftitle">근거 데이터</span>
           <label>업종
@@ -276,8 +300,9 @@ function Active({ lease, role, setRole, act, busy }) {
     <section className="pane">
       <h2>{ended ? "종료된 계약" : "확정된 계약"}</h2>
       <p className="lead">
-        {site.name} · {monthLabel(1)}부터 {t.totalPeriods}개월.
-        조건은 양측 서명으로 확정됐고, 컨트랙트에는 이를 바꾸는 함수가 존재하지 않습니다.
+        <b>{lease.site || site.name}</b><br />
+        {monthLabel(1)}부터 {t.totalPeriods}개월. 목적물과 조건 모두 양측 서명으로 확정됐고,
+        컨트랙트에는 이를 바꾸는 함수가 존재하지 않습니다.
       </p>
       <div className="cards">
         <Card label="기본료" value={`${won(t.baseRent)}원`} />

@@ -1,10 +1,77 @@
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import {
   site, roles, ROLE_LABEL, FIXED_RENT, address, won, pct, bpsPct, short, monthLabel,
-  termsDigest, loadDraft, DISPUTE_DAYS, MEDIATION_DAYS, ZERO,
+  termsDigest, loadDraft, DISPUTE_DAYS, MEDIATION_DAYS, ZERO, hashOf, siteParts,
 } from "./lease";
 
 const fmt = (t) => (t ? new Date(t).toLocaleString("ko-KR", { year: "numeric", month: "long", day: "numeric", hour: "2-digit", minute: "2-digit" }) : "—");
+
+/**
+ * 증빙 대조.
+ * 체인에는 정산 원본의 해시만 있다. 원본을 가진 쪽이 그것을 다시 해시해
+ * 대조할 수 있어야 그 해시가 의미를 갖는다. 없으면 해시는 장식이다.
+ */
+function Verifier({ lease, months }) {
+  const [text, setText] = useState("");
+  const [result, setResult] = useState(null);
+  const fileRef = useRef(null);
+
+  const posted = months.filter((m) => m.state !== 0 && m.proof && !/^0x0+$/.test(m.proof));
+  const targets = [
+    { label: "계약 조건 해시", hash: termsDigest(lease.terms), what: "조건" },
+    { label: "계약 목적물", hash: hashOf(lease.site || ""), what: "목적물" },
+    ...posted.map((m) => ({ label: `${monthLabel(m.month)} 정산 원본`, hash: m.proof, what: `${monthLabel(m.month)} 정산` })),
+  ];
+
+  const check = (value, source) => {
+    const h = hashOf(value);
+    const hit = targets.find((t) => t.hash.toLowerCase() === h.toLowerCase());
+    setResult({ hash: h, hit, source, len: value.length });
+  };
+
+  const onFile = (e) => {
+    const f = e.target.files?.[0];
+    if (!f) return;
+    const r = new FileReader();
+    r.onload = () => check(String(r.result), `파일 ${f.name}`);
+    r.readAsText(f);
+  };
+
+  return (
+    <div className="verify noprint">
+      <p className="fine">
+        은행이 준 정산 파일이나 계약 문구를 아래에 넣으면, 체인에 기록된 해시와 같은지 대조합니다.
+        원본이 한 글자라도 다르면 해시가 달라집니다.
+      </p>
+      <textarea rows={3} value={text} onChange={(e) => setText(e.target.value)}
+        placeholder="정산 원본 문자열이나 계약 목적물 문구를 붙여넣으십시오" />
+      <div className="btns">
+        <button className="ghost sm" disabled={!text.trim()} onClick={() => check(text, "붙여넣은 값")}>대조</button>
+        <button className="ghost sm" onClick={() => fileRef.current?.click()}>파일로 대조</button>
+        <input ref={fileRef} type="file" accept=".txt,.csv,.json" hidden onChange={onFile} />
+        {result && <button className="link" onClick={() => { setResult(null); setText(""); }}>지우기</button>}
+      </div>
+      {result && (
+        <div className={`vres ${result.hit ? "ok" : "no"}`}>
+          <b>{result.hit ? `일치 — ${result.hit.what}` : "일치하는 기록이 없습니다"}</b>
+          <span className="mono">{result.hash}</span>
+          <span className="fine">
+            {result.source} · {result.len.toLocaleString()}자
+            {result.hit
+              ? ` · 이 원본은 체인에 기록된 「${result.hit.label}」 해시와 일치합니다.`
+              : " · 원본이 수정되었거나, 이 계약의 기록이 아닙니다."}
+          </span>
+        </div>
+      )}
+      <details className="vlist">
+        <summary>체인에 기록된 해시 {targets.length}건</summary>
+        <ul>{targets.map((t) => (
+          <li key={t.hash + t.label}><span>{t.label}</span><code>{t.hash}</code></li>
+        ))}</ul>
+      </details>
+    </div>
+  );
+}
 
 /**
  * 사람이 읽는 계약 요약 + 월별 정산 명세.
@@ -53,7 +120,7 @@ export default function Statement({ lease, months, activity }) {
       <header className="dochd">
         <div>
           <h2>매출연동 임대차 계약 명세서</h2>
-          <p className="lead">{site.name} · {site.district}</p>
+          <p className="lead">{siteParts(lease.site).full}</p>
         </div>
         <dl className="docmeta">
           <div><dt>계약 식별자</dt><dd className="mono">{address}</dd></div>
@@ -79,6 +146,7 @@ export default function Statement({ lease, months, activity }) {
       <div className="tw">
         <table>
           <tbody>
+            <tr><td>계약 목적물</td><td className="r">{lease.site || "—"}</td></tr>
             <tr><td>기본료</td><td className="r">{won(t.baseRent)}원 / 월</td></tr>
             <tr><td>매출 연동률</td><td className="r">{bpsPct(t.pctBps)}%</td></tr>
             <tr><td>임대료 하한</td><td className="r">{won(t.floorRent)}원</td></tr>
@@ -165,6 +233,7 @@ export default function Statement({ lease, months, activity }) {
       )}
 
       <h3>6. 검증</h3>
+      <Verifier lease={lease} months={months} />
       <p className="fine">
         조건 해시 <b className="mono">{digest}</b><br />
         이 해시에 대한 임대인·임차인의 서명이 계약 확정 시 컨트랙트에서 검증되었습니다.
