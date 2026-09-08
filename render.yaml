@@ -1,0 +1,27 @@
+# Render 정적 사이트 설정. 저장소를 연결하면 이 파일을 읽어 서비스를 만든다.
+#
+# 화면은 브라우저에서 체인 RPC 를 직접 부르는 정적 번들이라 서버가 필요 없다.
+# 서버가 없으니 비용도 없고, 무료 플랜의 슬립으로 시연이 끊길 일도 없다.
+#
+# 빌드 전에 web/src/deployed.json 이 있어야 한다. 이 파일은 데모 서명 키를 담고 있어
+# 저장소에 두지 않으므로, Render 대시보드에서 값으로 넣는다. 방법은 docs/04-배포.md.
+services:
+  - type: web
+    name: revenue-lease
+    runtime: static
+    # 화면만 빌드한다. 뿌리의 hardhat 은 빌드에 필요 없어 설치하지 않는다.
+    buildCommand: npm ci --prefix web && node scripts/prepare-web-config.js && npm --prefix web run build
+    staticPublishPath: ./web/dist
+    # 사이트가 도메인 뿌리에 올라가므로 base 는 "/" 다 (GitHub Pages 처럼 하위 경로가 아니다).
+    envVars:
+      - key: BASE
+        value: /
+    headers:
+      - path: /*
+        name: X-Frame-Options
+        value: SAMEORIGIN
+    routes:
+      # 단일 화면이라 어떤 경로로 들어와도 index.html 을 준다.
+      - type: rewrite
+        source: /*
+        destination: /index.html

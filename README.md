@@ -63,6 +63,15 @@ cd web && npm install && npm run dev   # 3) http://localhost:5173
 npm run keys:new                 # 데모 전용 계정 4개 생성 → 출력을 .env 에 넣는다
 #   → 첫 계정(LANDLORD) 주소로 https://faucet.kaia.io 에서 테스트 KAIA 를 받는다
 npm run deploy:kairos            # 배포 + 나머지 계정에 가스 분배
+```
+
+화면은 Render 정적 사이트로 올린다. 저장소를 연결하면 뿌리의 `render.yaml` 을 읽어
+푸시할 때마다 자동 배포된다. `web/src/deployed.json` 은 저장소에 없으므로 대시보드
+환경변수 `DEPLOYED_JSON` 으로 넘긴다 — 절차는 **[docs/05-배포.md](docs/05-배포.md)**.
+
+GitHub Pages 경로도 대비책으로 남겨 뒀다.
+
+```
 npm run build:pages              # BASE=/IM/ 로 빌드
 npm run publish:pages            # gh-pages 브랜치로 푸시
 ```
@@ -85,6 +94,8 @@ npm run publish:pages            # gh-pages 브랜치로 푸시
 | `scripts/fast-forward.js` | 시연용: 로컬 체인 시간을 앞으로 돌려 기한 규칙을 보여준다 |
 | `scripts/new-keys.js` | 공개 테스트넷 데모 계정 생성 |
 | `scripts/publish-pages.js` | 빌드 결과를 gh-pages 브랜치로 배포 |
+| `scripts/prepare-web-config.js` | 빌드 서버에서 `deployed.json` 을 환경변수로부터 복원 |
+| `render.yaml` | Render 정적 사이트 설정 |
 | `scripts/analyze/build-dataset.js` | 점포 단위 학습 데이터셋 생성 (밀도·버스 접근성 피처 포함) |
 | `scripts/analyze/train_risk.py` | 폐업 예측 가능성 시점 분리 검증. 결과를 화면이 읽는다 |
 | `data/external/daegu_bus_stops.csv` | 대구 시내버스 정류소 위치 (공공데이터포털 15050946) |
