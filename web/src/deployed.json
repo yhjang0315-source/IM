@@ -1,5 +1,5 @@
 {
-  "address": "0x5FbDB2315678afecb367f032d93F642f64180aa3",
+  "address": "0x5FC8d32690cc91D4c39d9d3abcBD16989F875707",
   "abi": [
     {
       "inputs": [
@@ -43,6 +43,32 @@
       "type": "error"
     },
     {
+      "inputs": [],
+      "name": "NothingDue",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "TooEarly",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint16",
+          "name": "period",
+          "type": "uint16"
+        }
+      ],
+      "name": "Unfinished",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "WindowClosed",
+      "type": "error"
+    },
+    {
       "anonymous": false,
       "inputs": [
         {
@@ -74,9 +100,40 @@
           "internalType": "uint16",
           "name": "totalPeriods",
           "type": "uint16"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "deposit",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "mediator",
+          "type": "address"
         }
       ],
       "name": "Activated",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "total",
+          "type": "uint256"
+        }
+      ],
+      "name": "DepositPaid",
       "type": "event"
     },
     {
@@ -131,7 +188,26 @@
     },
     {
       "anonymous": false,
-      "inputs": [],
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "escrowRefunded",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "depositApplied",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "depositReturned",
+          "type": "uint256"
+        }
+      ],
       "name": "Ended",
       "type": "event"
     },
@@ -176,6 +252,62 @@
           "type": "uint256"
         }
       ],
+      "name": "Mediated",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint16",
+          "name": "period",
+          "type": "uint16"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "arrearsLeft",
+          "type": "uint256"
+        }
+      ],
+      "name": "Repaid",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint16",
+          "name": "period",
+          "type": "uint16"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "revenue",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "rent",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "bytes32",
+          "name": "proof",
+          "type": "bytes32"
+        }
+      ],
       "name": "RevenuePosted",
       "type": "event"
     },
@@ -217,6 +349,32 @@
       "type": "event"
     },
     {
+      "inputs": [],
+      "name": "DISPUTE_WINDOW",
+      "outputs": [
+        {
+          "internalType": "uint64",
+          "name": "",
+          "type": "uint64"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "MEDIATION_DELAY",
+      "outputs": [
+        {
+          "internalType": "uint64",
+          "name": "",
+          "type": "uint64"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
       "inputs": [
         {
           "internalType": "uint256",
@@ -242,6 +400,16 @@
           "internalType": "uint16",
           "name": "totalPeriods",
           "type": "uint16"
+        },
+        {
+          "internalType": "uint256",
+          "name": "deposit",
+          "type": "uint256"
+        },
+        {
+          "internalType": "address",
+          "name": "_mediator",
+          "type": "address"
         },
         {
           "internalType": "bytes",
@@ -270,6 +438,19 @@
       "name": "agree",
       "outputs": [],
       "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "depositPaid",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -361,6 +542,44 @@
           "internalType": "uint16",
           "name": "period",
           "type": "uint16"
+        },
+        {
+          "internalType": "uint256",
+          "name": "revenue",
+          "type": "uint256"
+        }
+      ],
+      "name": "mediate",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "mediator",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "payDeposit",
+      "outputs": [],
+      "stateMutability": "payable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint16",
+          "name": "period",
+          "type": "uint16"
         }
       ],
       "name": "periodOf",
@@ -406,6 +625,21 @@
               "internalType": "bool",
               "name": "tenantAgreed",
               "type": "bool"
+            },
+            {
+              "internalType": "bytes32",
+              "name": "proof",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "uint64",
+              "name": "postedAt",
+              "type": "uint64"
+            },
+            {
+              "internalType": "uint64",
+              "name": "disputedAt",
+              "type": "uint64"
             }
           ],
           "internalType": "struct RevenueLease.Period",
@@ -427,6 +661,11 @@
           "internalType": "uint256",
           "name": "revenue",
           "type": "uint256"
+        },
+        {
+          "internalType": "bytes32",
+          "name": "proof",
+          "type": "bytes32"
         }
       ],
       "name": "postRevenue",
@@ -451,6 +690,19 @@
         }
       ],
       "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint16",
+          "name": "period",
+          "type": "uint16"
+        }
+      ],
+      "name": "repay",
+      "outputs": [],
+      "stateMutability": "payable",
       "type": "function"
     },
     {
@@ -520,6 +772,24 @@
           "internalType": "uint16",
           "name": "totalPeriods",
           "type": "uint16"
+        },
+        {
+          "internalType": "uint256",
+          "name": "deposit",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "totalArrears",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "sum",
+          "type": "uint256"
         }
       ],
       "stateMutability": "view",
@@ -527,22 +797,26 @@
     }
   ],
   "rpc": "http://127.0.0.1:8545",
-  "terms": {
+  "startMonth": "2026-10",
+  "suggested": {
     "baseRent": "800000",
     "pctBps": 800,
     "floorRent": "1500000",
     "capRent": "3500000",
-    "totalPeriods": 12
+    "totalPeriods": 12,
+    "deposit": "10000000"
   },
   "fixedRentComparison": "2500000",
   "site": {
     "name": "동성로 15평 매장",
     "district": "대구 중구 동성로",
+    "areaPyeong": 15,
     "vacancyPct": 23.3
   },
   "roles": {
     "landlord": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
     "tenant": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
-    "gateway": "0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC"
+    "gateway": "0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC",
+    "mediator": "0x15d34AAf54267DB7D7c367839AAf71A00a2C6A65"
   }
 }

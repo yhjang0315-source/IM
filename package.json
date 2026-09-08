@@ -7,9 +7,12 @@
     "test": "hardhat test",
     "chain": "hardhat node",
     "deploy": "hardhat run scripts/deploy-dev.js --network localhost",
+    "deploy:active": "hardhat run scripts/deploy-active.js --network localhost",
+    "demo:ff": "hardhat run scripts/fast-forward.js --network localhost",
     "sim": "hardhat run scripts/simulate.js",
     "web": "npm --prefix web run dev",
-    "market": "node scripts/analyze/build-market.js"
+    "market": "node scripts/analyze/build-market.js",
+    "market:inspect": "node scripts/analyze/build-market.js --inspect"
   },
   "keywords": [],
   "author": "",

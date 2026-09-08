@@ -1,0 +1,11 @@
+# 저장소 안에서는 항상 LF. 체크아웃 때도 LF로 두어
+# Windows/Linux 사이를 오갈 때 줄바꿈만 바뀐 diff가 생기지 않게 한다.
+* text=auto eol=lf
+
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.pdf binary
+*.zip binary
+*.hwp binary
+*.hwpx binary
