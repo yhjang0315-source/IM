@@ -197,6 +197,50 @@ export default function App() {
   );
 }
 
+/** 원 단위 금액 입력. bigint 로 주고받는다. 계약 금액을 손으로 못 넣으면 데모가 아니라 안내문이 된다. */
+function MoneyField({ label, value, onChange, hint, warn, disabled }) {
+  return (
+    <div className="money">
+      <label>{label}</label>
+      <input type="number" min="0" step="10000" disabled={disabled}
+        value={String(value)}
+        onChange={(e) => {
+          const n = Math.floor(Number(e.target.value));
+          onChange(BigInt(Number.isFinite(n) && n > 0 ? n : 0));
+        }} />
+      <span className="mv">{won(value)}원</span>
+      {hint && <span className={`mh ${warn ? "bad" : ""}`}>{hint}</span>}
+    </div>
+  );
+}
+
+/** 미납 한 건. 행마다 상환 금액을 따로 잡아야 해서 별도 컴포넌트로 뺀다. */
+function ArrearsRow({ m, role, setRole, busy, act }) {
+  const [amt, setAmt] = useState(m.arrears);
+  useEffect(() => { setAmt(m.arrears); }, [m.arrears]);
+  const over = amt > m.arrears;
+  return (
+    <tr>
+      <td>{monthLabel(m.month)}</td>
+      <td className="r">{won(m.rent)}</td>
+      <td className="r">{won(m.paid)}</td>
+      <td className="r"><b className="bad">{won(m.arrears)}</b></td>
+      <td>
+        {role === "tenant" ? (
+          <div className="rowact">
+            <MoneyField label="상환액" value={amt} onChange={setAmt}
+              hint={over ? "초과분은 즉시 돌아옵니다" : amt < m.arrears ? "부분 상환" : null} />
+            <button className="ghost sm" disabled={!!busy || amt === 0n}
+              onClick={() => act("repay", () => repay(m.month, amt), `${monthLabel(m.month)} 미납 ${won(amt)}원 상환`)}>
+              상환
+            </button>
+          </div>
+        ) : <Need role="tenant" setRole={setRole} what="상환" />}
+      </td>
+    </tr>
+  );
+}
+
 function Loading() {
   return <section className="pane"><p className="empty">체인에서 계약을 불러오는 중…</p></section>;
 }
@@ -226,10 +270,17 @@ function Tenant({ months, totals, terms, next, role, setRole, act, busy, lease }
   const done = months.filter((m) => m.state === 3);
   const worstLinked = done.reduce((a, m) => Math.max(a, pct(m.rent, m.revenue)), 0);
   const worstFixed = done.reduce((a, m) => Math.max(a, pct(FIXED_RENT, m.revenue)), 0);
-  const [sim, setSim] = useState(next ? DEFAULT_REV[(next.month - 1) % 12] : 15);
-  useEffect(() => { if (next) setSim(DEFAULT_REV[(next.month - 1) % 12]); }, [next?.month]);
-  const simRev = BigInt(sim) * 1_000_000n;
+  const [simRev, setSimRev] = useState(BigInt(next ? DEFAULT_REV[(next.month - 1) % 12] : 15) * 1_000_000n);
   const simRent = quoteLocal(terms, simRev);
+  const [fundAmt, setFundAmt] = useState(simRent);
+  const [depAmt, setDepAmt] = useState(0n);
+  useEffect(() => {
+    if (next) setSimRev(BigInt(DEFAULT_REV[(next.month - 1) % 12]) * 1_000_000n);
+  }, [next?.month]);
+  // 매출을 바꾸면 예치 기본값도 따라간다. 사용자가 직접 고친 뒤에는 건드리지 않는다.
+  const touched = useRef(false);
+  useEffect(() => { if (!touched.current) setFundAmt(quoteLocal(terms, simRev)); }, [simRev]);
+  useEffect(() => { setDepAmt(terms.deposit - lease.depositPaid); }, [lease.depositPaid, terms.deposit]);
   const clamped = simRent === BigInt(terms.floorRent) ? "하한 적용" : simRent === BigInt(terms.capRent) ? "상한 적용" : null;
   const active = lease.state === 1;
   const arrearsRows = months.filter((m) => m.state === 3 && m.arrears > 0n);
@@ -251,19 +302,35 @@ function Tenant({ months, totals, terms, next, role, setRole, act, busy, lease }
           <h2>{monthLabel(next.month)} — 매출이 이 정도면</h2>
           <div className="runbox">
             <label>예상 매출</label>
-            <input type="range" min="4" max="40" value={sim} onChange={(e) => setSim(Number(e.target.value))} />
-            <span className="revv">{won(simRev)}원</span>
+            <input type="range" min="4" max="40" value={Number(simRev / 1_000_000n)}
+              onChange={(e) => setSimRev(BigInt(e.target.value) * 1_000_000n)} />
+            <MoneyField label="정확한 금액" value={simRev} onChange={setSimRev} />
             <div className="quote">
               임대료 <b>{won(simRent)}원</b>
               {clamped && <span className="tagc">{clamped}</span>}
               <span className="qsub">부담률 {pct(simRent, simRev).toFixed(1)}% · 고정 월세였다면 {pct(FIXED_RENT, simRev).toFixed(1)}%</span>
             </div>
-            <div className="escrow">이달 예치금 <b>{won(next.escrow)}원</b>{next.escrow > 0n && next.escrow < simRent ? " — 이 매출이면 부족합니다" : ""}</div>
+            <div className="escrow">이미 예치한 금액 <b>{won(next.escrow)}원</b></div>
+            {role === "tenant" && (
+              <MoneyField label="이번에 예치할 금액" value={fundAmt}
+                onChange={(v) => { touched.current = true; setFundAmt(v); }}
+                warn={next.escrow + fundAmt < simRent}
+                hint={next.escrow + fundAmt < simRent
+                  ? `이 매출이면 ${won(simRent - next.escrow - fundAmt)}원이 미납으로 기록됩니다`
+                  : `정산 후 ${won(next.escrow + fundAmt - simRent)}원이 돌아옵니다`} />
+            )}
             <div className="btns">
               {role === "tenant"
-                ? <button disabled={!!busy} onClick={() => act("fund", () => fund(next.month, simRent), `${monthLabel(next.month)} 예치 ${won(simRent)}원`)}>
-                    {busy === "fund" ? "전송 중…" : `${won(simRent)}원 예치`}
-                  </button>
+                ? <>
+                    <button disabled={!!busy || fundAmt === 0n}
+                      onClick={() => act("fund", () => fund(next.month, fundAmt), `${monthLabel(next.month)} 예치 ${won(fundAmt)}원`)}>
+                      {busy === "fund" ? "전송 중…" : `${won(fundAmt)}원 예치`}
+                    </button>
+                    <button className="ghost" disabled={!!busy}
+                      onClick={() => { touched.current = false; setFundAmt(simRent > next.escrow ? simRent - next.escrow : 0n); }}>
+                      부족분 채우기
+                    </button>
+                  </>
                 : <Need role="tenant" setRole={setRole} what="예치" />}
               <span className="hint">예치금은 정산 때 임대료만큼 임대인에게 가고 나머지는 돌아옵니다.</span>
             </div>
@@ -281,11 +348,15 @@ function Tenant({ months, totals, terms, next, role, setRole, act, busy, lease }
             <p className="hint">
               계약이 끝날 때 남은 미납 임대료를 보증금에서 먼저 회수하고, 나머지를 돌려줍니다.
             </p>
+            {role === "tenant" && (
+              <MoneyField label="납입할 금액" value={depAmt} onChange={setDepAmt}
+                hint={depAmt < terms.deposit - lease.depositPaid ? "나눠서 낼 수 있습니다" : null} />
+            )}
             <div className="btns">
               {role === "tenant"
-                ? <button disabled={!!busy}
-                    onClick={() => act("deposit", () => payDeposit(terms.deposit - lease.depositPaid), `보증금 ${won(terms.deposit - lease.depositPaid)}원 납입`)}>
-                    {busy === "deposit" ? "전송 중…" : "잔액 납입"}
+                ? <button disabled={!!busy || depAmt === 0n}
+                    onClick={() => act("deposit", () => payDeposit(depAmt), `보증금 ${won(depAmt)}원 납입`)}>
+                    {busy === "deposit" ? "전송 중…" : `${won(depAmt)}원 납입`}
                   </button>
                 : <Need role="tenant" setRole={setRole} what="보증금 납입" />}
             </div>
@@ -301,23 +372,10 @@ function Tenant({ months, totals, terms, next, role, setRole, act, busy, lease }
           </p>
           <div className="tw">
             <table>
-              <thead><tr><th>기간</th><th className="r">임대료</th><th className="r">지급</th><th className="r">남은 미납</th><th></th></tr></thead>
+              <thead><tr><th>기간</th><th className="r">임대료</th><th className="r">지급</th><th className="r">남은 미납</th><th>상환</th></tr></thead>
               <tbody>
                 {arrearsRows.map((m) => (
-                  <tr key={m.month}>
-                    <td>{monthLabel(m.month)}</td>
-                    <td className="r">{won(m.rent)}</td>
-                    <td className="r">{won(m.paid)}</td>
-                    <td className="r"><b className="bad">{won(m.arrears)}</b></td>
-                    <td className="r">
-                      {role === "tenant"
-                        ? <button className="ghost sm" disabled={!!busy}
-                            onClick={() => act("repay", () => repay(m.month, m.arrears), `${monthLabel(m.month)} 미납 ${won(m.arrears)}원 상환`)}>
-                            전액 상환
-                          </button>
-                        : <span className="hint">임차인만 상환</span>}
-                    </td>
-                  </tr>
+                  <ArrearsRow key={m.month} m={m} role={role} setRole={setRole} busy={busy} act={act} />
                 ))}
               </tbody>
             </table>
@@ -393,9 +451,14 @@ function Landlord({ months, totals, lease }) {
 
 // ------------------------------------------------------------------ 게이트웨이
 function Gateway({ next, pending, role, setRole, act, busy, lease }) {
-  const [rev, setRev] = useState(next ? DEFAULT_REV[(next.month - 1) % 12] : 15);
-  useEffect(() => { if (next) setRev(DEFAULT_REV[(next.month - 1) % 12]); }, [next?.month]);
-  const revenue = BigInt(rev) * 1_000_000n;
+  const [revenue, setRevenue] = useState(BigInt(next ? DEFAULT_REV[(next.month - 1) % 12] : 15) * 1_000_000n);
+  useEffect(() => { if (next) setRevenue(BigInt(DEFAULT_REV[(next.month - 1) % 12]) * 1_000_000n); }, [next?.month]);
+  // 이의·조정 금액은 당사자가 직접 넣는 값이다. 코드에 박아두면 시연에서
+  // "그 숫자는 어디서 나왔나요"에 답할 수 없다.
+  const [proposal, setProposal] = useState(0n);
+  const [mediation, setMediation] = useState(0n);
+  useEffect(() => { if (pending) { setProposal(pending.revenue); setMediation(pending.proposed || pending.revenue); } },
+    [pending?.month, pending?.state, pending?.revenue?.toString(), pending?.proposed?.toString()]);
   const active = lease.state === 1;
   const L = pending ? monthLabel(pending.month) : "";
   const proof = next ? makeProof(next.month, revenue) : null;
@@ -439,17 +502,17 @@ function Gateway({ next, pending, role, setRole, act, busy, lease }) {
               {role === "gateway"
                 ? <button disabled={!!busy} onClick={() => act("settle", () => settle("gateway", pending.month), `${L} 정산`)}>정산 실행</button>
                 : null}
-              {role === "landlord" && (
-                <button className="ghost" disabled={!!busy}
-                  onClick={() => act("dispute", () => dispute("landlord", pending.month, pending.revenue + 5_000_000n), `${L} 이의 제기 (임대인)`)}>
-                  이의 제기 — 매출이 더 많다
-                </button>
-              )}
-              {role === "tenant" && (
-                <button className="ghost" disabled={!!busy}
-                  onClick={() => act("dispute", () => dispute("tenant", pending.month, pending.revenue > 3_000_000n ? pending.revenue - 3_000_000n : 0n), `${L} 이의 제기 (임차인)`)}>
-                  이의 제기 — 매출이 더 적다
-                </button>
+              {(role === "landlord" || role === "tenant") && (
+                <div className="rowact wide">
+                  <MoneyField label="내가 보는 매출" value={proposal} onChange={setProposal}
+                    hint={proposal === pending.revenue ? "게시된 값과 같습니다" :
+                      proposal > pending.revenue ? `게시액보다 ${won(proposal - pending.revenue)}원 많음` :
+                      `게시액보다 ${won(pending.revenue - proposal)}원 적음`} />
+                  <button className="ghost" disabled={!!busy || proposal === pending.revenue}
+                    onClick={() => act("dispute", () => dispute(role, pending.month, proposal), `${L} 이의 제기 (${ROLE_LABEL[role]})`)}>
+                    이의 제기
+                  </button>
+                </div>
               )}
               {role !== "gateway" && <span className="hint">정산 실행은 게이트웨이가 합니다.</span>}
             </>}
@@ -458,10 +521,14 @@ function Gateway({ next, pending, role, setRole, act, busy, lease }) {
               {role === "tenant" && <button disabled={!!busy || pending.tenantAgreed} onClick={() => act("agree", () => agree("tenant", pending.month), `${L} 임차인 동의`)}>임차인 동의</button>}
               {role === "mediator" && (
                 mediationOpen
-                  ? <button disabled={!!busy}
-                      onClick={() => act("mediate", () => mediate(pending.month, pending.proposed), `${L} 조정인 확정 ${won(pending.proposed)}원`)}>
-                      조정안으로 확정 ({won(pending.proposed)}원)
-                    </button>
+                  ? <div className="rowact wide">
+                      <MoneyField label="조정으로 확정할 매출" value={mediation} onChange={setMediation}
+                        hint={`게시 ${won(pending.revenue)}원 · 제안 ${won(pending.proposed)}원 사이에서 정합니다`} />
+                      <button disabled={!!busy || mediation === 0n}
+                        onClick={() => act("mediate", () => mediate(pending.month, mediation), `${L} 조정 확정 ${won(mediation)}원`)}>
+                        조정 확정
+                      </button>
+                    </div>
                   : <span className="hint">교착 {MEDIATION_DAYS}일이 지나야 개입할 수 있습니다 — {new Date(pending.disputedAt + MEDIATION_DAYS * 86400000).toLocaleDateString("ko-KR")}부터</span>
               )}
               <span className="hint">둘 다 동의해야 정산이 풀립니다 (2-of-2). 게이트웨이는 개입할 수 없습니다.</span>
@@ -476,8 +543,9 @@ function Gateway({ next, pending, role, setRole, act, busy, lease }) {
             {monthLabel(next.month)} 확정 매출 (결제망 집계)
             {dueInfo && <span className={`due ${dueInfo.late ? "late" : ""}`}>{dueInfo.text}</span>}
           </label>
-          <input type="range" min="4" max="40" value={rev} onChange={(e) => setRev(Number(e.target.value))} />
-          <span className="revv">{won(revenue)}원</span>
+          <input type="range" min="4" max="40" value={Number(revenue / 1_000_000n)}
+            onChange={(e) => setRevenue(BigInt(e.target.value) * 1_000_000n)} />
+          <MoneyField label="정확한 금액 (결제망 집계값)" value={revenue} onChange={setRevenue} />
           <QuotePreview revenue={revenue} terms={lease.terms} />
           <div className="escrow">임차인 예치금 <b>{won(next.escrow)}원</b></div>
           <div className="proofbox">
