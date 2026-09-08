@@ -8,6 +8,10 @@
     "chain": "hardhat node",
     "deploy": "hardhat run scripts/deploy-dev.js --network localhost",
     "deploy:active": "hardhat run scripts/deploy-active.js --network localhost",
+    "deploy:kairos": "hardhat run scripts/deploy-dev.js --network kairos",
+    "keys:new": "hardhat run scripts/new-keys.js",
+    "build:pages": "node -e \"process.env.BASE=process.env.BASE||'/IM/';require('child_process').execSync('npm --prefix web run build',{stdio:'inherit',env:process.env})\"",
+    "publish:pages": "node scripts/publish-pages.js",
     "demo:ff": "hardhat run scripts/fast-forward.js --network localhost",
     "sim": "hardhat run scripts/simulate.js",
     "web": "npm --prefix web run dev",
@@ -19,6 +23,7 @@
   "license": "ISC",
   "devDependencies": {
     "@nomicfoundation/hardhat-toolbox": "^5.0.0",
+    "dotenv": "^17.4.2",
     "hardhat": "^2.29.1"
   },
   "dependencies": {

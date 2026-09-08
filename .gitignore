@@ -20,3 +20,6 @@ data/raw/
 
 # 학습 데이터셋과 모델 원본 — 원본 zip에서 재생성된다
 data/processed/
+
+# 배포 스크립트가 만든다. 공개 테스트넷 빌드에는 데모 키가 들어가므로 저장소에 두지 않는다.
+web/src/deployed.json

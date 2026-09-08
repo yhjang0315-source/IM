@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   read, site, roles, ROLE_LABEL, FIXED_RENT, won, pct, short, monthLabel, quoteLocal,
   loadLease, loadMonths, loadActivity, makeProof, monthDue, DISPUTE_DAYS, MEDIATION_DAYS, ZERO,
+  chainName, explorer, txLink, address as contractAddress,
   fund, postRevenue, settle, dispute, agree, repay, payDeposit, mediate, runMonth,
 } from "./lease";
 import Contract, { Card } from "./Contract";
@@ -92,7 +93,11 @@ export default function App() {
     try {
       const rc = await fn();
       await refresh();
-      notify({ kind: "ok", title: title || label, detail: rc && rc.hash ? `블록 #${rc.blockNumber} · tx ${short(rc.hash)}` : "오프체인 — 트랜잭션 없음" });
+      notify({
+        kind: "ok", title: title || label,
+        detail: rc && rc.hash ? `블록 #${rc.blockNumber} · tx ${short(rc.hash)}` : "오프체인 — 트랜잭션 없음",
+        link: rc && rc.hash ? txLink(rc.hash) : null,
+      });
     } catch (e) {
       notify({ kind: "err", title: `${title || label} 실패`, detail: explain(e) });
     } finally { setBusy(""); }
@@ -124,6 +129,12 @@ export default function App() {
           <span className="eyebrow">매출연동 임대차 · RevenueLease</span>
           <h1>{site.name}</h1>
           <p className="sub">{site.district} · 중대형 상가 공실률 <b>{site.vacancyPct}%</b></p>
+          <p className="chainline">
+            {chainName === "kairos" ? "Kaia Kairos 테스트넷" : "로컬 체인"} ·{" "}
+            {explorer
+              ? <a href={`${explorer}/address/${contractAddress}`} target="_blank" rel="noreferrer">{short(contractAddress)} ↗</a>
+              : <span className="mono">{short(contractAddress)}</span>}
+          </p>
         </div>
         {terms ? (
           <dl className="tms">
@@ -172,7 +183,12 @@ export default function App() {
 
       <div className="toasts" aria-live="polite">
         {toasts.map((t) => (
-          <div key={t.id} className={`toast ${t.kind}`}><b>{t.title}</b>{t.detail && <span>{t.detail}</span>}</div>
+          <div key={t.id} className={`toast ${t.kind}`}>
+            <b>{t.title}</b>
+            {t.detail && (t.link
+              ? <a href={t.link} target="_blank" rel="noreferrer">{t.detail} ↗</a>
+              : <span>{t.detail}</span>)}
+          </div>
         ))}
       </div>
     </div>

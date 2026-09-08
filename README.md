@@ -52,6 +52,23 @@ cd web && npm install && npm run dev   # 3) http://localhost:5173
 ```
 
 `npm run deploy`는 반드시 `npm run chain` 이후에. 체인을 다시 켤 때마다 재배포가 필요하다.
+
+### 공개 테스트넷 (Kaia Kairos)
+
+심사위원이 로컬 설치 없이 URL 하나로 볼 수 있게 공개 체인에도 올린다.
+
+```
+npm run keys:new                 # 데모 전용 계정 4개 생성 → 출력을 .env 에 넣는다
+#   → 첫 계정(LANDLORD) 주소로 https://faucet.kaia.io 에서 테스트 KAIA 를 받는다
+npm run deploy:kairos            # 배포 + 나머지 계정에 가스 분배
+npm run build:pages              # BASE=/IM/ 로 빌드
+npm run publish:pages            # gh-pages 브랜치로 푸시
+```
+
+**하드햇 기본 계정을 공개 테스트넷에 쓰면 안 된다.** 널리 알려진 키라 스캐너 봇이 잔액을 곧바로 쓸어간다.
+`npm run keys:new` 가 만드는 계정은 이 데모 전용이고, **키가 배포된 번들에 그대로 들어간다** —
+역할 전환 시연을 위해 의도한 것이며 실제 자산을 넣어서는 안 된다.
+`web/src/deployed.json` 은 배포 스크립트가 만들고 저장소에는 올리지 않는다.
 기한이 걸린 규칙(이의 7일, 조정 개시 14일)을 시연할 때는 `npm run demo:ff` 로 체인 시간을 15일 앞으로 돌린다.
 
 ## 구성
@@ -64,6 +81,8 @@ cd web && npm install && npm run dev   # 3) http://localhost:5173
 | `scripts/deploy-dev.js` | 배포 + 프런트 설정 생성 (`ACTIVATE=1`이면 활성화까지) |
 | `web/src/Statement.jsx` | 계약 요약 + 월별 정산 명세서 (인쇄하면 PDF) |
 | `scripts/fast-forward.js` | 시연용: 로컬 체인 시간을 앞으로 돌려 기한 규칙을 보여준다 |
+| `scripts/new-keys.js` | 공개 테스트넷 데모 계정 생성 |
+| `scripts/publish-pages.js` | 빌드 결과를 gh-pages 브랜치로 배포 |
 | `scripts/analyze/build-dataset.js` | 점포 단위 학습 데이터셋 생성 (밀도·버스 접근성 피처 포함) |
 | `scripts/analyze/train_risk.py` | 폐업 예측 가능성 시점 분리 검증. 결과를 화면이 읽는다 |
 | `data/external/daegu_bus_stops.csv` | 대구 시내버스 정류소 위치 (공공데이터포털 15050946) |
@@ -110,7 +129,9 @@ cd web && npm install && npm run dev   # 3) http://localhost:5173
   예) 카페 5,363개 · 9개월 소멸률 12.8% · 권장 연동분 69%.
   갱신하려면 `data/raw/` 에 분기 zip을 넣고 `npm run market`. `scripts/analyze/README.md` 참조.
 - **현금 매출 누락은 구조적으로 못 푼다.** "카드·간편결제 비중 90% 이상 업종부터"로 범위를 한정할 것.
-- **지갑은 데모용이다.** 화면이 하드햇 기본 계정 키를 들고 세 역할을 흉내낸다. 실서비스는 은행 앱 내장 키나 서버 서명으로 대체해야 한다.
+- **지갑은 데모용이다.** 화면이 개인키를 직접 들고 네 역할을 흉내낸다. 공개 테스트넷 배포본의 키도
+  번들에 그대로 들어 있다 — 역할 전환 시연을 위해 의도한 것이다. 실서비스는 은행 앱 내장 키나
+  서버 서명으로 대체해야 하며, 화면이 키를 들고 있어서는 안 된다.
 - **조정인은 선택 사항이다.** 지정하면 이의 교착 14일 뒤에만, 그것도 양측이 체결 시 함께 서명한 주소만 개입할 수 있다.
   지정하지 않은 계약은 합의로만 풀리며 그 경우 교착은 계약 외부 절차로 간다.
 - **다중 점포 관리와 실지갑(MetaMask) 연결은 없다.** 한 계약 = 한 컨트랙트이고, 화면은 데모용 키로 역할을 흉내낸다.
