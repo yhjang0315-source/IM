@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import {
-  site, roles, ROLE_LABEL, FIXED_RENT, address, won, pct, short, monthLabel,
+  site, roles, ROLE_LABEL, FIXED_RENT, address, won, pct, bpsPct, short, monthLabel,
   termsDigest, loadDraft, DISPUTE_DAYS, MEDIATION_DAYS, ZERO,
 } from "./lease";
 
@@ -57,7 +57,9 @@ export default function Statement({ lease, months, activity }) {
         </div>
         <dl className="docmeta">
           <div><dt>계약 식별자</dt><dd className="mono">{address}</dd></div>
-          <div><dt>발행 시각</dt><dd>{fmt(Date.now())}</dd></div>
+          {/* 문서 안의 모든 시각은 체인 기준이다. 브라우저 시계를 섞으면
+              확정 시각과 발행 시각이 서로 다른 시계를 가리키게 된다. */}
+          <div><dt>기준 시각 (체인)</dt><dd>{fmt(lease.chainNow || Date.now())}</dd></div>
         </dl>
       </header>
 
@@ -78,7 +80,7 @@ export default function Statement({ lease, months, activity }) {
         <table>
           <tbody>
             <tr><td>기본료</td><td className="r">{won(t.baseRent)}원 / 월</td></tr>
-            <tr><td>매출 연동률</td><td className="r">{(t.pctBps / 100).toFixed(2)}%</td></tr>
+            <tr><td>매출 연동률</td><td className="r">{bpsPct(t.pctBps)}%</td></tr>
             <tr><td>임대료 하한</td><td className="r">{won(t.floorRent)}원</td></tr>
             <tr><td>임대료 상한</td><td className="r">{won(t.capRent)}원</td></tr>
             <tr><td>계약 기간</td><td className="r">{monthLabel(1)} ~ {monthLabel(t.totalPeriods)} ({t.totalPeriods}개월)</td></tr>
@@ -93,7 +95,7 @@ export default function Statement({ lease, months, activity }) {
 
       <h3>3. 임대료 산정식</h3>
       <p className="formula">
-        임대료 = min( max( {won(t.baseRent)} + 월매출 × {(t.pctBps / 100).toFixed(2)}% , {won(t.floorRent)} ) , {won(t.capRent)} )
+        임대료 = min( max( {won(t.baseRent)} + 월매출 × {bpsPct(t.pctBps)}% , {won(t.floorRent)} ) , {won(t.capRent)} )
       </p>
       <p className="fine">
         이 식은 계약 확정 시 컨트랙트에 기록되었고, 컨트랙트에는 이를 변경하는 함수가 존재하지 않습니다.

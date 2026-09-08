@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
-  read, site, roles, ROLE_LABEL, FIXED_RENT, won, pct, short, monthLabel, quoteLocal,
+  read, site, roles, ROLE_LABEL, FIXED_RENT, won, pct, bpsPct, short, monthLabel, quoteLocal,
   loadLease, loadMonths, loadActivity, makeProof, monthDue, DISPUTE_DAYS, MEDIATION_DAYS, ZERO,
   chainName, explorer, txLink, address as contractAddress,
   fund, postRevenue, settle, dispute, agree, repay, payDeposit, mediate, runMonth,
@@ -51,12 +51,13 @@ export default function App() {
   const refresh = useCallback(async () => {
     try {
       const l = await loadLease();
-      setLease(l); setChainErr("");
       const [m, a] = await Promise.all([
         l.terms ? loadMonths(l.terms.totalPeriods) : Promise.resolve([]),
         loadActivity(),
       ]);
-      setMonths(m); setActivity(a);
+      // 셋을 한 번에 넣는다. 따로 넣으면 계약은 있는데 월별 데이터는 빈
+      // 중간 상태가 렌더되어 "정산된 달이 없습니다"가 잠깐 뜬다.
+      setLease(l); setMonths(m); setActivity(a); setChainErr("");
     } catch (e) {
       setChainErr(`체인에 연결할 수 없습니다 (${site.name}). npm run chain → npm run deploy 순서로 띄우십시오. ${explain(e)}`);
     }
@@ -120,7 +121,8 @@ export default function App() {
     ["contract", "계약"], ["tenant", "임차인"], ["landlord", "임대인"], ["gateway", "게이트웨이"],
     ["evidence", "업종 근거"], ["statement", "명세서"], ["activity", `활동${activity.length ? ` (${activity.length})` : ""}`],
   ];
-  const gated = (node) => (terms ? node : <NotYet onGo={() => setTab("contract")} />);
+  const loading = !lease && !chainErr;
+  const gated = (node) => (loading ? <Loading /> : terms ? node : <NotYet onGo={() => setTab("contract")} />);
 
   return (
     <div className="app">
@@ -139,7 +141,7 @@ export default function App() {
         {terms ? (
           <dl className="tms">
             <div><dt>기본료</dt><dd>{won(terms.baseRent)}</dd></div>
-            <div><dt>매출 연동률</dt><dd>{(terms.pctBps / 100).toFixed(1)}%</dd></div>
+            <div><dt>매출 연동률</dt><dd>{bpsPct(terms.pctBps)}%</dd></div>
             <div><dt>하한</dt><dd>{won(terms.floorRent)}</dd></div>
             <div><dt>상한</dt><dd>{won(terms.capRent)}</dd></div>
             <div><dt>기간</dt><dd>{monthLabel(1)} ~ {monthLabel(terms.totalPeriods)}</dd></div>
@@ -171,12 +173,12 @@ export default function App() {
 
       {chainErr && <div className="err">{chainErr}</div>}
 
-      {tab === "contract" && <Contract lease={lease} market={market} role={role} setRole={setRole} act={act} busy={busy} />}
+      {tab === "contract" && (loading ? <Loading /> : <Contract lease={lease} market={market} role={role} setRole={setRole} act={act} busy={busy} />)}
       {tab === "tenant" && gated(<Tenant months={months} totals={totals} terms={terms} next={next} role={role} setRole={setRole} act={act} busy={busy} lease={lease} />)}
-      {tab === "landlord" && gated(<Landlord months={months} totals={totals} />)}
+      {tab === "landlord" && gated(<Landlord months={months} totals={totals} lease={lease} />)}
       {tab === "gateway" && gated(<Gateway next={next} pending={pending} role={role} setRole={setRole} act={act} busy={busy} lease={lease} />)}
       {tab === "evidence" && <Evidence market={market} terms={terms} validation={validation} />}
-      {tab === "statement" && <Statement lease={lease} months={months} activity={activity} />}
+      {tab === "statement" && (loading ? <Loading /> : <Statement lease={lease} months={months} activity={activity} />)}
       {tab === "activity" && <Activity items={activity} />}
 
       {terms && <Ledger months={months} />}
@@ -193,6 +195,10 @@ export default function App() {
       </div>
     </div>
   );
+}
+
+function Loading() {
+  return <section className="pane"><p className="empty">체인에서 계약을 불러오는 중…</p></section>;
 }
 
 function NotYet({ onGo }) {
@@ -334,16 +340,36 @@ function Tenant({ months, totals, terms, next, role, setRole, act, busy, lease }
 }
 
 // ------------------------------------------------------------------ 임대인
-function Landlord({ months, totals }) {
+function Landlord({ months, totals, lease }) {
+  const t = lease.terms;
   const max = Number(totals.fixed) || 1;
+  const arrearsTotal = months.reduce((a, m) => a + (m.state === 3 ? m.arrears : 0n), 0n);
+  const depositShort = t.deposit > lease.depositPaid;
   const bars = [
     ["공실 유지 (현재)", 0n, "bad"],
     ["매출연동 실수취", totals.rent, "good"],
     ["고정 월세 (임차인이 들어와야 성립)", totals.fixed, "muted"],
   ];
-  const arrears = months.reduce((a, m) => a + (m.state === 3 ? m.arrears : 0n), 0n);
   return (
     <section className="pane">
+      <h2>담보와 채권</h2>
+      <p className="lead">
+        보증금은 계약이 끝날 때 남은 미납분을 먼저 회수하고 나머지를 돌려줍니다.
+        미납이 보증금을 넘으면 그만큼은 채무로 남습니다.
+      </p>
+      <div className="cards">
+        <Card label="약정 보증금" value={`${won(t.deposit)}원`} />
+        <Card label="납입된 보증금" value={`${won(lease.depositPaid)}원`} muted={depositShort} />
+        <Card label="미납 누계" value={`${won(arrearsTotal)}원`} accent={arrearsTotal > 0n} />
+        <Card label="보증금 대비 미납" value={t.deposit > 0n ? `${pct(arrearsTotal, t.deposit).toFixed(1)}%` : "—"} />
+      </div>
+      {depositShort && (
+        <div className="warn-note">
+          보증금이 <b>{won(t.deposit - lease.depositPaid)}원</b> 덜 납입됐습니다.
+          그만큼 미납 회수 여력이 줄어듭니다.
+        </div>
+      )}
+
       <h2>{totals.n}개월 누적 수취액</h2>
       <div className="bars">
         {bars.map(([label, v, cls]) => (
@@ -357,7 +383,7 @@ function Landlord({ months, totals }) {
       {totals.n > 0 ? (
         <div className="note">
           고정 월세 대비 <b className="good">{pct(totals.rent, totals.fixed).toFixed(1)}%</b>를 수취했습니다.
-          {arrears > 0n && <> 미납 누계 <b className="bad">{won(arrears)}원</b>이 온체인에 기록돼 있습니다.</>}
+          {arrearsTotal > 0n && <> 미납 누계 <b className="bad">{won(arrearsTotal)}원</b>이 온체인에 기록돼 있습니다.</>}
           {" "}호가를 내린 것이 아니라 연동한 것이므로 <b>담보평가 기준 임대료는 유지</b>됩니다.
         </div>
       ) : <p className="empty">첫 정산이 끝나면 누적 수취액이 채워집니다.</p>}
@@ -557,7 +583,7 @@ function Evidence({ market, terms, validation }) {
             {Math.abs(gap) < 0.05 ? <>권장 범위 안입니다.</>
               : gap > 0 ? <>권장보다 <b className="bad">{(Math.abs(gap) * 100).toFixed(0)}%p 낮습니다</b> — 임대인 고정수입이 과소합니다.</>
               : <>권장보다 <b className="bad">{(Math.abs(gap) * 100).toFixed(0)}%p 높습니다</b> — 임차인 하방 위험이 큽니다.</>}
-            {terms.pctBps > 0 && <> 연동률 {(terms.pctBps / 100).toFixed(1)}%는 월매출 <b>{won(Math.round(breakEvenRev))}원</b>에서 연동 임대료가 시세와 같아지도록 잡은 값입니다.</>}
+            {terms.pctBps > 0 && <> 연동률 {bpsPct(terms.pctBps)}%는 월매출 <b>{won(Math.round(breakEvenRev))}원</b>에서 연동 임대료가 시세와 같아지도록 잡은 값입니다.</>}
           </div>
         </>
       ) : (

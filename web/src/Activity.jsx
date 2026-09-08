@@ -1,4 +1,4 @@
-import { won, monthLabel, roleOf, ROLE_LABEL, short, ZERO, txLink } from "./lease";
+import { won, monthLabel, roleOf, ROLE_LABEL, short, ZERO, txLink, bpsPct } from "./lease";
 
 /** 이벤트 한 줄을 사람 말로. 누가 했는지는 컨트랙트가 강제한 역할에서 온다. */
 function describe(ev) {
@@ -6,7 +6,7 @@ function describe(ev) {
   const L = (p) => monthLabel(p);
   switch (ev.name) {
     case "Activated":
-      return { who: "양측 서명", text: `조건 확정 — 기본료 ${won(a.baseRent)} · 연동 ${Number(a.pctBps) / 100}% · 하한 ${won(a.floorRent)} · 상한 ${won(a.capRent)} · ${a.totalPeriods}개월 · 보증금 ${won(a.deposit)}${a.mediator && a.mediator !== ZERO ? ` · 조정인 ${short(a.mediator)}` : " · 조정인 없음"}` };
+      return { who: "양측 서명", text: `조건 확정 — 기본료 ${won(a.baseRent)} · 연동 ${bpsPct(a.pctBps)}% · 하한 ${won(a.floorRent)} · 상한 ${won(a.capRent)} · ${a.totalPeriods}개월 · 보증금 ${won(a.deposit)}${a.mediator && a.mediator !== ZERO ? ` · 조정인 ${short(a.mediator)}` : " · 조정인 없음"}` };
     case "DepositPaid":
       return { who: "임차인", text: `보증금 ${won(a.amount)}원 납입 · 누계 ${won(a.total)}원` };
     case "Mediated":

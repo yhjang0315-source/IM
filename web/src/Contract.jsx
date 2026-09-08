@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import {
   site, suggested, FIXED_RENT, won, pct, quoteLocal, termsDigest, signTerms, activate, endLease,
-  loadDraft, saveDraft, clearDraft, roles, ROLE_LABEL, short, monthLabel, ZERO, MEDIATION_DAYS, DISPUTE_DAYS,
+  loadDraft, saveDraft, clearDraft, roles, ROLE_LABEL, short, monthLabel, ZERO, MEDIATION_DAYS, DISPUTE_DAYS, bpsPct,
 } from "./lease";
 
 const DEMO_REV = [12, 10, 16, 19, 21, 18, 15, 14, 20, 22, 24, 26]; // 백만원, 미리보기용
@@ -146,7 +146,7 @@ function Wizard({ market, role, setRole, act, busy }) {
               권장 기본료 <b>{(rec.src.recommended.baseShare * 100).toFixed(0)}%</b> / 연동 {(rec.src.recommended.linkedShare * 100).toFixed(0)}%
             </div>
             <div className="recv">
-              기본료 {won(rec.base)} · 연동률 {(rec.bps / 100).toFixed(1)}% · 하한 {won(rec.floor)} · 상한 {won(rec.cap)} · 보증금 {won(rec.deposit)}
+              기본료 {won(rec.base)} · 연동률 {bpsPct(rec.bps)}% · 하한 {won(rec.floor)} · 상한 {won(rec.cap)} · 보증금 {won(rec.deposit)}
             </div>
             {rec.weak && (
               <div className="warn-note">
@@ -165,7 +165,9 @@ function Wizard({ market, role, setRole, act, busy }) {
             <input type="number" step="10000" value={d.baseRent} disabled={locked} onChange={(e) => set("baseRent", e.target.value)} />
           </label>
           <label>매출 연동률 (%)
-            <input type="number" step="0.1" min="0" max="100" value={(n(d.pctBps) / 100).toFixed(1)} disabled={locked}
+            {/* bp 단위(정수)라 소수 둘째 자리까지 그대로 보여야 한다.
+                한 자리로 반올림하면 935bp 가 9.3% 로 보이면서 실제 값과 어긋난다. */}
+            <input type="number" step="0.01" min="0" max="100" value={bpsPct(d.pctBps)} disabled={locked}
               onChange={(e) => set("pctBps", Math.round(Number(e.target.value) * 100))} />
           </label>
           <label>하한 (원/월)
@@ -279,7 +281,7 @@ function Active({ lease, role, setRole, act, busy }) {
       </p>
       <div className="cards">
         <Card label="기본료" value={`${won(t.baseRent)}원`} />
-        <Card label="매출 연동률" value={`${(t.pctBps / 100).toFixed(1)}%`} accent />
+        <Card label="매출 연동률" value={`${bpsPct(t.pctBps)}%`} accent />
         <Card label="하한" value={`${won(t.floorRent)}원`} />
         <Card label="상한" value={`${won(t.capRent)}원`} />
         <Card label="약정 보증금" value={`${won(t.deposit)}원`} />

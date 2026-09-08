@@ -20,7 +20,7 @@ export const explorer = cfg.explorer || null;
 export const txLink = (hash) => (explorer ? `${explorer}/tx/${hash}` : null);
 export const FIXED_RENT = BigInt(cfg.fixedRentComparison);
 
-export const ROLE_LABEL = { landlord: "임대인", tenant: "임차인", gateway: "결제 게이트웨이(은행)", mediator: "조정인" };
+export const ROLE_LABEL = { landlord: "임대인", tenant: "임차인", gateway: "게이트웨이(은행)", mediator: "조정인" };
 export const ZERO = "0x0000000000000000000000000000000000000000";
 
 const wallets = {};
@@ -29,6 +29,13 @@ const as = (role) => new ethers.Contract(cfg.address, cfg.abi, signer(role));
 export const read = new ethers.Contract(cfg.address, cfg.abi, provider);
 
 export const won = (v) => Number(v).toLocaleString("ko-KR");
+
+/**
+ * 연동률(bp)을 퍼센트 문자열로. 800 → "8", 935 → "9.35".
+ * toFixed(1) 을 쓰면 935bp 가 화면마다 9.3% 와 9.35% 로 갈린다.
+ * 계약 조건 숫자가 화면마다 다르게 보이면 이 서비스는 신뢰를 잃는다.
+ */
+export const bpsPct = (bps) => String(Math.round(Number(bps)) / 100);
 export const pct = (a, b) => (b === 0n || b === 0 ? 0 : (Number(a) * 100) / Number(b));
 export const short = (h) => (h ? `${h.slice(0, 6)}…${h.slice(-4)}` : "");
 export const roleOf = (addr) =>
@@ -90,18 +97,18 @@ export async function activate(role, t, sigL, sigT) {
 }
 
 // ---------- 월별 흐름. 각 함수는 영수증을 돌려준다(해시·블록 표시용) ----------
+/** 12개월을 병렬로 읽는다. 순차로 돌면 왕복이 24번이라 원격 RPC 에서 수 초씩 걸린다. */
 export async function loadMonths(total) {
-  const out = [];
-  for (let m = 1; m <= total; m++) {
+  const months = Array.from({ length: total }, (_, i) => i + 1);
+  return Promise.all(months.map(async (m) => {
     const [p, esc] = await Promise.all([read.periodOf(m), read.escrow(m)]);
-    out.push({
+    return {
       month: m, revenue: p.revenue, rent: p.rent, paid: p.paid, arrears: p.arrears,
       state: Number(p.state), // 0 None 1 Posted 2 Disputed 3 Settled
       proposed: p.proposedRevenue, landlordAgreed: p.landlordAgreed, tenantAgreed: p.tenantAgreed,
       escrow: esc, proof: p.proof, postedAt: Number(p.postedAt) * 1000, disputedAt: Number(p.disputedAt) * 1000,
-    });
-  }
-  return out;
+    };
+  }));
 }
 
 /**
@@ -136,14 +143,16 @@ export async function runMonth(month, revenue) {
 // ---------- 활동 피드: 컨트랙트 이벤트 전체 ----------
 export async function loadActivity() {
   const raw = await provider.getLogs({ address: cfg.address, fromBlock: 0, toBlock: "latest" });
-  const blocks = new Map();
+  // 블록 조회를 한 번에 던진다. 로그마다 순서대로 기다리면 이벤트 수만큼 왕복한다.
+  const nums = [...new Set(raw.map((l) => l.blockNumber))];
+  const blocks = new Map(
+    await Promise.all(nums.map(async (n) => [n, await provider.getBlock(n)])));
   const out = [];
   for (const l of raw) {
     let ev;
     try { ev = read.interface.parseLog({ topics: [...l.topics], data: l.data }); } catch { continue; }
     if (!ev) continue;
-    if (!blocks.has(l.blockNumber)) blocks.set(l.blockNumber, provider.getBlock(l.blockNumber));
-    const b = await blocks.get(l.blockNumber);
+    const b = blocks.get(l.blockNumber);
     out.push({
       name: ev.name, args: ev.args, block: l.blockNumber, tx: l.transactionHash,
       time: Number(b.timestamp) * 1000, key: `${l.transactionHash}:${l.index}`,
