@@ -1,5 +1,8 @@
 const { ethers } = require("hardhat");
 
+// 정산 원본 파일의 해시 자리. 실제로는 PG 집계 파일을 해시한다.
+const PROOF = ethers.keccak256(ethers.toUtf8Bytes("PG정산파일-시뮬레이션"));
+
 // 동성로 15평 매장 가정. 금액 단위: 원 (프로토타입에서 1 wei = 1 원)
 const FIXED_RENT = 2_500_000n;                 // 현행 고정 월세
 const REV = [12,10,16,19,21,18,15,14,20,22,24,26].map(v => BigInt(v) * 1_000_000n); // 월 매출
@@ -12,10 +15,12 @@ async function main() {
   const c = await F.deploy(landlord.address, tenant.address, gateway.address);
   await c.waitForDeployment();
 
+  const NO_MEDIATOR = "0x0000000000000000000000000000000000000000";
+  const DEPOSIT = 10_000_000n;
   const digest = ethers.keccak256(ethers.AbiCoder.defaultAbiCoder().encode(
-    ["address","uint256","uint16","uint256","uint256","uint16"],
-    [await c.getAddress(), T.baseRent, T.pctBps, T.floorRent, T.capRent, T.totalPeriods]));
-  await c.activate(T.baseRent, T.pctBps, T.floorRent, T.capRent, T.totalPeriods,
+    ["address","uint256","uint16","uint256","uint256","uint16","uint256","address"],
+    [await c.getAddress(), T.baseRent, T.pctBps, T.floorRent, T.capRent, T.totalPeriods, DEPOSIT, NO_MEDIATOR]));
+  await c.activate(T.baseRent, T.pctBps, T.floorRent, T.capRent, T.totalPeriods, DEPOSIT, NO_MEDIATOR,
     await landlord.signMessage(ethers.getBytes(digest)),
     await tenant.signMessage(ethers.getBytes(digest)));
 
@@ -30,7 +35,7 @@ async function main() {
     const rev = REV[m];
     const rent = await c.quote(rev);                 // 실제 컨트랙트가 계산
     await c.connect(tenant).fund(m + 1, { value: rent });
-    await c.connect(gateway).postRevenue(m + 1, rev);
+    await c.connect(gateway).postRevenue(m + 1, rev, PROOF);
     await c.connect(gateway).settle(m + 1);          // 온체인 정산 실행
     sumRent += rent; sumRev += rev;
     const bl = Number(pct(rent, rev)), bf = Number(pct(FIXED_RENT, rev));
