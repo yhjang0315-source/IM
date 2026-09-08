@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   read, site, roles, ROLE_LABEL, FIXED_RENT, won, pct, short, monthLabel, quoteLocal,
   loadLease, loadMonths, loadActivity, makeProof, monthDue, DISPUTE_DAYS, MEDIATION_DAYS, ZERO,
+  chainName, explorer, txLink, address as contractAddress,
   fund, postRevenue, settle, dispute, agree, repay, payDeposit, mediate, runMonth,
 } from "./lease";
 import Contract, { Card } from "./Contract";
@@ -40,6 +41,7 @@ export default function App() {
   const [months, setMonths] = useState([]);
   const [activity, setActivity] = useState([]);
   const [market, setMarket] = useState(null);
+  const [validation, setValidation] = useState(null);
   const [tab, setTab] = useState("contract");
   const [busy, setBusy] = useState("");
   const [chainErr, setChainErr] = useState("");
@@ -73,6 +75,10 @@ export default function App() {
       .then((r) => (r.ok ? r.json() : null))
       .then((d) => setMarket(d && d.sectors && d.sectors.length ? d : null))
       .catch(() => setMarket(null));
+    fetch(`${import.meta.env.BASE_URL}model-validation.json`)
+      .then((r) => (r.ok ? r.json() : null))
+      .then(setValidation)
+      .catch(() => setValidation(null));
   }, []);
 
   const notify = useCallback((t) => {
@@ -87,7 +93,11 @@ export default function App() {
     try {
       const rc = await fn();
       await refresh();
-      notify({ kind: "ok", title: title || label, detail: rc && rc.hash ? `블록 #${rc.blockNumber} · tx ${short(rc.hash)}` : "오프체인 — 트랜잭션 없음" });
+      notify({
+        kind: "ok", title: title || label,
+        detail: rc && rc.hash ? `블록 #${rc.blockNumber} · tx ${short(rc.hash)}` : "오프체인 — 트랜잭션 없음",
+        link: rc && rc.hash ? txLink(rc.hash) : null,
+      });
     } catch (e) {
       notify({ kind: "err", title: `${title || label} 실패`, detail: explain(e) });
     } finally { setBusy(""); }
@@ -119,6 +129,12 @@ export default function App() {
           <span className="eyebrow">매출연동 임대차 · RevenueLease</span>
           <h1>{site.name}</h1>
           <p className="sub">{site.district} · 중대형 상가 공실률 <b>{site.vacancyPct}%</b></p>
+          <p className="chainline">
+            {chainName === "kairos" ? "Kaia Kairos 테스트넷" : "로컬 체인"} ·{" "}
+            {explorer
+              ? <a href={`${explorer}/address/${contractAddress}`} target="_blank" rel="noreferrer">{short(contractAddress)} ↗</a>
+              : <span className="mono">{short(contractAddress)}</span>}
+          </p>
         </div>
         {terms ? (
           <dl className="tms">
@@ -159,7 +175,7 @@ export default function App() {
       {tab === "tenant" && gated(<Tenant months={months} totals={totals} terms={terms} next={next} role={role} setRole={setRole} act={act} busy={busy} lease={lease} />)}
       {tab === "landlord" && gated(<Landlord months={months} totals={totals} />)}
       {tab === "gateway" && gated(<Gateway next={next} pending={pending} role={role} setRole={setRole} act={act} busy={busy} lease={lease} />)}
-      {tab === "evidence" && <Evidence market={market} terms={terms} />}
+      {tab === "evidence" && <Evidence market={market} terms={terms} validation={validation} />}
       {tab === "statement" && <Statement lease={lease} months={months} activity={activity} />}
       {tab === "activity" && <Activity items={activity} />}
 
@@ -167,7 +183,12 @@ export default function App() {
 
       <div className="toasts" aria-live="polite">
         {toasts.map((t) => (
-          <div key={t.id} className={`toast ${t.kind}`}><b>{t.title}</b>{t.detail && <span>{t.detail}</span>}</div>
+          <div key={t.id} className={`toast ${t.kind}`}>
+            <b>{t.title}</b>
+            {t.detail && (t.link
+              ? <a href={t.link} target="_blank" rel="noreferrer">{t.detail} ↗</a>
+              : <span>{t.detail}</span>)}
+          </div>
         ))}
       </div>
     </div>
@@ -477,7 +498,7 @@ function QuotePreview({ revenue, terms }) {
 }
 
 // ------------------------------------------------------------------ 업종 근거
-function Evidence({ market, terms }) {
+function Evidence({ market, terms, validation }) {
   const [sel, setSel] = useState("");
   if (!market) {
     return (
@@ -546,7 +567,10 @@ function Evidence({ market, terms }) {
       {localRows.length > 0 && (
         <>
           <h2>같은 업종, 상권별 편차</h2>
-          <p className="lead">같은 업종이라도 상권에 따라 갈립니다. 연동률을 업종 하나로 못 박지 않고 상권까지 반영해야 하는 이유입니다.</p>
+          <p className="lead">
+            같은 업종이라도 상권에 따라 갈립니다. 다만 <b>표본 {market.reliableDistrictSample}개 미만인 조합은 근거로 쓰지 않습니다</b> —
+            시점을 나눠 검증했을 때 다음 분기에 재현되지 않았습니다.
+          </p>
           <div className="tw">
             <table>
               <thead><tr><th>상권</th><th className="r">표본</th><th className="r">소멸률</th><th className="r">업종 평균 대비</th></tr></thead>
@@ -554,11 +578,13 @@ function Evidence({ market, terms }) {
                 {localRows.map((d) => {
                   const diff = (d.disappearRate - cur.disappearRate) * 100;
                   return (
-                    <tr key={d.district + d.sector} className={gu && d.district.startsWith(gu) ? "hi" : ""}>
+                    <tr key={d.district + d.sector} className={`${gu && d.district.startsWith(gu) ? "hi" : ""} ${d.reliable ? "" : "weak"}`}>
                       <td>{d.district}</td>
                       <td className="r">{d.countFirst.toLocaleString()}</td>
                       <td className="r">{(d.disappearRate * 100).toFixed(1)}%</td>
-                      <td className={`r ${diff > 0 ? "bad" : "good"}`}>{diff > 0 ? "+" : ""}{diff.toFixed(1)}%p</td>
+                      <td className={`r ${d.reliable ? (diff > 0 ? "bad" : "good") : ""}`}>
+                        {d.reliable ? `${diff > 0 ? "+" : ""}${diff.toFixed(1)}%p` : "표본 부족"}
+                      </td>
                     </tr>
                   );
                 })}
@@ -568,10 +594,63 @@ function Evidence({ market, terms }) {
         </>
       )}
 
+      {validation && <Validation v={validation} />}
+
       <p className="caveat">
         <b>한계</b> — {market.caveat} 눈금은 {market.scale.basis}. 표본 {market.minCount}개 미만 조합은 제외했습니다.
       </p>
     </section>
+  );
+}
+
+/**
+ * "이 숫자를 믿어도 되나"에 대한 답.
+ * 개별 점포 폐업을 예측할 수 있는지 먼저 확인했고, 안 된다는 결론이 나왔다.
+ * 그 확인 과정을 숨기지 않고 보여주는 편이 낫다 — 안 되는 것을 아는 것도 근거다.
+ */
+function Validation({ v }) {
+  const [open, setOpen] = useState(false);
+  const best = v.models.reduce((a, b) => (b.rocAuc > a.rocAuc ? b : a));
+  return (
+    <>
+      <h2>이 숫자를 믿어도 되나</h2>
+      <p className="lead">
+        {v.train.from}~{v.train.to} 구간으로 학습해 {v.test.from}~{v.test.to} 구간을 맞히는지 확인했습니다.
+        같은 구간을 무작위로 쪼개면 미래를 맞히는 능력이 아니라 과거를 외우는 능력을 재게 됩니다.
+      </p>
+      <div className="cards">
+        <Card label="검증 표본" value={`${v.test.rows.toLocaleString()}개 점포`} />
+        <Card label="개별 점포 예측" value={`AUC ${best.rocAuc.toFixed(2)}`} muted />
+        <Card label="업종 단위 재현성" value={`상관 ${Math.max(...v.stability.sector.map((s) => s.corr)).toFixed(2)}`} accent />
+        <Card label="상권 신뢰 최소 표본" value={`${v.reliableDistrictSample}개`} />
+      </div>
+      <div className="note">
+        <b>개별 점포의 폐업은 공개 데이터로 예측되지 않습니다.</b> 머신러닝을 붙여도 업종 평균과 차이가 없었습니다
+        (AUC {v.models.map((m) => m.rocAuc.toFixed(2)).join(" / ")}). 상가정보에는 매출·임대료·개업일이 없어
+        폐업을 가르는 변수 자체가 데이터에 없기 때문입니다.
+        그래서 이 서비스는 <b>예측이 아니라 업종 단위 집계</b>를 씁니다. 그쪽은 다음 분기에도 재현됩니다.
+      </div>
+      <button className="link" onClick={() => setOpen(!open)}>{open ? "자세히 접기" : "검증 수치 자세히 보기"}</button>
+      {open && (
+        <div className="tw">
+          <table>
+            <thead><tr><th>확인한 것</th><th className="r">판별력 (AUC)</th><th>해석</th></tr></thead>
+            <tbody>
+              {v.models.map((m) => (
+                <tr key={m.model}><td>{m.model}</td><td className="r">{m.rocAuc.toFixed(3)}</td>
+                  <td>{m.rocAuc < 0.65 ? "약함" : "쓸 만함"}</td></tr>
+              ))}
+              {v.features.map((f) => (
+                <tr key={f.feature} className={f.rocAuc < 0.55 ? "weak" : ""}>
+                  <td>{f.feature}</td><td className="r">{f.rocAuc.toFixed(3)}</td>
+                  <td>{f.rocAuc < 0.55 ? "무신호" : "신호 있음"}{f.missingPct > 10 ? ` · 결측 ${f.missingPct.toFixed(0)}%` : ""}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+    </>
   );
 }
 

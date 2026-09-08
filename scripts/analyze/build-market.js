@@ -23,6 +23,9 @@ const OUT = path.join(ROOT, "web", "public", "market.json");
 
 const REGION = process.env.REGION || "대구광역시";
 const MIN_COUNT = Number(process.env.MIN_COUNT || 30); // 표본이 적으면 비율이 튄다
+// 상권x업종 조합은 표본이 이보다 적으면 다음 분기에 재현되지 않는다(상관 0.29).
+// scripts/analyze/train_risk.py 의 시점 분리 검증에서 나온 값이다.
+const RELIABLE_DISTRICT = Number(process.env.RELIABLE_DISTRICT || 100);
 
 // ---------- CSV: 따옴표 안의 쉼표를 지키는 최소 파서 ----------
 function splitCsvLine(line) {
@@ -336,6 +339,8 @@ async function inspect(file) {
     const annualSurvival = Math.pow(1 - r.disappearRate, 12 / months);
     districts.push({
       district, sector: small,
+      // 표본이 모자란 조합은 값을 보여주되 근거로 쓰지 않는다
+      reliable: r.prev >= RELIABLE_DISTRICT,
       countFirst: r.prev, countLast: nextSet.size,
       disappearRate: Number(r.disappearRate.toFixed(4)),
       annualSurvival: Number(annualSurvival.toFixed(4)),
@@ -350,6 +355,7 @@ async function inspect(file) {
     snapshots: snaps.map((s) => s.date),
     periodMonths: months,
     minCount: MIN_COUNT,
+    reliableDistrictSample: RELIABLE_DISTRICT,
     scale: {
       basis: "업종별 연 잔존율의 5~95 백분위를 기본료 비중 25~65%로 매핑",
       survivalP5: scaleLo === null ? null : Number(scaleLo.toFixed(4)),
@@ -365,6 +371,8 @@ async function inspect(file) {
   console.log(`\n  기간 ${first.date} → ${last.date} (${months}개월)`);
   console.log(`  업종 ${sectors.length}종 · 상권x업종 ${districts.length}조합 (표본 ${MIN_COUNT}개 이상만)`);
   console.log(`  → ${path.relative(ROOT, OUT)}\n`);
+  const rel = districts.filter((d) => d.reliable).length;
+  console.log(`  상권x업종 중 표본 ${RELIABLE_DISTRICT}개 이상(권장값 근거로 쓸 수 있는 것): ${rel}개`);
   console.log("  소멸률 상위 10개 업종");
   for (const s of sectors.slice(0, 10)) {
     console.log(`    ${(s.disappearRate * 100).toFixed(1).padStart(5)}%  연 잔존 ${(s.annualSurvival * 100).toFixed(1).padStart(5)}%  n=${String(s.countFirst).padStart(5)}  ${s.sector}`);

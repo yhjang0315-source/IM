@@ -1,13 +1,12 @@
 import { ethers } from "ethers";
 import cfg from "./deployed.json";
 
-// 로컬 개발용 키(하드햇 기본 계정). 실제 서비스에서는 은행 앱 내장 키/서버 서명으로 대체된다.
-const KEYS = {
-  landlord: "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80",
-  tenant:   "0x59c6995e998f97a5a0044966f0945389dc9e86dae88c7a8412f4603b6b78690d",
-  gateway:  "0x5de4111afa1a4b94908f83103eb1f1706367c2e68ca870fc3fb9a804cdab365a",
-  mediator: "0x47e179ec197488593b187f80a00eb0da91f1b9d0b13f8733639f19c30a34926a",
-};
+/**
+ * 데모용 서명 키. 배포 스크립트가 deployed.json 에 넣는다.
+ * 로컬은 하드햇 기본 계정, 공개 테스트넷은 .env 의 데모 전용 계정이다.
+ * 실제 서비스에서는 은행 앱 내장 키나 서버 서명으로 대체된다 — 화면이 키를 들고 있으면 안 된다.
+ */
+const KEYS = cfg.keys;
 
 // cacheTimeout: -1 — 연속 트랜잭션에서 nonce가 캐시된 값으로 굳는 것을 막는다 (자동 채굴 로컬 체인)
 export const provider = new ethers.JsonRpcProvider(cfg.rpc, undefined, { cacheTimeout: -1, staticNetwork: true });
@@ -16,6 +15,9 @@ export const site = cfg.site;
 export const roles = cfg.roles;
 export const suggested = cfg.suggested;
 export const startMonth = cfg.startMonth || "2026-10";
+export const chainName = cfg.network || "localhost";
+export const explorer = cfg.explorer || null;
+export const txLink = (hash) => (explorer ? `${explorer}/tx/${hash}` : null);
 export const FIXED_RENT = BigInt(cfg.fixedRentComparison);
 
 export const ROLE_LABEL = { landlord: "임대인", tenant: "임차인", gateway: "결제 게이트웨이(은행)", mediator: "조정인" };

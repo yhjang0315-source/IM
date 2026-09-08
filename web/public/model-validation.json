@@ -1,0 +1,130 @@
+{
+ "generatedAt": "2026-09-08T03:57:56.469116+00:00",
+ "question": "공개 데이터만으로 개별 점포의 폐업을 예측할 수 있는가",
+ "answer": "예측되지 않는다. 업종이 유일한 신호이며, 그 신호는 업종 평균으로 이미 얻고 있다.",
+ "train": {
+  "from": "20250630",
+  "to": "20251231",
+  "months": 6,
+  "rows": 114924,
+  "eventRate": 0.059
+ },
+ "test": {
+  "from": "20251231",
+  "to": "20260331",
+  "months": 3,
+  "rows": 115238,
+  "eventRate": 0.0325
+ },
+ "models": [
+  {
+   "model": "업종 평균 (현재 방식)",
+   "rocAuc": 0.6043,
+   "prAuc": 0.0452,
+   "brier": 0.0323
+  },
+  {
+   "model": "로지스틱 회귀",
+   "rocAuc": 0.6003,
+   "prAuc": 0.0441,
+   "brier": 0.234
+  },
+  {
+   "model": "그래디언트 부스팅",
+   "rocAuc": 0.6031,
+   "prAuc": 0.0436,
+   "brier": 0.0322
+  }
+ ],
+ "features": [
+  {
+   "feature": "업종 소분류",
+   "rocAuc": 0.6043,
+   "missingPct": 0.0
+  },
+  {
+   "feature": "층수",
+   "rocAuc": 0.5256,
+   "missingPct": 48.6
+  },
+  {
+   "feature": "행정동",
+   "rocAuc": 0.5233,
+   "missingPct": 0.0
+  },
+  {
+   "feature": "반경 200m 동종업종 수",
+   "rocAuc": 0.5136,
+   "missingPct": 0.0
+  },
+  {
+   "feature": "반경 200m 점포 수",
+   "rocAuc": 0.512,
+   "missingPct": 0.0
+  },
+  {
+   "feature": "시군구",
+   "rocAuc": 0.5082,
+   "missingPct": 0.0
+  },
+  {
+   "feature": "최근접 정류장 거리",
+   "rocAuc": 0.5021,
+   "missingPct": 0.5
+  },
+  {
+   "feature": "반경 200m 버스정류장 수",
+   "rocAuc": 0.5019,
+   "missingPct": 0.0
+  },
+  {
+   "feature": "반경 200m 경유노선 수",
+   "rocAuc": 0.5003,
+   "missingPct": 0.0
+  },
+  {
+   "feature": "지하 여부",
+   "rocAuc": 0.5002,
+   "missingPct": 0.0
+  }
+ ],
+ "stability": {
+  "sector": [
+   {
+    "minSample": 30,
+    "cells": 211,
+    "corr": 0.571
+   },
+   {
+    "minSample": 100,
+    "cells": 153,
+    "corr": 0.596
+   },
+   {
+    "minSample": 300,
+    "cells": 97,
+    "corr": 0.666
+   }
+  ],
+  "districtSector": [
+   {
+    "minSample": 30,
+    "cells": 574,
+    "corr": 0.291
+   },
+   {
+    "minSample": 100,
+    "cells": 46,
+    "corr": 0.624
+   }
+  ]
+ },
+ "reliableDistrictSample": 100,
+ "conclusion": [
+  "점포 단위 예측은 ROC-AUC 0.60 수준으로, 업종 평균과 차이가 없다.",
+  "위치 기반 피처(행정동·점포밀도·버스 접근성·층)는 단독 판별력이 0.50~0.53으로 사실상 무신호다.",
+  "상가정보에는 매출·임대료·개업일·사업자 특성이 없다. 폐업을 가르는 변수가 데이터에 없다.",
+  "업종별 소멸률은 다음 분기에도 재현된다(상관 0.67). 업종 단위 추정은 근거가 있다.",
+  "상권x업종 세분화는 표본 100개 이상일 때만 신뢰할 수 있다. 그 미만은 표본 노이즈다."
+ ]
+}

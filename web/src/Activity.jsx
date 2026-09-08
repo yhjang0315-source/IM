@@ -1,4 +1,4 @@
-import { won, monthLabel, roleOf, ROLE_LABEL, short, ZERO } from "./lease";
+import { won, monthLabel, roleOf, ROLE_LABEL, short, ZERO, txLink } from "./lease";
 
 /** 이벤트 한 줄을 사람 말로. 누가 했는지는 컨트랙트가 강제한 역할에서 온다. */
 function describe(ev) {
@@ -54,7 +54,11 @@ export default function Activity({ items }) {
               <span className="fe">{ev.name}</span>
               <span className="fx">{d.text}</span>
               <span className="fw">{d.who}</span>
-              <span className="fb">#{ev.block} · {short(ev.tx)}</span>
+              <span className="fb">
+                #{ev.block} · {txLink(ev.tx)
+                  ? <a href={txLink(ev.tx)} target="_blank" rel="noreferrer">{short(ev.tx)} ↗</a>
+                  : short(ev.tx)}
+              </span>
             </li>
           );
         })}

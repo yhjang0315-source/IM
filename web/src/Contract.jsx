@@ -43,14 +43,18 @@ function Wizard({ market, role, setRole, act, busy }) {
     if (!market || !d.sector) return null;
     const sec = market.sectors.find((s) => s.sector === d.sector);
     if (!sec) return null;
-    const dis = d.district
+    const found = d.district
       ? market.districts.find((x) => x.district === d.district && sec.sector.endsWith(x.sector)) : null;
+    // 표본이 모자란 상권 조합은 다음 분기에 재현되지 않는다(검증 상관 0.29).
+    // 값은 보여주되 권장 조건의 근거로는 업종 평균을 쓴다.
+    const dis = found && found.reliable ? found : null;
+    const weak = found && !found.reliable ? found : null;
     const src = dis || sec;
     const mr = n(d.marketRent), er = n(d.expectedRev);
     const base = man(mr * src.recommended.baseShare);
     const linked = Math.max(0, mr - base);
     const bps = er > 0 ? Math.max(0, Math.min(10_000, Math.round((linked / er) * 10_000))) : 0;
-    return { src, sec, isDistrict: !!dis, base, bps, floor: man(mr * 0.6), cap: man(mr * 1.4), deposit: man(mr * 10) };
+    return { src, sec, isDistrict: !!dis, weak, base, bps, floor: man(mr * 0.6), cap: man(mr * 1.4), deposit: man(mr * 10) };
   }, [market, d.sector, d.district, d.marketRent, d.expectedRev]);
 
   const districtsFor = useMemo(() => {
@@ -120,7 +124,9 @@ function Wizard({ market, role, setRole, act, busy }) {
             <select value={d.district} disabled={locked || !districtsFor.length} onChange={(e) => set("district", e.target.value)}>
               <option value="">업종 전체 평균</option>
               {districtsFor.map((x) => (
-                <option key={x.district} value={x.district}>{x.district} (n={x.countFirst}, 소멸 {(x.disappearRate * 100).toFixed(1)}%)</option>
+                <option key={x.district} value={x.district}>
+                  {x.reliable ? "" : "· "}{x.district} (n={x.countFirst}, 소멸 {(x.disappearRate * 100).toFixed(1)}%){x.reliable ? "" : " — 표본 부족"}
+                </option>
               ))}
             </select>
           </label>
@@ -142,6 +148,13 @@ function Wizard({ market, role, setRole, act, busy }) {
             <div className="recv">
               기본료 {won(rec.base)} · 연동률 {(rec.bps / 100).toFixed(1)}% · 하한 {won(rec.floor)} · 상한 {won(rec.cap)} · 보증금 {won(rec.deposit)}
             </div>
+            {rec.weak && (
+              <div className="warn-note">
+                {d.district} 표본이 {rec.weak.countFirst}개뿐이라 (소멸률 {(rec.weak.disappearRate * 100).toFixed(1)}%)
+                권장값은 <b>업종 평균</b>으로 냈습니다. 표본 {market.reliableDistrictSample}개 미만인 상권 수치는
+                다음 분기에 재현되지 않아 근거로 쓰지 않습니다.
+              </div>
+            )}
             <div className="btns"><button type="button" className="ghost" disabled={locked} onClick={apply}>권장값 적용</button></div>
           </div>
         )}

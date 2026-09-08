@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-06T23:33:12.555Z",
+  "generatedAt": "2026-09-08T03:58:40.900Z",
   "region": "대구광역시",
   "snapshots": [
     "20250630",
@@ -8,6 +8,7 @@
   ],
   "periodMonths": 9,
   "minCount": 30,
+  "reliableDistrictSample": 100,
   "scale": {
     "basis": "업종별 연 잔존율의 5~95 백분위를 기본료 비중 25~65%로 매핑",
     "survivalP5": 0.8068,
@@ -2974,6 +2975,7 @@
     {
       "district": "달서구 상인2동",
       "sector": "돼지고기 구이/찜",
+      "reliable": false,
       "countFirst": 34,
       "countLast": 26,
       "disappearRate": 0.3235,
@@ -2988,6 +2990,7 @@
     {
       "district": "북구 관문동",
       "sector": "백반/한정식",
+      "reliable": false,
       "countFirst": 52,
       "countLast": 53,
       "disappearRate": 0.3077,
@@ -3002,6 +3005,7 @@
     {
       "district": "수성구 수성2.3가동",
       "sector": "백반/한정식",
+      "reliable": false,
       "countFirst": 49,
       "countLast": 51,
       "disappearRate": 0.2857,
@@ -3016,6 +3020,7 @@
     {
       "district": "북구 동천동",
       "sector": "김밥/만두/분식",
+      "reliable": false,
       "countFirst": 35,
       "countLast": 28,
       "disappearRate": 0.2857,
@@ -3030,6 +3035,7 @@
     {
       "district": "달서구 본리동",
       "sector": "백반/한정식",
+      "reliable": false,
       "countFirst": 53,
       "countLast": 51,
       "disappearRate": 0.283,
@@ -3044,6 +3050,7 @@
     {
       "district": "중구 삼덕동",
       "sector": "사진촬영업",
+      "reliable": false,
       "countFirst": 31,
       "countLast": 29,
       "disappearRate": 0.2581,
@@ -3058,6 +3065,7 @@
     {
       "district": "달성군 다사읍",
       "sector": "빵/도넛",
+      "reliable": false,
       "countFirst": 45,
       "countLast": 38,
       "disappearRate": 0.2444,
@@ -3072,6 +3080,7 @@
     {
       "district": "북구 구암동",
       "sector": "백반/한정식",
+      "reliable": false,
       "countFirst": 80,
       "countLast": 80,
       "disappearRate": 0.2375,
@@ -3086,6 +3095,7 @@
     {
       "district": "수성구 수성1가동",
       "sector": "카페",
+      "reliable": false,
       "countFirst": 30,
       "countLast": 26,
       "disappearRate": 0.2333,
@@ -3100,6 +3110,7 @@
     {
       "district": "수성구 황금2동",
       "sector": "백반/한정식",
+      "reliable": false,
       "countFirst": 54,
       "countLast": 61,
       "disappearRate": 0.2222,
@@ -3114,6 +3125,7 @@
     {
       "district": "달서구 월성1동",
       "sector": "백반/한정식",
+      "reliable": false,
       "countFirst": 82,
       "countLast": 95,
       "disappearRate": 0.2195,
@@ -3128,6 +3140,7 @@
     {
       "district": "달서구 상인2동",
       "sector": "카페",
+      "reliable": false,
       "countFirst": 47,
       "countLast": 41,
       "disappearRate": 0.2128,
@@ -3142,6 +3155,7 @@
     {
       "district": "북구 복현2동",
       "sector": "카페",
+      "reliable": false,
       "countFirst": 33,
       "countLast": 30,
       "disappearRate": 0.2121,
@@ -3156,6 +3170,7 @@
     {
       "district": "중구 동인동",
       "sector": "백반/한정식",
+      "reliable": false,
       "countFirst": 91,
       "countLast": 82,
       "disappearRate": 0.2088,
@@ -3170,6 +3185,7 @@
     {
       "district": "남구 대명2동",
       "sector": "카페",
+      "reliable": false,
       "countFirst": 53,
       "countLast": 48,
       "disappearRate": 0.2075,
@@ -3184,6 +3200,7 @@
     {
       "district": "수성구 범어4동",
       "sector": "김밥/만두/분식",
+      "reliable": false,
       "countFirst": 34,
       "countLast": 29,
       "disappearRate": 0.2059,
@@ -3198,6 +3215,7 @@
     {
       "district": "수성구 두산동",
       "sector": "화장품 소매업",
+      "reliable": false,
       "countFirst": 34,
       "countLast": 31,
       "disappearRate": 0.2059,
@@ -3212,6 +3230,7 @@
     {
       "district": "동구 신천4동",
       "sector": "편의점",
+      "reliable": false,
       "countFirst": 35,
       "countLast": 34,
       "disappearRate": 0.2,
@@ -3226,6 +3245,7 @@
     {
       "district": "동구 불로.봉무동",
       "sector": "돼지고기 구이/찜",
+      "reliable": false,
       "countFirst": 30,
       "countLast": 26,
       "disappearRate": 0.2,
@@ -3240,6 +3260,7 @@
     {
       "district": "수성구 범어2동",
       "sector": "백반/한정식",
+      "reliable": false,
       "countFirst": 35,
       "countLast": 41,
       "disappearRate": 0.2,
@@ -3254,6 +3275,7 @@
     {
       "district": "달서구 진천동",
       "sector": "빵/도넛",
+      "reliable": false,
       "countFirst": 35,
       "countLast": 31,
       "disappearRate": 0.2,
@@ -3268,6 +3290,7 @@
     {
       "district": "북구 고성동",
       "sector": "카페",
+      "reliable": false,
       "countFirst": 30,
       "countLast": 27,
       "disappearRate": 0.2,
@@ -3282,6 +3305,7 @@
     {
       "district": "남구 대명10동",
       "sector": "백반/한정식",
+      "reliable": false,
       "countFirst": 46,
       "countLast": 47,
       "disappearRate": 0.1957,
@@ -3296,6 +3320,7 @@
     {
       "district": "달서구 신당동",
       "sector": "돼지고기 구이/찜",
+      "reliable": false,
       "countFirst": 72,
       "countLast": 62,
       "disappearRate": 0.1944,
@@ -3310,6 +3335,7 @@
     {
       "district": "달서구 감삼동",
       "sector": "백반/한정식",
+      "reliable": false,
       "countFirst": 67,
       "countLast": 77,
       "disappearRate": 0.194,
@@ -3324,6 +3350,7 @@
     {
       "district": "북구 침산3동",
       "sector": "입시·교과학원",
+      "reliable": false,
       "countFirst": 31,
       "countLast": 31,
       "disappearRate": 0.1935,
@@ -3338,6 +3365,7 @@
     {
       "district": "남구 봉덕2동",
       "sector": "백반/한정식",
+      "reliable": false,
       "countFirst": 47,
       "countLast": 49,
       "disappearRate": 0.1915,
@@ -3352,6 +3380,7 @@
     {
       "district": "중구 삼덕동",
       "sector": "카페",
+      "reliable": true,
       "countFirst": 105,
       "countLast": 97,
       "disappearRate": 0.1905,
@@ -3366,6 +3395,7 @@
     {
       "district": "동구 안심1동",
       "sector": "김밥/만두/분식",
+      "reliable": false,
       "countFirst": 37,
       "countLast": 36,
       "disappearRate": 0.1892,
@@ -3380,6 +3410,7 @@
     {
       "district": "달성군 화원읍",
       "sector": "백반/한정식",
+      "reliable": true,
       "countFirst": 101,
       "countLast": 106,
       "disappearRate": 0.1881,
@@ -3394,6 +3425,7 @@
     {
       "district": "달서구 성당동",
       "sector": "슈퍼마켓",
+      "reliable": false,
       "countFirst": 32,
       "countLast": 28,
       "disappearRate": 0.1875,
@@ -3408,6 +3440,7 @@
     {
       "district": "동구 안심1동",
       "sector": "요리 주점",
+      "reliable": false,
       "countFirst": 48,
       "countLast": 39,
       "disappearRate": 0.1875,
@@ -3422,6 +3455,7 @@
     {
       "district": "북구 국우동",
       "sector": "백반/한정식",
+      "reliable": false,
       "countFirst": 65,
       "countLast": 72,
       "disappearRate": 0.1846,
@@ -3436,6 +3470,7 @@
     {
       "district": "달서구 신당동",
       "sector": "김밥/만두/분식",
+      "reliable": false,
       "countFirst": 49,
       "countLast": 42,
       "disappearRate": 0.1837,
@@ -3450,6 +3485,7 @@
     {
       "district": "달서구 용산2동",
       "sector": "백반/한정식",
+      "reliable": false,
       "countFirst": 33,
       "countLast": 32,
       "disappearRate": 0.1818,
@@ -3464,6 +3500,7 @@
     {
       "district": "달서구 진천동",
       "sector": "요리 주점",
+      "reliable": false,
       "countFirst": 33,
       "countLast": 27,
       "disappearRate": 0.1818,
@@ -3478,6 +3515,7 @@
     {
       "district": "달성군 화원읍",
       "sector": "치킨",
+      "reliable": false,
       "countFirst": 33,
       "countLast": 33,
       "disappearRate": 0.1818,
@@ -3492,6 +3530,7 @@
     {
       "district": "북구 태전2동",
       "sector": "백반/한정식",
+      "reliable": false,
       "countFirst": 44,
       "countLast": 51,
       "disappearRate": 0.1818,
@@ -3506,6 +3545,7 @@
     {
       "district": "수성구 고산2동",
       "sector": "카페",
+      "reliable": false,
       "countFirst": 66,
       "countLast": 59,
       "disappearRate": 0.1818,
@@ -3520,6 +3560,7 @@
     {
       "district": "서구 비산2.3동",
       "sector": "백반/한정식",
+      "reliable": false,
       "countFirst": 44,
       "countLast": 56,
       "disappearRate": 0.1818,
@@ -3534,6 +3575,7 @@
     {
       "district": "북구 동천동",
       "sector": "돼지고기 구이/찜",
+      "reliable": false,
       "countFirst": 33,
       "countLast": 29,
       "disappearRate": 0.1818,
@@ -3548,6 +3590,7 @@
     {
       "district": "북구 무태조야동",
       "sector": "카페",
+      "reliable": false,
       "countFirst": 50,
       "countLast": 43,
       "disappearRate": 0.18,
@@ -3562,6 +3605,7 @@
     {
       "district": "남구 대명3동",
       "sector": "카페",
+      "reliable": false,
       "countFirst": 50,
       "countLast": 46,
       "disappearRate": 0.18,
@@ -3576,6 +3620,7 @@
     {
       "district": "달서구 이곡2동",
       "sector": "일반 유흥 주점",
+      "reliable": false,
       "countFirst": 50,
       "countLast": 46,
       "disappearRate": 0.18,
@@ -3590,6 +3635,7 @@
     {
       "district": "중구 삼덕동",
       "sector": "경양식",
+      "reliable": false,
       "countFirst": 51,
       "countLast": 49,
       "disappearRate": 0.1765,
@@ -3604,6 +3650,7 @@
     {
       "district": "동구 신천3동",
       "sector": "카페",
+      "reliable": false,
       "countFirst": 34,
       "countLast": 31,
       "disappearRate": 0.1765,
@@ -3618,6 +3665,7 @@
     {
       "district": "달서구 상인2동",
       "sector": "백반/한정식",
+      "reliable": true,
       "countFirst": 115,
       "countLast": 123,
       "disappearRate": 0.1739,
@@ -3632,6 +3680,7 @@
     {
       "district": "달서구 유천동",
       "sector": "카페",
+      "reliable": false,
       "countFirst": 35,
       "countLast": 32,
       "disappearRate": 0.1714,
@@ -3646,6 +3695,7 @@
     {
       "district": "달서구 감삼동",
       "sector": "요리 주점",
+      "reliable": false,
       "countFirst": 35,
       "countLast": 31,
       "disappearRate": 0.1714,
@@ -3660,6 +3710,7 @@
     {
       "district": "달서구 두류1.2동",
       "sector": "카페",
+      "reliable": false,
       "countFirst": 35,
       "countLast": 34,
       "disappearRate": 0.1714,
@@ -3674,6 +3725,7 @@
     {
       "district": "수성구 범물1동",
       "sector": "여성 의류 소매업",
+      "reliable": false,
       "countFirst": 41,
       "countLast": 34,
       "disappearRate": 0.1707,
@@ -3688,6 +3740,7 @@
     {
       "district": "동구 동촌동",
       "sector": "백반/한정식",
+      "reliable": false,
       "countFirst": 47,
       "countLast": 45,
       "disappearRate": 0.1702,
@@ -3702,6 +3755,7 @@
     {
       "district": "중구 대신동",
       "sector": "카페",
+      "reliable": false,
       "countFirst": 47,
       "countLast": 42,
       "disappearRate": 0.1702,
@@ -3716,6 +3770,7 @@
     {
       "district": "북구 태전1동",
       "sector": "백반/한정식",
+      "reliable": false,
       "countFirst": 59,
       "countLast": 61,
       "disappearRate": 0.1695,
@@ -3730,6 +3785,7 @@
     {
       "district": "달성군 현풍읍",
       "sector": "요리 주점",
+      "reliable": false,
       "countFirst": 30,
       "countLast": 27,
       "disappearRate": 0.1667,
@@ -3744,6 +3800,7 @@
     {
       "district": "달서구 두류3동",
       "sector": "요리 주점",
+      "reliable": false,
       "countFirst": 48,
       "countLast": 41,
       "disappearRate": 0.1667,
@@ -3758,6 +3815,7 @@
     {
       "district": "서구 평리3동",
       "sector": "백반/한정식",
+      "reliable": false,
       "countFirst": 48,
       "countLast": 52,
       "disappearRate": 0.1667,
@@ -3772,6 +3830,7 @@
     {
       "district": "달서구 두류3동",
       "sector": "백반/한정식",
+      "reliable": false,
       "countFirst": 72,
       "countLast": 76,
       "disappearRate": 0.1667,
@@ -3786,6 +3845,7 @@
     {
       "district": "북구 관문동",
       "sector": "카페",
+      "reliable": false,
       "countFirst": 30,
       "countLast": 29,
       "disappearRate": 0.1667,
@@ -3800,6 +3860,7 @@
     {
       "district": "동구 신천3동",
       "sector": "미용실",
+      "reliable": false,
       "countFirst": 30,
       "countLast": 29,
       "disappearRate": 0.1667,
@@ -3814,6 +3875,7 @@
     {
       "district": "중구 대봉1동",
       "sector": "요리 주점",
+      "reliable": false,
       "countFirst": 36,
       "countLast": 30,
       "disappearRate": 0.1667,
@@ -3828,6 +3890,7 @@
     {
       "district": "중구 성내2동",
       "sector": "부동산 중개/대리업",
+      "reliable": false,
       "countFirst": 48,
       "countLast": 40,
       "disappearRate": 0.1667,
@@ -3842,6 +3905,7 @@
     {
       "district": "동구 신암3동",
       "sector": "백반/한정식",
+      "reliable": false,
       "countFirst": 30,
       "countLast": 30,
       "disappearRate": 0.1667,
@@ -3856,6 +3920,7 @@
     {
       "district": "동구 안심4동",
       "sector": "자동차 세차장",
+      "reliable": false,
       "countFirst": 36,
       "countLast": 34,
       "disappearRate": 0.1667,
@@ -3870,6 +3935,7 @@
     {
       "district": "북구 산격4동",
       "sector": "백반/한정식",
+      "reliable": false,
       "countFirst": 30,
       "countLast": 30,
       "disappearRate": 0.1667,
@@ -3884,6 +3950,7 @@
     {
       "district": "동구 신천3동",
       "sector": "백반/한정식",
+      "reliable": false,
       "countFirst": 36,
       "countLast": 41,
       "disappearRate": 0.1667,
@@ -3898,6 +3965,7 @@
     {
       "district": "서구 내당4동",
       "sector": "백반/한정식",
+      "reliable": false,
       "countFirst": 42,
       "countLast": 47,
       "disappearRate": 0.1667,
@@ -3912,6 +3980,7 @@
     {
       "district": "동구 안심3동",
       "sector": "백반/한정식",
+      "reliable": false,
       "countFirst": 30,
       "countLast": 38,
       "disappearRate": 0.1667,
@@ -3926,6 +3995,7 @@
     {
       "district": "달서구 신당동",
       "sector": "편의점",
+      "reliable": false,
       "countFirst": 73,
       "countLast": 68,
       "disappearRate": 0.1644,
@@ -3940,6 +4010,7 @@
     {
       "district": "수성구 두산동",
       "sector": "백반/한정식",
+      "reliable": true,
       "countFirst": 128,
       "countLast": 165,
       "disappearRate": 0.1641,
@@ -3954,6 +4025,7 @@
     {
       "district": "달서구 두류1.2동",
       "sector": "백반/한정식",
+      "reliable": false,
       "countFirst": 55,
       "countLast": 58,
       "disappearRate": 0.1636,
@@ -3968,6 +4040,7 @@
     {
       "district": "수성구 지산1동",
       "sector": "요리 주점",
+      "reliable": false,
       "countFirst": 43,
       "countLast": 38,
       "disappearRate": 0.1628,
@@ -3982,6 +4055,7 @@
     {
       "district": "수성구 범어2동",
       "sector": "카페",
+      "reliable": false,
       "countFirst": 37,
       "countLast": 35,
       "disappearRate": 0.1622,
@@ -3996,6 +4070,7 @@
     {
       "district": "중구 삼덕동",
       "sector": "백반/한정식",
+      "reliable": false,
       "countFirst": 99,
       "countLast": 118,
       "disappearRate": 0.1616,
@@ -4010,6 +4085,7 @@
     {
       "district": "달서구 신당동",
       "sector": "카페",
+      "reliable": true,
       "countFirst": 118,
       "countLast": 107,
       "disappearRate": 0.161,
@@ -4024,6 +4100,7 @@
     {
       "district": "동구 불로.봉무동",
       "sector": "카페",
+      "reliable": false,
       "countFirst": 56,
       "countLast": 52,
       "disappearRate": 0.1607,
@@ -4038,6 +4115,7 @@
     {
       "district": "수성구 범어1동",
       "sector": "카페",
+      "reliable": false,
       "countFirst": 56,
       "countLast": 55,
       "disappearRate": 0.1607,
@@ -4052,6 +4130,7 @@
     {
       "district": "달서구 진천동",
       "sector": "김밥/만두/분식",
+      "reliable": false,
       "countFirst": 50,
       "countLast": 47,
       "disappearRate": 0.16,
@@ -4066,6 +4145,7 @@
     {
       "district": "북구 무태조야동",
       "sector": "부동산 중개/대리업",
+      "reliable": false,
       "countFirst": 50,
       "countLast": 43,
       "disappearRate": 0.16,
@@ -4080,6 +4160,7 @@
     {
       "district": "수성구 두산동",
       "sector": "요리 주점",
+      "reliable": true,
       "countFirst": 114,
       "countLast": 101,
       "disappearRate": 0.1579,
@@ -4094,6 +4175,7 @@
     {
       "district": "중구 성내1동",
       "sector": "경양식",
+      "reliable": false,
       "countFirst": 76,
       "countLast": 74,
       "disappearRate": 0.1579,
@@ -4108,6 +4190,7 @@
     {
       "district": "동구 신천4동",
       "sector": "요리 주점",
+      "reliable": false,
       "countFirst": 57,
       "countLast": 55,
       "disappearRate": 0.1579,
@@ -4122,6 +4205,7 @@
     {
       "district": "북구 태전2동",
       "sector": "카페",
+      "reliable": false,
       "countFirst": 38,
       "countLast": 37,
       "disappearRate": 0.1579,
@@ -4136,6 +4220,7 @@
     {
       "district": "중구 성내1동",
       "sector": "백반/한정식",
+      "reliable": true,
       "countFirst": 178,
       "countLast": 210,
       "disappearRate": 0.1573,
@@ -4150,6 +4235,7 @@
     {
       "district": "달서구 진천동",
       "sector": "치킨",
+      "reliable": false,
       "countFirst": 45,
       "countLast": 43,
       "disappearRate": 0.1556,
@@ -4164,6 +4250,7 @@
     {
       "district": "달서구 월성1동",
       "sector": "돼지고기 구이/찜",
+      "reliable": false,
       "countFirst": 45,
       "countLast": 41,
       "disappearRate": 0.1556,
@@ -4178,6 +4265,7 @@
     {
       "district": "수성구 범어4동",
       "sector": "카페",
+      "reliable": false,
       "countFirst": 58,
       "countLast": 55,
       "disappearRate": 0.1552,
@@ -4192,6 +4280,7 @@
     {
       "district": "중구 삼덕동",
       "sector": "여성 의류 소매업",
+      "reliable": false,
       "countFirst": 46,
       "countLast": 39,
       "disappearRate": 0.1522,
@@ -4206,6 +4295,7 @@
     {
       "district": "달성군 유가읍",
       "sector": "백반/한정식",
+      "reliable": false,
       "countFirst": 79,
       "countLast": 95,
       "disappearRate": 0.1519,
@@ -4220,6 +4310,7 @@
     {
       "district": "달성군 현풍읍",
       "sector": "돼지고기 구이/찜",
+      "reliable": false,
       "countFirst": 33,
       "countLast": 31,
       "disappearRate": 0.1515,
@@ -4234,6 +4325,7 @@
     {
       "district": "북구 태전1동",
       "sector": "요리 주점",
+      "reliable": false,
       "countFirst": 33,
       "countLast": 28,
       "disappearRate": 0.1515,
@@ -4248,6 +4340,7 @@
     {
       "district": "달성군 다사읍",
       "sector": "슈퍼마켓",
+      "reliable": false,
       "countFirst": 53,
       "countLast": 57,
       "disappearRate": 0.1509,
@@ -4262,6 +4355,7 @@
     {
       "district": "중구 성내1동",
       "sector": "김밥/만두/분식",
+      "reliable": false,
       "countFirst": 53,
       "countLast": 50,
       "disappearRate": 0.1509,
@@ -4276,6 +4370,7 @@
     {
       "district": "서구 평리4동",
       "sector": "백반/한정식",
+      "reliable": false,
       "countFirst": 80,
       "countLast": 85,
       "disappearRate": 0.15,
@@ -4290,6 +4385,7 @@
     {
       "district": "동구 혁신동",
       "sector": "카페",
+      "reliable": false,
       "countFirst": 80,
       "countLast": 75,
       "disappearRate": 0.15,
@@ -4304,6 +4400,7 @@
     {
       "district": "달성군 다사읍",
       "sector": "돼지고기 구이/찜",
+      "reliable": false,
       "countFirst": 81,
       "countLast": 74,
       "disappearRate": 0.1481,
@@ -4318,6 +4415,7 @@
     {
       "district": "달서구 월성1동",
       "sector": "카페",
+      "reliable": false,
       "countFirst": 61,
       "countLast": 65,
       "disappearRate": 0.1475,
@@ -4332,6 +4430,7 @@
     {
       "district": "동구 안심4동",
       "sector": "백반/한정식",
+      "reliable": false,
       "countFirst": 61,
       "countLast": 64,
       "disappearRate": 0.1475,
@@ -4346,6 +4445,7 @@
     {
       "district": "북구 칠성동",
       "sector": "백반/한정식",
+      "reliable": false,
       "countFirst": 68,
       "countLast": 76,
       "disappearRate": 0.1471,
@@ -4360,6 +4460,7 @@
     {
       "district": "중구 남산1동",
       "sector": "백반/한정식",
+      "reliable": false,
       "countFirst": 34,
       "countLast": 37,
       "disappearRate": 0.1471,
@@ -4374,6 +4475,7 @@
     {
       "district": "동구 안심1동",
       "sector": "백반/한정식",
+      "reliable": true,
       "countFirst": 116,
       "countLast": 125,
       "disappearRate": 0.1466,
@@ -4388,6 +4490,7 @@
     {
       "district": "달서구 진천동",
       "sector": "백반/한정식",
+      "reliable": true,
       "countFirst": 123,
       "countLast": 152,
       "disappearRate": 0.1463,
@@ -4402,6 +4505,7 @@
     {
       "district": "남구 대명3동",
       "sector": "부동산 중개/대리업",
+      "reliable": false,
       "countFirst": 41,
       "countLast": 35,
       "disappearRate": 0.1463,
@@ -4416,6 +4520,7 @@
     {
       "district": "달서구 진천동",
       "sector": "피부 관리실",
+      "reliable": false,
       "countFirst": 41,
       "countLast": 37,
       "disappearRate": 0.1463,
@@ -4430,6 +4535,7 @@
     {
       "district": "중구 성내2동",
       "sector": "돼지고기 구이/찜",
+      "reliable": false,
       "countFirst": 48,
       "countLast": 42,
       "disappearRate": 0.1458,
@@ -4444,6 +4550,7 @@
     {
       "district": "중구 성내2동",
       "sector": "화장품 소매업",
+      "reliable": false,
       "countFirst": 48,
       "countLast": 44,
       "disappearRate": 0.1458,
@@ -4458,6 +4565,7 @@
     {
       "district": "동구 혁신동",
       "sector": "백반/한정식",
+      "reliable": false,
       "countFirst": 62,
       "countLast": 72,
       "disappearRate": 0.1452,
@@ -4472,6 +4580,7 @@
     {
       "district": "중구 성내1동",
       "sector": "요리 주점",
+      "reliable": false,
       "countFirst": 83,
       "countLast": 72,
       "disappearRate": 0.1446,
@@ -4486,6 +4595,7 @@
     {
       "district": "달서구 진천동",
       "sector": "카페",
+      "reliable": true,
       "countFirst": 118,
       "countLast": 112,
       "disappearRate": 0.1441,
@@ -4500,6 +4610,7 @@
     {
       "district": "남구 대명4동",
       "sector": "백반/한정식",
+      "reliable": false,
       "countFirst": 56,
       "countLast": 57,
       "disappearRate": 0.1429,
@@ -4514,6 +4625,7 @@
     {
       "district": "북구 대현동",
       "sector": "백반/한정식",
+      "reliable": false,
       "countFirst": 56,
       "countLast": 64,
       "disappearRate": 0.1429,
@@ -4528,6 +4640,7 @@
     {
       "district": "북구 태전1동",
       "sector": "카페",
+      "reliable": false,
       "countFirst": 42,
       "countLast": 38,
       "disappearRate": 0.1429,
@@ -4542,6 +4655,7 @@
     {
       "district": "달서구 신당동",
       "sector": "노래방",
+      "reliable": false,
       "countFirst": 49,
       "countLast": 48,
       "disappearRate": 0.1429,
@@ -4556,6 +4670,7 @@
     {
       "district": "북구 동천동",
       "sector": "카페",
+      "reliable": false,
       "countFirst": 70,
       "countLast": 68,
       "disappearRate": 0.1429,
@@ -4570,6 +4685,7 @@
     {
       "district": "서구 내당1동",
       "sector": "백반/한정식",
+      "reliable": false,
       "countFirst": 35,
       "countLast": 33,
       "disappearRate": 0.1429,
@@ -4584,6 +4700,7 @@
     {
       "district": "수성구 두산동",
       "sector": "여성 의류 소매업",
+      "reliable": false,
       "countFirst": 35,
       "countLast": 30,
       "disappearRate": 0.1429,
@@ -4598,6 +4715,7 @@
     {
       "district": "북구 산격3동",
       "sector": "백반/한정식",
+      "reliable": false,
       "countFirst": 84,
       "countLast": 93,
       "disappearRate": 0.1429,
@@ -4612,6 +4730,7 @@
     {
       "district": "북구 동천동",
       "sector": "백반/한정식",
+      "reliable": false,
       "countFirst": 63,
       "countLast": 80,
       "disappearRate": 0.1429,
@@ -4626,6 +4745,7 @@
     {
       "district": "중구 삼덕동",
       "sector": "편의점",
+      "reliable": false,
       "countFirst": 35,
       "countLast": 34,
       "disappearRate": 0.1429,
@@ -4640,6 +4760,7 @@
     {
       "district": "동구 안심1동",
       "sector": "카페",
+      "reliable": false,
       "countFirst": 70,
       "countLast": 65,
       "disappearRate": 0.1429,
@@ -4654,6 +4775,7 @@
     {
       "district": "북구 국우동",
       "sector": "돼지고기 구이/찜",
+      "reliable": false,
       "countFirst": 35,
       "countLast": 33,
       "disappearRate": 0.1429,
@@ -4668,6 +4790,7 @@
     {
       "district": "달서구 성당동",
       "sector": "백반/한정식",
+      "reliable": false,
       "countFirst": 64,
       "countLast": 65,
       "disappearRate": 0.1406,
@@ -4682,6 +4805,7 @@
     {
       "district": "달성군 현풍읍",
       "sector": "카페",
+      "reliable": false,
       "countFirst": 57,
       "countLast": 52,
       "disappearRate": 0.1404,
@@ -4696,6 +4820,7 @@
     {
       "district": "북구 산격3동",
       "sector": "요리 주점",
+      "reliable": false,
       "countFirst": 50,
       "countLast": 43,
       "disappearRate": 0.14,
@@ -4710,6 +4835,7 @@
     {
       "district": "달성군 구지면",
       "sector": "카페",
+      "reliable": false,
       "countFirst": 43,
       "countLast": 40,
       "disappearRate": 0.1395,
@@ -4724,6 +4850,7 @@
     {
       "district": "서구 상중이동",
       "sector": "부동산 중개/대리업",
+      "reliable": false,
       "countFirst": 36,
       "countLast": 31,
       "disappearRate": 0.1389,
@@ -4738,6 +4865,7 @@
     {
       "district": "중구 동인동",
       "sector": "돼지고기 구이/찜",
+      "reliable": false,
       "countFirst": 36,
       "countLast": 33,
       "disappearRate": 0.1389,
@@ -4752,6 +4880,7 @@
     {
       "district": "수성구 고산1동",
       "sector": "카페",
+      "reliable": false,
       "countFirst": 65,
       "countLast": 65,
       "disappearRate": 0.1385,
@@ -4766,6 +4895,7 @@
     {
       "district": "수성구 만촌1동",
       "sector": "카페",
+      "reliable": false,
       "countFirst": 44,
       "countLast": 42,
       "disappearRate": 0.1364,
@@ -4780,6 +4910,7 @@
     {
       "district": "달서구 진천동",
       "sector": "편의점",
+      "reliable": false,
       "countFirst": 44,
       "countLast": 47,
       "disappearRate": 0.1364,
@@ -4794,6 +4925,7 @@
     {
       "district": "남구 대명9동",
       "sector": "백반/한정식",
+      "reliable": false,
       "countFirst": 37,
       "countLast": 44,
       "disappearRate": 0.1351,
@@ -4808,6 +4940,7 @@
     {
       "district": "중구 대봉1동",
       "sector": "백반/한정식",
+      "reliable": false,
       "countFirst": 37,
       "countLast": 50,
       "disappearRate": 0.1351,
@@ -4822,6 +4955,7 @@
     {
       "district": "달서구 두류3동",
       "sector": "카페",
+      "reliable": false,
       "countFirst": 37,
       "countLast": 35,
       "disappearRate": 0.1351,
@@ -4836,6 +4970,7 @@
     {
       "district": "달서구 성당동",
       "sector": "부동산 중개/대리업",
+      "reliable": false,
       "countFirst": 37,
       "countLast": 32,
       "disappearRate": 0.1351,
@@ -4850,6 +4985,7 @@
     {
       "district": "수성구 범어3동",
       "sector": "카페",
+      "reliable": false,
       "countFirst": 52,
       "countLast": 52,
       "disappearRate": 0.1346,
@@ -4864,6 +5000,7 @@
     {
       "district": "달서구 신당동",
       "sector": "백반/한정식",
+      "reliable": true,
       "countFirst": 171,
       "countLast": 205,
       "disappearRate": 0.1345,
@@ -4878,6 +5015,7 @@
     {
       "district": "북구 태전2동",
       "sector": "돼지고기 구이/찜",
+      "reliable": false,
       "countFirst": 30,
       "countLast": 28,
       "disappearRate": 0.1333,
@@ -4892,6 +5030,7 @@
     {
       "district": "북구 산격2동",
       "sector": "여성 의류 소매업",
+      "reliable": false,
       "countFirst": 45,
       "countLast": 39,
       "disappearRate": 0.1333,
@@ -4906,6 +5045,7 @@
     {
       "district": "달서구 신당동",
       "sector": "치킨",
+      "reliable": false,
       "countFirst": 45,
       "countLast": 42,
       "disappearRate": 0.1333,
@@ -4920,6 +5060,7 @@
     {
       "district": "달성군 화원읍",
       "sector": "김밥/만두/분식",
+      "reliable": false,
       "countFirst": 30,
       "countLast": 26,
       "disappearRate": 0.1333,
@@ -4934,6 +5075,7 @@
     {
       "district": "달서구 도원동",
       "sector": "카페",
+      "reliable": false,
       "countFirst": 45,
       "countLast": 42,
       "disappearRate": 0.1333,
@@ -4948,6 +5090,7 @@
     {
       "district": "서구 상중이동",
       "sector": "슈퍼마켓",
+      "reliable": false,
       "countFirst": 30,
       "countLast": 28,
       "disappearRate": 0.1333,
@@ -4962,6 +5105,7 @@
     {
       "district": "달서구 송현1동",
       "sector": "부동산 중개/대리업",
+      "reliable": false,
       "countFirst": 30,
       "countLast": 27,
       "disappearRate": 0.1333,
@@ -4976,6 +5120,7 @@
     {
       "district": "북구 국우동",
       "sector": "카페",
+      "reliable": false,
       "countFirst": 60,
       "countLast": 57,
       "disappearRate": 0.1333,
@@ -4990,6 +5135,7 @@
     {
       "district": "북구 산격3동",
       "sector": "카페",
+      "reliable": false,
       "countFirst": 53,
       "countLast": 56,
       "disappearRate": 0.1321,
@@ -5004,6 +5150,7 @@
     {
       "district": "남구 봉덕1동",
       "sector": "백반/한정식",
+      "reliable": false,
       "countFirst": 53,
       "countLast": 56,
       "disappearRate": 0.1321,
@@ -5018,6 +5165,7 @@
     {
       "district": "수성구 황금2동",
       "sector": "요리 주점",
+      "reliable": false,
       "countFirst": 38,
       "countLast": 34,
       "disappearRate": 0.1316,
@@ -5032,6 +5180,7 @@
     {
       "district": "동구 신암4동",
       "sector": "백반/한정식",
+      "reliable": false,
       "countFirst": 38,
       "countLast": 44,
       "disappearRate": 0.1316,
@@ -5046,6 +5195,7 @@
     {
       "district": "달성군 다사읍",
       "sector": "김밥/만두/분식",
+      "reliable": false,
       "countFirst": 61,
       "countLast": 54,
       "disappearRate": 0.1311,
@@ -5060,6 +5210,7 @@
     {
       "district": "북구 고성동",
       "sector": "백반/한정식",
+      "reliable": false,
       "countFirst": 61,
       "countLast": 73,
       "disappearRate": 0.1311,
@@ -5074,6 +5225,7 @@
     {
       "district": "북구 대현동",
       "sector": "카페",
+      "reliable": false,
       "countFirst": 46,
       "countLast": 43,
       "disappearRate": 0.1304,
@@ -5088,6 +5240,7 @@
     {
       "district": "달서구 월성1동",
       "sector": "입시·교과학원",
+      "reliable": true,
       "countFirst": 131,
       "countLast": 153,
       "disappearRate": 0.1298,
@@ -5102,6 +5255,7 @@
     {
       "district": "중구 성내1동",
       "sector": "화장품 소매업",
+      "reliable": false,
       "countFirst": 54,
       "countLast": 52,
       "disappearRate": 0.1296,
@@ -5116,6 +5270,7 @@
     {
       "district": "동구 공산동",
       "sector": "카페",
+      "reliable": false,
       "countFirst": 85,
       "countLast": 80,
       "disappearRate": 0.1294,
@@ -5130,6 +5285,7 @@
     {
       "district": "달성군 현풍읍",
       "sector": "일반 유흥 주점",
+      "reliable": false,
       "countFirst": 31,
       "countLast": 28,
       "disappearRate": 0.129,
@@ -5144,6 +5300,7 @@
     {
       "district": "중구 성내1동",
       "sector": "신발 소매업",
+      "reliable": false,
       "countFirst": 31,
       "countLast": 32,
       "disappearRate": 0.129,
@@ -5158,6 +5315,7 @@
     {
       "district": "군위군 군위읍",
       "sector": "부동산 중개/대리업",
+      "reliable": false,
       "countFirst": 31,
       "countLast": 27,
       "disappearRate": 0.129,
@@ -5172,6 +5330,7 @@
     {
       "district": "북구 복현1동",
       "sector": "요리 주점",
+      "reliable": false,
       "countFirst": 31,
       "countLast": 27,
       "disappearRate": 0.129,
@@ -5186,6 +5345,7 @@
     {
       "district": "수성구 고산3동",
       "sector": "백반/한정식",
+      "reliable": false,
       "countFirst": 31,
       "countLast": 32,
       "disappearRate": 0.129,
@@ -5200,6 +5360,7 @@
     {
       "district": "동구 지저동",
       "sector": "백반/한정식",
+      "reliable": false,
       "countFirst": 31,
       "countLast": 31,
       "disappearRate": 0.129,
@@ -5214,6 +5375,7 @@
     {
       "district": "달서구 월성2동",
       "sector": "구내식당",
+      "reliable": false,
       "countFirst": 70,
       "countLast": 61,
       "disappearRate": 0.1286,
@@ -5228,6 +5390,7 @@
     {
       "district": "중구 성내2동",
       "sector": "카페",
+      "reliable": true,
       "countFirst": 140,
       "countLast": 134,
       "disappearRate": 0.1286,
@@ -5242,6 +5405,7 @@
     {
       "district": "동구 신천4동",
       "sector": "카페",
+      "reliable": false,
       "countFirst": 70,
       "countLast": 69,
       "disappearRate": 0.1286,
@@ -5256,6 +5420,7 @@
     {
       "district": "달성군 옥포읍",
       "sector": "백반/한정식",
+      "reliable": false,
       "countFirst": 78,
       "countLast": 79,
       "disappearRate": 0.1282,
@@ -5270,6 +5435,7 @@
     {
       "district": "달서구 상인1동",
       "sector": "백반/한정식",
+      "reliable": false,
       "countFirst": 39,
       "countLast": 43,
       "disappearRate": 0.1282,
@@ -5284,6 +5450,7 @@
     {
       "district": "서구 평리4동",
       "sector": "요리 주점",
+      "reliable": false,
       "countFirst": 39,
       "countLast": 34,
       "disappearRate": 0.1282,
@@ -5298,6 +5465,7 @@
     {
       "district": "달서구 신당동",
       "sector": "중국집",
+      "reliable": false,
       "countFirst": 39,
       "countLast": 36,
       "disappearRate": 0.1282,
@@ -5312,6 +5480,7 @@
     {
       "district": "남구 대명11동",
       "sector": "백반/한정식",
+      "reliable": false,
       "countFirst": 39,
       "countLast": 38,
       "disappearRate": 0.1282,
@@ -5326,6 +5495,7 @@
     {
       "district": "수성구 범어4동",
       "sector": "백반/한정식",
+      "reliable": false,
       "countFirst": 39,
       "countLast": 49,
       "disappearRate": 0.1282,
@@ -5340,6 +5510,7 @@
     {
       "district": "달서구 진천동",
       "sector": "돼지고기 구이/찜",
+      "reliable": false,
       "countFirst": 55,
       "countLast": 51,
       "disappearRate": 0.1273,
@@ -5354,6 +5525,7 @@
     {
       "district": "중구 성내1동",
       "sector": "빵/도넛",
+      "reliable": false,
       "countFirst": 55,
       "countLast": 53,
       "disappearRate": 0.1273,
@@ -5368,6 +5540,7 @@
     {
       "district": "동구 효목1동",
       "sector": "백반/한정식",
+      "reliable": false,
       "countFirst": 71,
       "countLast": 75,
       "disappearRate": 0.1268,
@@ -5382,6 +5555,7 @@
     {
       "district": "수성구 지산1동",
       "sector": "카페",
+      "reliable": false,
       "countFirst": 56,
       "countLast": 52,
       "disappearRate": 0.125,
@@ -5396,6 +5570,7 @@
     {
       "district": "달성군 논공읍",
       "sector": "백반/한정식",
+      "reliable": false,
       "countFirst": 72,
       "countLast": 78,
       "disappearRate": 0.125,
@@ -5410,6 +5585,7 @@
     {
       "district": "북구 칠성동",
       "sector": "카페",
+      "reliable": false,
       "countFirst": 48,
       "countLast": 48,
       "disappearRate": 0.125,
@@ -5424,6 +5600,7 @@
     {
       "district": "수성구 고산3동",
       "sector": "입시·교과학원",
+      "reliable": false,
       "countFirst": 40,
       "countLast": 43,
       "disappearRate": 0.125,
@@ -5438,6 +5615,7 @@
     {
       "district": "북구 침산2동",
       "sector": "백반/한정식",
+      "reliable": false,
       "countFirst": 40,
       "countLast": 39,
       "disappearRate": 0.125,
@@ -5452,6 +5630,7 @@
     {
       "district": "달서구 이곡2동",
       "sector": "돼지고기 구이/찜",
+      "reliable": false,
       "countFirst": 32,
       "countLast": 32,
       "disappearRate": 0.125,
@@ -5466,6 +5645,7 @@
     {
       "district": "중구 삼덕동",
       "sector": "요리 주점",
+      "reliable": true,
       "countFirst": 104,
       "countLast": 93,
       "disappearRate": 0.125,
@@ -5480,6 +5660,7 @@
     {
       "district": "달서구 감삼동",
       "sector": "피부 관리실",
+      "reliable": false,
       "countFirst": 40,
       "countLast": 38,
       "disappearRate": 0.125,
@@ -5494,6 +5675,7 @@
     {
       "district": "동구 방촌동",
       "sector": "백반/한정식",
+      "reliable": false,
       "countFirst": 40,
       "countLast": 44,
       "disappearRate": 0.125,
@@ -5508,6 +5690,7 @@
     {
       "district": "달서구 본동",
       "sector": "부동산 중개/대리업",
+      "reliable": false,
       "countFirst": 32,
       "countLast": 29,
       "disappearRate": 0.125,
@@ -5522,6 +5705,7 @@
     {
       "district": "달서구 신당동",
       "sector": "요리 주점",
+      "reliable": false,
       "countFirst": 65,
       "countLast": 59,
       "disappearRate": 0.1231,
@@ -5536,6 +5720,7 @@
     {
       "district": "남구 대명2동",
       "sector": "백반/한정식",
+      "reliable": false,
       "countFirst": 49,
       "countLast": 56,
       "disappearRate": 0.1224,
@@ -5550,6 +5735,7 @@
     {
       "district": "수성구 만촌3동",
       "sector": "입시·교과학원",
+      "reliable": false,
       "countFirst": 74,
       "countLast": 80,
       "disappearRate": 0.1216,
@@ -5564,6 +5750,7 @@
     {
       "district": "달서구 상인2동",
       "sector": "요리 주점",
+      "reliable": false,
       "countFirst": 74,
       "countLast": 66,
       "disappearRate": 0.1216,
@@ -5578,6 +5765,7 @@
     {
       "district": "수성구 두산동",
       "sector": "카페",
+      "reliable": false,
       "countFirst": 66,
       "countLast": 67,
       "disappearRate": 0.1212,
@@ -5592,6 +5780,7 @@
     {
       "district": "수성구 수성2.3가동",
       "sector": "카페",
+      "reliable": false,
       "countFirst": 33,
       "countLast": 30,
       "disappearRate": 0.1212,
@@ -5606,6 +5795,7 @@
     {
       "district": "북구 산격3동",
       "sector": "김밥/만두/분식",
+      "reliable": false,
       "countFirst": 33,
       "countLast": 31,
       "disappearRate": 0.1212,
@@ -5620,6 +5810,7 @@
     {
       "district": "달성군 유가읍",
       "sector": "돼지고기 구이/찜",
+      "reliable": false,
       "countFirst": 33,
       "countLast": 31,
       "disappearRate": 0.1212,
@@ -5634,6 +5825,7 @@
     {
       "district": "서구 비산7동",
       "sector": "카페",
+      "reliable": false,
       "countFirst": 33,
       "countLast": 31,
       "disappearRate": 0.1212,
@@ -5648,6 +5840,7 @@
     {
       "district": "남구 봉덕2동",
       "sector": "카페",
+      "reliable": false,
       "countFirst": 33,
       "countLast": 30,
       "disappearRate": 0.1212,
@@ -5662,6 +5855,7 @@
     {
       "district": "달서구 본리동",
       "sector": "돼지고기 구이/찜",
+      "reliable": false,
       "countFirst": 33,
       "countLast": 31,
       "disappearRate": 0.1212,
@@ -5676,6 +5870,7 @@
     {
       "district": "달서구 이곡2동",
       "sector": "백반/한정식",
+      "reliable": false,
       "countFirst": 58,
       "countLast": 63,
       "disappearRate": 0.1207,
@@ -5690,6 +5885,7 @@
     {
       "district": "달서구 감삼동",
       "sector": "카페",
+      "reliable": false,
       "countFirst": 58,
       "countLast": 59,
       "disappearRate": 0.1207,
@@ -5704,6 +5900,7 @@
     {
       "district": "달성군 유가읍",
       "sector": "입시·교과학원",
+      "reliable": false,
       "countFirst": 50,
       "countLast": 56,
       "disappearRate": 0.12,
@@ -5718,6 +5915,7 @@
     {
       "district": "동구 신천4동",
       "sector": "여관/모텔",
+      "reliable": false,
       "countFirst": 50,
       "countLast": 47,
       "disappearRate": 0.12,
@@ -5732,6 +5930,7 @@
     {
       "district": "서구 비산7동",
       "sector": "백반/한정식",
+      "reliable": false,
       "countFirst": 92,
       "countLast": 94,
       "disappearRate": 0.1196,
@@ -5746,6 +5945,7 @@
     {
       "district": "달서구 상인2동",
       "sector": "노래방",
+      "reliable": false,
       "countFirst": 42,
       "countLast": 37,
       "disappearRate": 0.119,
@@ -5760,6 +5960,7 @@
     {
       "district": "북구 구암동",
       "sector": "요리 주점",
+      "reliable": false,
       "countFirst": 42,
       "countLast": 37,
       "disappearRate": 0.119,
@@ -5774,6 +5975,7 @@
     {
       "district": "달성군 가창면",
       "sector": "카페",
+      "reliable": false,
       "countFirst": 42,
       "countLast": 37,
       "disappearRate": 0.119,
@@ -5788,6 +5990,7 @@
     {
       "district": "수성구 범어3동",
       "sector": "백반/한정식",
+      "reliable": false,
       "countFirst": 59,
       "countLast": 65,
       "disappearRate": 0.1186,
@@ -5802,6 +6005,7 @@
     {
       "district": "남구 대명2동",
       "sector": "부동산 중개/대리업",
+      "reliable": false,
       "countFirst": 34,
       "countLast": 30,
       "disappearRate": 0.1176,
@@ -5816,6 +6020,7 @@
     {
       "district": "북구 무태조야동",
       "sector": "돼지고기 구이/찜",
+      "reliable": false,
       "countFirst": 43,
       "countLast": 41,
       "disappearRate": 0.1163,
@@ -5830,6 +6035,7 @@
     {
       "district": "동구 신천4동",
       "sector": "부동산 중개/대리업",
+      "reliable": false,
       "countFirst": 43,
       "countLast": 38,
       "disappearRate": 0.1163,
@@ -5844,6 +6050,7 @@
     {
       "district": "북구 노원동",
       "sector": "카페",
+      "reliable": false,
       "countFirst": 43,
       "countLast": 39,
       "disappearRate": 0.1163,
@@ -5858,6 +6065,7 @@
     {
       "district": "달성군 화원읍",
       "sector": "돼지고기 구이/찜",
+      "reliable": false,
       "countFirst": 43,
       "countLast": 41,
       "disappearRate": 0.1163,
@@ -5872,6 +6080,7 @@
     {
       "district": "수성구 지산1동",
       "sector": "백반/한정식",
+      "reliable": false,
       "countFirst": 87,
       "countLast": 89,
       "disappearRate": 0.1149,
@@ -5886,6 +6095,7 @@
     {
       "district": "중구 성내1동",
       "sector": "기타 기술/직업 훈련학원",
+      "reliable": false,
       "countFirst": 35,
       "countLast": 31,
       "disappearRate": 0.1143,
@@ -5900,6 +6110,7 @@
     {
       "district": "동구 신암3동",
       "sector": "부동산 중개/대리업",
+      "reliable": false,
       "countFirst": 35,
       "countLast": 35,
       "disappearRate": 0.1143,
@@ -5914,6 +6125,7 @@
     {
       "district": "달서구 이곡1동",
       "sector": "백반/한정식",
+      "reliable": false,
       "countFirst": 53,
       "countLast": 58,
       "disappearRate": 0.1132,
@@ -5928,6 +6140,7 @@
     {
       "district": "수성구 만촌3동",
       "sector": "부동산 중개/대리업",
+      "reliable": false,
       "countFirst": 53,
       "countLast": 54,
       "disappearRate": 0.1132,
@@ -5942,6 +6155,7 @@
     {
       "district": "중구 대봉1동",
       "sector": "카페",
+      "reliable": false,
       "countFirst": 62,
       "countLast": 57,
       "disappearRate": 0.1129,
@@ -5956,6 +6170,7 @@
     {
       "district": "달성군 유가읍",
       "sector": "카페",
+      "reliable": false,
       "countFirst": 62,
       "countLast": 62,
       "disappearRate": 0.1129,
@@ -5970,6 +6185,7 @@
     {
       "district": "달성군 다사읍",
       "sector": "치킨",
+      "reliable": false,
       "countFirst": 71,
       "countLast": 68,
       "disappearRate": 0.1127,
@@ -5984,6 +6200,7 @@
     {
       "district": "북구 산격2동",
       "sector": "백반/한정식",
+      "reliable": false,
       "countFirst": 71,
       "countLast": 82,
       "disappearRate": 0.1127,
@@ -5998,6 +6215,7 @@
     {
       "district": "수성구 황금2동",
       "sector": "카페",
+      "reliable": false,
       "countFirst": 45,
       "countLast": 47,
       "disappearRate": 0.1111,
@@ -6012,6 +6230,7 @@
     {
       "district": "달서구 죽전동",
       "sector": "부동산 중개/대리업",
+      "reliable": false,
       "countFirst": 36,
       "countLast": 34,
       "disappearRate": 0.1111,
@@ -6026,6 +6245,7 @@
     {
       "district": "중구 성내2동",
       "sector": "요리 주점",
+      "reliable": false,
       "countFirst": 45,
       "countLast": 41,
       "disappearRate": 0.1111,
@@ -6040,6 +6260,7 @@
     {
       "district": "북구 구암동",
       "sector": "돼지고기 구이/찜",
+      "reliable": false,
       "countFirst": 36,
       "countLast": 32,
       "disappearRate": 0.1111,
@@ -6054,6 +6275,7 @@
     {
       "district": "동구 신천3동",
       "sector": "부동산 중개/대리업",
+      "reliable": false,
       "countFirst": 45,
       "countLast": 48,
       "disappearRate": 0.1111,
@@ -6068,6 +6290,7 @@
     {
       "district": "달서구 송현1동",
       "sector": "백반/한정식",
+      "reliable": false,
       "countFirst": 54,
       "countLast": 60,
       "disappearRate": 0.1111,
@@ -6082,6 +6305,7 @@
     {
       "district": "중구 성내1동",
       "sector": "돼지고기 구이/찜",
+      "reliable": false,
       "countFirst": 36,
       "countLast": 37,
       "disappearRate": 0.1111,
@@ -6096,6 +6320,7 @@
     {
       "district": "남구 봉덕3동",
       "sector": "백반/한정식",
+      "reliable": false,
       "countFirst": 45,
       "countLast": 56,
       "disappearRate": 0.1111,
@@ -6110,6 +6335,7 @@
     {
       "district": "남구 대명3동",
       "sector": "백반/한정식",
+      "reliable": false,
       "countFirst": 82,
       "countLast": 86,
       "disappearRate": 0.1098,
@@ -6124,6 +6350,7 @@
     {
       "district": "수성구 황금2동",
       "sector": "일반 유흥 주점",
+      "reliable": false,
       "countFirst": 55,
       "countLast": 51,
       "disappearRate": 0.1091,
@@ -6138,6 +6365,7 @@
     {
       "district": "달성군 가창면",
       "sector": "백반/한정식",
+      "reliable": false,
       "countFirst": 55,
       "countLast": 65,
       "disappearRate": 0.1091,
@@ -6152,6 +6380,7 @@
     {
       "district": "동구 안심1동",
       "sector": "돼지고기 구이/찜",
+      "reliable": false,
       "countFirst": 46,
       "countLast": 43,
       "disappearRate": 0.1087,
@@ -6166,6 +6395,7 @@
     {
       "district": "동구 신천4동",
       "sector": "화장품 소매업",
+      "reliable": false,
       "countFirst": 37,
       "countLast": 36,
       "disappearRate": 0.1081,
@@ -6180,6 +6410,7 @@
     {
       "district": "북구 관음동",
       "sector": "백반/한정식",
+      "reliable": false,
       "countFirst": 37,
       "countLast": 40,
       "disappearRate": 0.1081,
@@ -6194,6 +6425,7 @@
     {
       "district": "달서구 신당동",
       "sector": "슈퍼마켓",
+      "reliable": false,
       "countFirst": 65,
       "countLast": 64,
       "disappearRate": 0.1077,
@@ -6208,6 +6440,7 @@
     {
       "district": "달성군 논공읍",
       "sector": "슈퍼마켓",
+      "reliable": false,
       "countFirst": 56,
       "countLast": 52,
       "disappearRate": 0.1071,
@@ -6222,6 +6455,7 @@
     {
       "district": "중구 성내1동",
       "sector": "카페",
+      "reliable": true,
       "countFirst": 224,
       "countLast": 237,
       "disappearRate": 0.1071,
@@ -6236,6 +6470,7 @@
     {
       "district": "중구 대봉1동",
       "sector": "여성 의류 소매업",
+      "reliable": false,
       "countFirst": 75,
       "countLast": 67,
       "disappearRate": 0.1067,
@@ -6250,6 +6485,7 @@
     {
       "district": "동구 안심1동",
       "sector": "치킨",
+      "reliable": false,
       "countFirst": 47,
       "countLast": 44,
       "disappearRate": 0.1064,
@@ -6264,6 +6500,7 @@
     {
       "district": "달서구 진천동",
       "sector": "네일숍",
+      "reliable": false,
       "countFirst": 47,
       "countLast": 42,
       "disappearRate": 0.1064,
@@ -6278,6 +6515,7 @@
     {
       "district": "달서구 상인1동",
       "sector": "카페",
+      "reliable": false,
       "countFirst": 47,
       "countLast": 49,
       "disappearRate": 0.1064,
@@ -6292,6 +6530,7 @@
     {
       "district": "동구 신천4동",
       "sector": "백반/한정식",
+      "reliable": true,
       "countFirst": 104,
       "countLast": 112,
       "disappearRate": 0.1058,
@@ -6306,6 +6545,7 @@
     {
       "district": "수성구 두산동",
       "sector": "돼지고기 구이/찜",
+      "reliable": false,
       "countFirst": 57,
       "countLast": 54,
       "disappearRate": 0.1053,
@@ -6320,6 +6560,7 @@
     {
       "district": "동구 안심1동",
       "sector": "부동산 중개/대리업",
+      "reliable": false,
       "countFirst": 57,
       "countLast": 61,
       "disappearRate": 0.1053,
@@ -6334,6 +6575,7 @@
     {
       "district": "달서구 신당동",
       "sector": "일반 유흥 주점",
+      "reliable": false,
       "countFirst": 67,
       "countLast": 64,
       "disappearRate": 0.1045,
@@ -6348,6 +6590,7 @@
     {
       "district": "중구 삼덕동",
       "sector": "부동산 중개/대리업",
+      "reliable": false,
       "countFirst": 48,
       "countLast": 43,
       "disappearRate": 0.1042,
@@ -6362,6 +6605,7 @@
     {
       "district": "동구 신천4동",
       "sector": "여성 의류 소매업",
+      "reliable": false,
       "countFirst": 96,
       "countLast": 86,
       "disappearRate": 0.1042,
@@ -6376,6 +6620,7 @@
     {
       "district": "달서구 송현2동",
       "sector": "백반/한정식",
+      "reliable": false,
       "countFirst": 77,
       "countLast": 85,
       "disappearRate": 0.1039,
@@ -6390,6 +6635,7 @@
     {
       "district": "달성군 다사읍",
       "sector": "카페",
+      "reliable": true,
       "countFirst": 116,
       "countLast": 111,
       "disappearRate": 0.1034,
@@ -6404,6 +6650,7 @@
     {
       "district": "서구 상중이동",
       "sector": "백반/한정식",
+      "reliable": false,
       "countFirst": 87,
       "countLast": 95,
       "disappearRate": 0.1034,
@@ -6418,6 +6665,7 @@
     {
       "district": "달서구 송현2동",
       "sector": "요리 주점",
+      "reliable": false,
       "countFirst": 39,
       "countLast": 36,
       "disappearRate": 0.1026,
@@ -6432,6 +6680,7 @@
     {
       "district": "달성군 다사읍",
       "sector": "부동산 중개/대리업",
+      "reliable": false,
       "countFirst": 78,
       "countLast": 86,
       "disappearRate": 0.1026,
@@ -6446,6 +6695,7 @@
     {
       "district": "동구 신천4동",
       "sector": "신발 소매업",
+      "reliable": false,
       "countFirst": 39,
       "countLast": 35,
       "disappearRate": 0.1026,
@@ -6460,6 +6710,7 @@
     {
       "district": "동구 신암4동",
       "sector": "부동산 중개/대리업",
+      "reliable": false,
       "countFirst": 39,
       "countLast": 38,
       "disappearRate": 0.1026,
@@ -6474,6 +6725,7 @@
     {
       "district": "북구 동천동",
       "sector": "요리 주점",
+      "reliable": false,
       "countFirst": 78,
       "countLast": 73,
       "disappearRate": 0.1026,
@@ -6488,6 +6740,7 @@
     {
       "district": "중구 삼덕동",
       "sector": "기타 의류 소매업",
+      "reliable": false,
       "countFirst": 39,
       "countLast": 41,
       "disappearRate": 0.1026,
@@ -6502,6 +6755,7 @@
     {
       "district": "수성구 범어1동",
       "sector": "백반/한정식",
+      "reliable": false,
       "countFirst": 59,
       "countLast": 63,
       "disappearRate": 0.1017,
@@ -6516,6 +6770,7 @@
     {
       "district": "북구 노원동",
       "sector": "백반/한정식",
+      "reliable": true,
       "countFirst": 169,
       "countLast": 170,
       "disappearRate": 0.1006,
@@ -6530,6 +6785,7 @@
     {
       "district": "수성구 만촌1동",
       "sector": "입시·교과학원",
+      "reliable": false,
       "countFirst": 30,
       "countLast": 33,
       "disappearRate": 0.1,
@@ -6544,6 +6800,7 @@
     {
       "district": "달성군 논공읍",
       "sector": "노래방",
+      "reliable": false,
       "countFirst": 30,
       "countLast": 27,
       "disappearRate": 0.1,
@@ -6558,6 +6815,7 @@
     {
       "district": "북구 무태조야동",
       "sector": "백반/한정식",
+      "reliable": false,
       "countFirst": 70,
       "countLast": 73,
       "disappearRate": 0.1,
@@ -6572,6 +6830,7 @@
     {
       "district": "서구 평리4동",
       "sector": "일반 유흥 주점",
+      "reliable": false,
       "countFirst": 30,
       "countLast": 30,
       "disappearRate": 0.1,
@@ -6586,6 +6845,7 @@
     {
       "district": "동구 안심4동",
       "sector": "카페",
+      "reliable": false,
       "countFirst": 40,
       "countLast": 42,
       "disappearRate": 0.1,
@@ -6600,6 +6860,7 @@
     {
       "district": "수성구 두산동",
       "sector": "피부 관리실",
+      "reliable": false,
       "countFirst": 50,
       "countLast": 50,
       "disappearRate": 0.1,
@@ -6614,6 +6875,7 @@
     {
       "district": "수성구 지산1동",
       "sector": "부동산 중개/대리업",
+      "reliable": false,
       "countFirst": 30,
       "countLast": 27,
       "disappearRate": 0.1,
@@ -6628,6 +6890,7 @@
     {
       "district": "달서구 송현1동",
       "sector": "피부 관리실",
+      "reliable": false,
       "countFirst": 30,
       "countLast": 30,
       "disappearRate": 0.1,
@@ -6642,6 +6905,7 @@
     {
       "district": "동구 신천4동",
       "sector": "기타 의류 소매업",
+      "reliable": true,
       "countFirst": 171,
       "countLast": 154,
       "disappearRate": 0.0994,
@@ -6656,6 +6920,7 @@
     {
       "district": "달서구 상인1동",
       "sector": "입시·교과학원",
+      "reliable": false,
       "countFirst": 71,
       "countLast": 78,
       "disappearRate": 0.0986,
@@ -6670,6 +6935,7 @@
     {
       "district": "수성구 범어4동",
       "sector": "입시·교과학원",
+      "reliable": true,
       "countFirst": 274,
       "countLast": 312,
       "disappearRate": 0.0985,
@@ -6684,6 +6950,7 @@
     {
       "district": "달서구 감삼동",
       "sector": "돼지고기 구이/찜",
+      "reliable": false,
       "countFirst": 51,
       "countLast": 47,
       "disappearRate": 0.098,
@@ -6698,6 +6965,7 @@
     {
       "district": "수성구 고산1동",
       "sector": "백반/한정식",
+      "reliable": false,
       "countFirst": 51,
       "countLast": 61,
       "disappearRate": 0.098,
@@ -6712,6 +6980,7 @@
     {
       "district": "달서구 용산1동",
       "sector": "기타 의류 소매업",
+      "reliable": false,
       "countFirst": 41,
       "countLast": 37,
       "disappearRate": 0.0976,
@@ -6726,6 +6995,7 @@
     {
       "district": "북구 노원동",
       "sector": "부동산 중개/대리업",
+      "reliable": false,
       "countFirst": 41,
       "countLast": 40,
       "disappearRate": 0.0976,
@@ -6740,6 +7010,7 @@
     {
       "district": "북구 읍내동",
       "sector": "카페",
+      "reliable": false,
       "countFirst": 41,
       "countLast": 41,
       "disappearRate": 0.0976,
@@ -6754,6 +7025,7 @@
     {
       "district": "달성군 다사읍",
       "sector": "약국",
+      "reliable": false,
       "countFirst": 31,
       "countLast": 28,
       "disappearRate": 0.0968,
@@ -6768,6 +7040,7 @@
     {
       "district": "서구 상중이동",
       "sector": "경영 컨설팅업",
+      "reliable": false,
       "countFirst": 31,
       "countLast": 28,
       "disappearRate": 0.0968,
@@ -6782,6 +7055,7 @@
     {
       "district": "중구 성내1동",
       "sector": "슈퍼마켓",
+      "reliable": false,
       "countFirst": 31,
       "countLast": 34,
       "disappearRate": 0.0968,
@@ -6796,6 +7070,7 @@
     {
       "district": "남구 이천동",
       "sector": "카페",
+      "reliable": false,
       "countFirst": 31,
       "countLast": 29,
       "disappearRate": 0.0968,
@@ -6810,6 +7085,7 @@
     {
       "district": "수성구 범어2동",
       "sector": "경영 컨설팅업",
+      "reliable": false,
       "countFirst": 31,
       "countLast": 28,
       "disappearRate": 0.0968,
@@ -6824,6 +7100,7 @@
     {
       "district": "수성구 만촌3동",
       "sector": "카페",
+      "reliable": false,
       "countFirst": 42,
       "countLast": 42,
       "disappearRate": 0.0952,
@@ -6838,6 +7115,7 @@
     {
       "district": "북구 칠성동",
       "sector": "기타 의류 소매업",
+      "reliable": false,
       "countFirst": 63,
       "countLast": 58,
       "disappearRate": 0.0952,
@@ -6852,6 +7130,7 @@
     {
       "district": "수성구 고산3동",
       "sector": "카페",
+      "reliable": false,
       "countFirst": 53,
       "countLast": 53,
       "disappearRate": 0.0943,
@@ -6866,6 +7145,7 @@
     {
       "district": "수성구 두산동",
       "sector": "일반 유흥 주점",
+      "reliable": false,
       "countFirst": 53,
       "countLast": 50,
       "disappearRate": 0.0943,
@@ -6880,6 +7160,7 @@
     {
       "district": "동구 불로.봉무동",
       "sector": "백반/한정식",
+      "reliable": false,
       "countFirst": 85,
       "countLast": 104,
       "disappearRate": 0.0941,
@@ -6894,6 +7175,7 @@
     {
       "district": "북구 무태조야동",
       "sector": "치킨",
+      "reliable": false,
       "countFirst": 32,
       "countLast": 31,
       "disappearRate": 0.0938,
@@ -6908,6 +7190,7 @@
     {
       "district": "북구 노원동",
       "sector": "슈퍼마켓",
+      "reliable": false,
       "countFirst": 32,
       "countLast": 32,
       "disappearRate": 0.0938,
@@ -6922,6 +7205,7 @@
     {
       "district": "달성군 유가읍",
       "sector": "김밥/만두/분식",
+      "reliable": false,
       "countFirst": 32,
       "countLast": 34,
       "disappearRate": 0.0938,
@@ -6936,6 +7220,7 @@
     {
       "district": "동구 안심3동",
       "sector": "입시·교과학원",
+      "reliable": false,
       "countFirst": 64,
       "countLast": 70,
       "disappearRate": 0.0938,
@@ -6950,6 +7235,7 @@
     {
       "district": "서구 내당2.3동",
       "sector": "백반/한정식",
+      "reliable": false,
       "countFirst": 32,
       "countLast": 35,
       "disappearRate": 0.0938,
@@ -6964,6 +7250,7 @@
     {
       "district": "달서구 감삼동",
       "sector": "네일숍",
+      "reliable": false,
       "countFirst": 32,
       "countLast": 29,
       "disappearRate": 0.0938,
@@ -6978,6 +7265,7 @@
     {
       "district": "달서구 죽전동",
       "sector": "카페",
+      "reliable": false,
       "countFirst": 32,
       "countLast": 31,
       "disappearRate": 0.0938,
@@ -6992,6 +7280,7 @@
     {
       "district": "수성구 지산1동",
       "sector": "피부 관리실",
+      "reliable": false,
       "countFirst": 32,
       "countLast": 30,
       "disappearRate": 0.0938,
@@ -7006,6 +7295,7 @@
     {
       "district": "달서구 성당동",
       "sector": "카페",
+      "reliable": false,
       "countFirst": 43,
       "countLast": 41,
       "disappearRate": 0.093,
@@ -7020,6 +7310,7 @@
     {
       "district": "수성구 고산1동",
       "sector": "입시·교과학원",
+      "reliable": true,
       "countFirst": 108,
       "countLast": 119,
       "disappearRate": 0.0926,
@@ -7034,6 +7325,7 @@
     {
       "district": "서구 내당1동",
       "sector": "부동산 중개/대리업",
+      "reliable": false,
       "countFirst": 33,
       "countLast": 32,
       "disappearRate": 0.0909,
@@ -7048,6 +7340,7 @@
     {
       "district": "남구 대명11동",
       "sector": "미용실",
+      "reliable": false,
       "countFirst": 33,
       "countLast": 31,
       "disappearRate": 0.0909,
@@ -7062,6 +7355,7 @@
     {
       "district": "서구 평리4동",
       "sector": "돼지고기 구이/찜",
+      "reliable": false,
       "countFirst": 44,
       "countLast": 43,
       "disappearRate": 0.0909,
@@ -7076,6 +7370,7 @@
     {
       "district": "서구 내당4동",
       "sector": "기타 의류 소매업",
+      "reliable": false,
       "countFirst": 44,
       "countLast": 41,
       "disappearRate": 0.0909,
@@ -7090,6 +7385,7 @@
     {
       "district": "달서구 송현2동",
       "sector": "돼지고기 구이/찜",
+      "reliable": false,
       "countFirst": 33,
       "countLast": 33,
       "disappearRate": 0.0909,
@@ -7104,6 +7400,7 @@
     {
       "district": "서구 비산5동",
       "sector": "백반/한정식",
+      "reliable": false,
       "countFirst": 33,
       "countLast": 35,
       "disappearRate": 0.0909,
@@ -7118,6 +7415,7 @@
     {
       "district": "수성구 황금2동",
       "sector": "부동산 중개/대리업",
+      "reliable": false,
       "countFirst": 56,
       "countLast": 53,
       "disappearRate": 0.0893,
@@ -7132,6 +7430,7 @@
     {
       "district": "중구 성내2동",
       "sector": "백반/한정식",
+      "reliable": true,
       "countFirst": 191,
       "countLast": 211,
       "disappearRate": 0.089,
@@ -7146,6 +7445,7 @@
     {
       "district": "달서구 신당동",
       "sector": "여관/모텔",
+      "reliable": false,
       "countFirst": 45,
       "countLast": 44,
       "disappearRate": 0.0889,
@@ -7160,6 +7460,7 @@
     {
       "district": "중구 삼덕동",
       "sector": "미용실",
+      "reliable": false,
       "countFirst": 79,
       "countLast": 82,
       "disappearRate": 0.0886,
@@ -7174,6 +7475,7 @@
     {
       "district": "중구 남산2동",
       "sector": "카페",
+      "reliable": false,
       "countFirst": 34,
       "countLast": 34,
       "disappearRate": 0.0882,
@@ -7188,6 +7490,7 @@
     {
       "district": "달서구 진천동",
       "sector": "슈퍼마켓",
+      "reliable": false,
       "countFirst": 34,
       "countLast": 34,
       "disappearRate": 0.0882,
@@ -7202,6 +7505,7 @@
     {
       "district": "중구 성내2동",
       "sector": "국수/칼국수",
+      "reliable": false,
       "countFirst": 34,
       "countLast": 33,
       "disappearRate": 0.0882,
@@ -7216,6 +7520,7 @@
     {
       "district": "달성군 구지면",
       "sector": "백반/한정식",
+      "reliable": false,
       "countFirst": 80,
       "countLast": 91,
       "disappearRate": 0.0875,
@@ -7230,6 +7535,7 @@
     {
       "district": "달서구 용산1동",
       "sector": "백반/한정식",
+      "reliable": false,
       "countFirst": 58,
       "countLast": 68,
       "disappearRate": 0.0862,
@@ -7244,6 +7550,7 @@
     {
       "district": "중구 성내1동",
       "sector": "남성 의류 소매업",
+      "reliable": false,
       "countFirst": 35,
       "countLast": 32,
       "disappearRate": 0.0857,
@@ -7258,6 +7565,7 @@
     {
       "district": "서구 상중이동",
       "sector": "카페",
+      "reliable": false,
       "countFirst": 35,
       "countLast": 36,
       "disappearRate": 0.0857,
@@ -7272,6 +7580,7 @@
     {
       "district": "달서구 월성1동",
       "sector": "피부 관리실",
+      "reliable": false,
       "countFirst": 35,
       "countLast": 33,
       "disappearRate": 0.0857,
@@ -7286,6 +7595,7 @@
     {
       "district": "중구 성내2동",
       "sector": "편의점",
+      "reliable": false,
       "countFirst": 35,
       "countLast": 36,
       "disappearRate": 0.0857,
@@ -7300,6 +7610,7 @@
     {
       "district": "북구 관음동",
       "sector": "미용실",
+      "reliable": false,
       "countFirst": 59,
       "countLast": 59,
       "disappearRate": 0.0847,
@@ -7314,6 +7625,7 @@
     {
       "district": "달서구 감삼동",
       "sector": "부동산 중개/대리업",
+      "reliable": false,
       "countFirst": 59,
       "countLast": 55,
       "disappearRate": 0.0847,
@@ -7328,6 +7640,7 @@
     {
       "district": "서구 상중이동",
       "sector": "가구 소매업",
+      "reliable": false,
       "countFirst": 36,
       "countLast": 37,
       "disappearRate": 0.0833,
@@ -7342,6 +7655,7 @@
     {
       "district": "달성군 현풍읍",
       "sector": "편의점",
+      "reliable": false,
       "countFirst": 36,
       "countLast": 42,
       "disappearRate": 0.0833,
@@ -7356,6 +7670,7 @@
     {
       "district": "남구 대명5동",
       "sector": "백반/한정식",
+      "reliable": false,
       "countFirst": 48,
       "countLast": 49,
       "disappearRate": 0.0833,
@@ -7370,6 +7685,7 @@
     {
       "district": "중구 성내1동",
       "sector": "부동산 중개/대리업",
+      "reliable": false,
       "countFirst": 60,
       "countLast": 55,
       "disappearRate": 0.0833,
@@ -7384,6 +7700,7 @@
     {
       "district": "남구 대명5동",
       "sector": "카페",
+      "reliable": false,
       "countFirst": 36,
       "countLast": 39,
       "disappearRate": 0.0833,
@@ -7398,6 +7715,7 @@
     {
       "district": "달성군 다사읍",
       "sector": "피부 관리실",
+      "reliable": false,
       "countFirst": 36,
       "countLast": 35,
       "disappearRate": 0.0833,
@@ -7412,6 +7730,7 @@
     {
       "district": "북구 칠성동",
       "sector": "가구 소매업",
+      "reliable": false,
       "countFirst": 36,
       "countLast": 34,
       "disappearRate": 0.0833,
@@ -7426,6 +7745,7 @@
     {
       "district": "동구 신천4동",
       "sector": "일반 유흥 주점",
+      "reliable": false,
       "countFirst": 98,
       "countLast": 93,
       "disappearRate": 0.0816,
@@ -7440,6 +7760,7 @@
     {
       "district": "서구 비산7동",
       "sector": "요리 주점",
+      "reliable": false,
       "countFirst": 49,
       "countLast": 45,
       "disappearRate": 0.0816,
@@ -7454,6 +7775,7 @@
     {
       "district": "달서구 진천동",
       "sector": "여성 의류 소매업",
+      "reliable": false,
       "countFirst": 37,
       "countLast": 34,
       "disappearRate": 0.0811,
@@ -7468,6 +7790,7 @@
     {
       "district": "달서구 상인2동",
       "sector": "피부 관리실",
+      "reliable": false,
       "countFirst": 37,
       "countLast": 34,
       "disappearRate": 0.0811,
@@ -7482,6 +7805,7 @@
     {
       "district": "수성구 수성2.3가동",
       "sector": "미용실",
+      "reliable": false,
       "countFirst": 37,
       "countLast": 35,
       "disappearRate": 0.0811,
@@ -7496,6 +7820,7 @@
     {
       "district": "중구 성내1동",
       "sector": "핸드폰 소매업",
+      "reliable": false,
       "countFirst": 37,
       "countLast": 34,
       "disappearRate": 0.0811,
@@ -7510,6 +7835,7 @@
     {
       "district": "북구 읍내동",
       "sector": "부동산 중개/대리업",
+      "reliable": false,
       "countFirst": 37,
       "countLast": 40,
       "disappearRate": 0.0811,
@@ -7524,6 +7850,7 @@
     {
       "district": "수성구 만촌2동",
       "sector": "입시·교과학원",
+      "reliable": false,
       "countFirst": 37,
       "countLast": 44,
       "disappearRate": 0.0811,
@@ -7538,6 +7865,7 @@
     {
       "district": "수성구 상동",
       "sector": "부동산 중개/대리업",
+      "reliable": false,
       "countFirst": 50,
       "countLast": 51,
       "disappearRate": 0.08,
@@ -7552,6 +7880,7 @@
     {
       "district": "달성군 현풍읍",
       "sector": "미용실",
+      "reliable": false,
       "countFirst": 63,
       "countLast": 69,
       "disappearRate": 0.0794,
@@ -7566,6 +7895,7 @@
     {
       "district": "중구 성내1동",
       "sector": "사진촬영업",
+      "reliable": false,
       "countFirst": 63,
       "countLast": 70,
       "disappearRate": 0.0794,
@@ -7580,6 +7910,7 @@
     {
       "district": "남구 대명6동",
       "sector": "부동산 중개/대리업",
+      "reliable": false,
       "countFirst": 38,
       "countLast": 35,
       "disappearRate": 0.0789,
@@ -7594,6 +7925,7 @@
     {
       "district": "동구 불로.봉무동",
       "sector": "여성 의류 소매업",
+      "reliable": false,
       "countFirst": 38,
       "countLast": 35,
       "disappearRate": 0.0789,
@@ -7608,6 +7940,7 @@
     {
       "district": "중구 대봉1동",
       "sector": "피부 관리실",
+      "reliable": false,
       "countFirst": 38,
       "countLast": 36,
       "disappearRate": 0.0789,
@@ -7622,6 +7955,7 @@
     {
       "district": "남구 봉덕3동",
       "sector": "부동산 중개/대리업",
+      "reliable": false,
       "countFirst": 38,
       "countLast": 36,
       "disappearRate": 0.0789,
@@ -7636,6 +7970,7 @@
     {
       "district": "중구 대봉1동",
       "sector": "미용실",
+      "reliable": false,
       "countFirst": 38,
       "countLast": 42,
       "disappearRate": 0.0789,
@@ -7650,6 +7985,7 @@
     {
       "district": "북구 읍내동",
       "sector": "백반/한정식",
+      "reliable": false,
       "countFirst": 64,
       "countLast": 81,
       "disappearRate": 0.0781,
@@ -7664,6 +8000,7 @@
     {
       "district": "달서구 신당동",
       "sector": "구내식당",
+      "reliable": false,
       "countFirst": 64,
       "countLast": 59,
       "disappearRate": 0.0781,
@@ -7678,6 +8015,7 @@
     {
       "district": "수성구 범어3동",
       "sector": "입시·교과학원",
+      "reliable": false,
       "countFirst": 39,
       "countLast": 43,
       "disappearRate": 0.0769,
@@ -7692,6 +8030,7 @@
     {
       "district": "수성구 지산2동",
       "sector": "미용실",
+      "reliable": false,
       "countFirst": 52,
       "countLast": 52,
       "disappearRate": 0.0769,
@@ -7706,6 +8045,7 @@
     {
       "district": "중구 성내2동",
       "sector": "네일숍",
+      "reliable": false,
       "countFirst": 39,
       "countLast": 36,
       "disappearRate": 0.0769,
@@ -7720,6 +8060,7 @@
     {
       "district": "달서구 신당동",
       "sector": "부동산 중개/대리업",
+      "reliable": false,
       "countFirst": 92,
       "countLast": 87,
       "disappearRate": 0.0761,
@@ -7734,6 +8075,7 @@
     {
       "district": "서구 비산7동",
       "sector": "슈퍼마켓",
+      "reliable": false,
       "countFirst": 40,
       "countLast": 38,
       "disappearRate": 0.075,
@@ -7748,6 +8090,7 @@
     {
       "district": "달서구 신당동",
       "sector": "기타 의류 소매업",
+      "reliable": true,
       "countFirst": 121,
       "countLast": 114,
       "disappearRate": 0.0744,
@@ -7762,6 +8105,7 @@
     {
       "district": "수성구 수성1가동",
       "sector": "미용실",
+      "reliable": false,
       "countFirst": 54,
       "countLast": 66,
       "disappearRate": 0.0741,
@@ -7776,6 +8120,7 @@
     {
       "district": "달성군 다사읍",
       "sector": "편의점",
+      "reliable": false,
       "countFirst": 41,
       "countLast": 52,
       "disappearRate": 0.0732,
@@ -7790,6 +8135,7 @@
     {
       "district": "남구 대명2동",
       "sector": "미용실",
+      "reliable": false,
       "countFirst": 41,
       "countLast": 42,
       "disappearRate": 0.0732,
@@ -7804,6 +8150,7 @@
     {
       "district": "중구 성내2동",
       "sector": "여성 의류 소매업",
+      "reliable": true,
       "countFirst": 233,
       "countLast": 216,
       "disappearRate": 0.073,
@@ -7818,6 +8165,7 @@
     {
       "district": "동구 안심4동",
       "sector": "미용실",
+      "reliable": false,
       "countFirst": 55,
       "countLast": 56,
       "disappearRate": 0.0727,
@@ -7832,6 +8180,7 @@
     {
       "district": "수성구 범어4동",
       "sector": "부동산 중개/대리업",
+      "reliable": false,
       "countFirst": 55,
       "countLast": 57,
       "disappearRate": 0.0727,
@@ -7846,6 +8195,7 @@
     {
       "district": "수성구 범어3동",
       "sector": "변호사",
+      "reliable": true,
       "countFirst": 125,
       "countLast": 127,
       "disappearRate": 0.072,
@@ -7860,6 +8210,7 @@
     {
       "district": "동구 공산동",
       "sector": "백반/한정식",
+      "reliable": true,
       "countFirst": 125,
       "countLast": 131,
       "disappearRate": 0.072,
@@ -7874,6 +8225,7 @@
     {
       "district": "중구 동인동",
       "sector": "카페",
+      "reliable": false,
       "countFirst": 56,
       "countLast": 67,
       "disappearRate": 0.0714,
@@ -7888,6 +8240,7 @@
     {
       "district": "중구 대봉1동",
       "sector": "사진촬영업",
+      "reliable": false,
       "countFirst": 56,
       "countLast": 56,
       "disappearRate": 0.0714,
@@ -7902,6 +8255,7 @@
     {
       "district": "달서구 이곡1동",
       "sector": "입시·교과학원",
+      "reliable": false,
       "countFirst": 42,
       "countLast": 48,
       "disappearRate": 0.0714,
@@ -7916,6 +8270,7 @@
     {
       "district": "수성구 범어1동",
       "sector": "미용실",
+      "reliable": false,
       "countFirst": 42,
       "countLast": 43,
       "disappearRate": 0.0714,
@@ -7930,6 +8285,7 @@
     {
       "district": "중구 성내1동",
       "sector": "일식 회/초밥",
+      "reliable": false,
       "countFirst": 70,
       "countLast": 78,
       "disappearRate": 0.0714,
@@ -7944,6 +8300,7 @@
     {
       "district": "달성군 다사읍",
       "sector": "백반/한정식",
+      "reliable": true,
       "countFirst": 155,
       "countLast": 179,
       "disappearRate": 0.071,
@@ -7958,6 +8315,7 @@
     {
       "district": "수성구 범어2동",
       "sector": "변호사",
+      "reliable": true,
       "countFirst": 113,
       "countLast": 107,
       "disappearRate": 0.0708,
@@ -7972,6 +8330,7 @@
     {
       "district": "수성구 두산동",
       "sector": "부동산 중개/대리업",
+      "reliable": false,
       "countFirst": 57,
       "countLast": 53,
       "disappearRate": 0.0702,
@@ -7986,6 +8345,7 @@
     {
       "district": "달성군 현풍읍",
       "sector": "백반/한정식",
+      "reliable": true,
       "countFirst": 130,
       "countLast": 133,
       "disappearRate": 0.0692,
@@ -8000,6 +8360,7 @@
     {
       "district": "달서구 진천동",
       "sector": "부동산 중개/대리업",
+      "reliable": false,
       "countFirst": 87,
       "countLast": 96,
       "disappearRate": 0.069,
@@ -8014,6 +8375,7 @@
     {
       "district": "북구 동천동",
       "sector": "입시·교과학원",
+      "reliable": false,
       "countFirst": 87,
       "countLast": 92,
       "disappearRate": 0.069,
@@ -8028,6 +8390,7 @@
     {
       "district": "수성구 상동",
       "sector": "카페",
+      "reliable": false,
       "countFirst": 44,
       "countLast": 43,
       "disappearRate": 0.0682,
@@ -8042,6 +8405,7 @@
     {
       "district": "달성군 화원읍",
       "sector": "카페",
+      "reliable": false,
       "countFirst": 59,
       "countLast": 60,
       "disappearRate": 0.0678,
@@ -8056,6 +8420,7 @@
     {
       "district": "동구 불로.봉무동",
       "sector": "기타 의류 소매업",
+      "reliable": false,
       "countFirst": 89,
       "countLast": 84,
       "disappearRate": 0.0674,
@@ -8070,6 +8435,7 @@
     {
       "district": "달성군 현풍읍",
       "sector": "부동산 중개/대리업",
+      "reliable": false,
       "countFirst": 60,
       "countLast": 58,
       "disappearRate": 0.0667,
@@ -8084,6 +8450,7 @@
     {
       "district": "수성구 고산1동",
       "sector": "김밥/만두/분식",
+      "reliable": false,
       "countFirst": 30,
       "countLast": 28,
       "disappearRate": 0.0667,
@@ -8098,6 +8465,7 @@
     {
       "district": "북구 무태조야동",
       "sector": "미용실",
+      "reliable": false,
       "countFirst": 75,
       "countLast": 77,
       "disappearRate": 0.0667,
@@ -8112,6 +8480,7 @@
     {
       "district": "북구 동천동",
       "sector": "일반 유흥 주점",
+      "reliable": false,
       "countFirst": 30,
       "countLast": 30,
       "disappearRate": 0.0667,
@@ -8126,6 +8495,7 @@
     {
       "district": "북구 칠성동",
       "sector": "핸드폰 소매업",
+      "reliable": false,
       "countFirst": 30,
       "countLast": 28,
       "disappearRate": 0.0667,
@@ -8140,6 +8510,7 @@
     {
       "district": "중구 성내2동",
       "sector": "여행사",
+      "reliable": false,
       "countFirst": 30,
       "countLast": 29,
       "disappearRate": 0.0667,
@@ -8154,6 +8525,7 @@
     {
       "district": "서구 평리3동",
       "sector": "부동산 중개/대리업",
+      "reliable": false,
       "countFirst": 30,
       "countLast": 28,
       "disappearRate": 0.0667,
@@ -8168,6 +8540,7 @@
     {
       "district": "중구 성내2동",
       "sector": "가방 소매업",
+      "reliable": false,
       "countFirst": 30,
       "countLast": 28,
       "disappearRate": 0.0667,
@@ -8182,6 +8555,7 @@
     {
       "district": "남구 봉덕1동",
       "sector": "카페",
+      "reliable": false,
       "countFirst": 30,
       "countLast": 29,
       "disappearRate": 0.0667,
@@ -8196,6 +8570,7 @@
     {
       "district": "중구 성내2동",
       "sector": "신발 소매업",
+      "reliable": false,
       "countFirst": 61,
       "countLast": 60,
       "disappearRate": 0.0656,
@@ -8210,6 +8585,7 @@
     {
       "district": "수성구 범어2동",
       "sector": "입시·교과학원",
+      "reliable": false,
       "countFirst": 77,
       "countLast": 96,
       "disappearRate": 0.0649,
@@ -8224,6 +8600,7 @@
     {
       "district": "동구 불로.봉무동",
       "sector": "부동산 중개/대리업",
+      "reliable": false,
       "countFirst": 31,
       "countLast": 33,
       "disappearRate": 0.0645,
@@ -8238,6 +8615,7 @@
     {
       "district": "남구 대명11동",
       "sector": "여성 의류 소매업",
+      "reliable": false,
       "countFirst": 31,
       "countLast": 29,
       "disappearRate": 0.0645,
@@ -8252,6 +8630,7 @@
     {
       "district": "중구 성내3동",
       "sector": "부동산 중개/대리업",
+      "reliable": false,
       "countFirst": 31,
       "countLast": 36,
       "disappearRate": 0.0645,
@@ -8266,6 +8645,7 @@
     {
       "district": "군위군 군위읍",
       "sector": "백반/한정식",
+      "reliable": false,
       "countFirst": 62,
       "countLast": 65,
       "disappearRate": 0.0645,
@@ -8280,6 +8660,7 @@
     {
       "district": "북구 노원동",
       "sector": "미용실",
+      "reliable": false,
       "countFirst": 31,
       "countLast": 30,
       "disappearRate": 0.0645,
@@ -8294,6 +8675,7 @@
     {
       "district": "달서구 송현2동",
       "sector": "부동산 중개/대리업",
+      "reliable": false,
       "countFirst": 31,
       "countLast": 29,
       "disappearRate": 0.0645,
@@ -8308,6 +8690,7 @@
     {
       "district": "달성군 다사읍",
       "sector": "여성 의류 소매업",
+      "reliable": false,
       "countFirst": 31,
       "countLast": 30,
       "disappearRate": 0.0645,
@@ -8322,6 +8705,7 @@
     {
       "district": "달서구 송현1동",
       "sector": "카페",
+      "reliable": false,
       "countFirst": 31,
       "countLast": 30,
       "disappearRate": 0.0645,
@@ -8336,6 +8720,7 @@
     {
       "district": "달성군 옥포읍",
       "sector": "부동산 중개/대리업",
+      "reliable": false,
       "countFirst": 31,
       "countLast": 32,
       "disappearRate": 0.0645,
@@ -8350,6 +8735,7 @@
     {
       "district": "중구 남산2동",
       "sector": "부동산 중개/대리업",
+      "reliable": false,
       "countFirst": 31,
       "countLast": 34,
       "disappearRate": 0.0645,
@@ -8364,6 +8750,7 @@
     {
       "district": "달성군 유가읍",
       "sector": "미용실",
+      "reliable": false,
       "countFirst": 47,
       "countLast": 54,
       "disappearRate": 0.0638,
@@ -8378,6 +8765,7 @@
     {
       "district": "중구 대신동",
       "sector": "신발 소매업",
+      "reliable": false,
       "countFirst": 47,
       "countLast": 46,
       "disappearRate": 0.0638,
@@ -8392,6 +8780,7 @@
     {
       "district": "서구 비산5동",
       "sector": "요리 주점",
+      "reliable": false,
       "countFirst": 47,
       "countLast": 44,
       "disappearRate": 0.0638,
@@ -8406,6 +8795,7 @@
     {
       "district": "군위군 부계면",
       "sector": "백반/한정식",
+      "reliable": false,
       "countFirst": 47,
       "countLast": 50,
       "disappearRate": 0.0638,
@@ -8420,6 +8810,7 @@
     {
       "district": "중구 성내1동",
       "sector": "피부 관리실",
+      "reliable": false,
       "countFirst": 63,
       "countLast": 60,
       "disappearRate": 0.0635,
@@ -8434,6 +8825,7 @@
     {
       "district": "중구 성내1동",
       "sector": "여성 의류 소매업",
+      "reliable": true,
       "countFirst": 143,
       "countLast": 134,
       "disappearRate": 0.0629,
@@ -8448,6 +8840,7 @@
     {
       "district": "수성구 고산2동",
       "sector": "부동산 중개/대리업",
+      "reliable": false,
       "countFirst": 64,
       "countLast": 72,
       "disappearRate": 0.0625,
@@ -8462,6 +8855,7 @@
     {
       "district": "달서구 송현2동",
       "sector": "미용실",
+      "reliable": false,
       "countFirst": 80,
       "countLast": 81,
       "disappearRate": 0.0625,
@@ -8476,6 +8870,7 @@
     {
       "district": "중구 대신동",
       "sector": "백반/한정식",
+      "reliable": false,
       "countFirst": 48,
       "countLast": 53,
       "disappearRate": 0.0625,
@@ -8490,6 +8885,7 @@
     {
       "district": "남구 대명5동",
       "sector": "미용실",
+      "reliable": false,
       "countFirst": 32,
       "countLast": 31,
       "disappearRate": 0.0625,
@@ -8504,6 +8900,7 @@
     {
       "district": "중구 성내2동",
       "sector": "슈퍼마켓",
+      "reliable": false,
       "countFirst": 32,
       "countLast": 33,
       "disappearRate": 0.0625,
@@ -8518,6 +8915,7 @@
     {
       "district": "수성구 두산동",
       "sector": "미용실",
+      "reliable": false,
       "countFirst": 64,
       "countLast": 69,
       "disappearRate": 0.0625,
@@ -8532,6 +8930,7 @@
     {
       "district": "수성구 범어1동",
       "sector": "돼지고기 구이/찜",
+      "reliable": false,
       "countFirst": 32,
       "countLast": 32,
       "disappearRate": 0.0625,
@@ -8546,6 +8945,7 @@
     {
       "district": "중구 성내2동",
       "sector": "피부 관리실",
+      "reliable": false,
       "countFirst": 32,
       "countLast": 31,
       "disappearRate": 0.0625,
@@ -8560,6 +8960,7 @@
     {
       "district": "동구 혁신동",
       "sector": "미용실",
+      "reliable": false,
       "countFirst": 32,
       "countLast": 38,
       "disappearRate": 0.0625,
@@ -8574,6 +8975,7 @@
     {
       "district": "달서구 상인1동",
       "sector": "여성 의류 소매업",
+      "reliable": false,
       "countFirst": 48,
       "countLast": 45,
       "disappearRate": 0.0625,
@@ -8588,6 +8990,7 @@
     {
       "district": "동구 신천4동",
       "sector": "남성 의류 소매업",
+      "reliable": false,
       "countFirst": 49,
       "countLast": 46,
       "disappearRate": 0.0612,
@@ -8602,6 +9005,7 @@
     {
       "district": "동구 불로.봉무동",
       "sector": "미용실",
+      "reliable": false,
       "countFirst": 49,
       "countLast": 50,
       "disappearRate": 0.0612,
@@ -8616,6 +9020,7 @@
     {
       "district": "달서구 장기동",
       "sector": "미용실",
+      "reliable": false,
       "countFirst": 33,
       "countLast": 32,
       "disappearRate": 0.0606,
@@ -8630,6 +9035,7 @@
     {
       "district": "북구 태전1동",
       "sector": "부동산 중개/대리업",
+      "reliable": false,
       "countFirst": 33,
       "countLast": 34,
       "disappearRate": 0.0606,
@@ -8644,6 +9050,7 @@
     {
       "district": "서구 평리3동",
       "sector": "미용실",
+      "reliable": false,
       "countFirst": 33,
       "countLast": 33,
       "disappearRate": 0.0606,
@@ -8658,6 +9065,7 @@
     {
       "district": "수성구 범어3동",
       "sector": "부동산 중개/대리업",
+      "reliable": false,
       "countFirst": 50,
       "countLast": 50,
       "disappearRate": 0.06,
@@ -8672,6 +9080,7 @@
     {
       "district": "달서구 죽전동",
       "sector": "백반/한정식",
+      "reliable": false,
       "countFirst": 50,
       "countLast": 68,
       "disappearRate": 0.06,
@@ -8686,6 +9095,7 @@
     {
       "district": "동구 혁신동",
       "sector": "부동산 중개/대리업",
+      "reliable": false,
       "countFirst": 50,
       "countLast": 51,
       "disappearRate": 0.06,
@@ -8700,6 +9110,7 @@
     {
       "district": "수성구 만촌1동",
       "sector": "백반/한정식",
+      "reliable": false,
       "countFirst": 34,
       "countLast": 39,
       "disappearRate": 0.0588,
@@ -8714,6 +9125,7 @@
     {
       "district": "서구 내당4동",
       "sector": "요리 주점",
+      "reliable": false,
       "countFirst": 34,
       "countLast": 33,
       "disappearRate": 0.0588,
@@ -8728,6 +9140,7 @@
     {
       "district": "동구 효목2동",
       "sector": "백반/한정식",
+      "reliable": false,
       "countFirst": 51,
       "countLast": 55,
       "disappearRate": 0.0588,
@@ -8742,6 +9155,7 @@
     {
       "district": "동구 효목1동",
       "sector": "요리 주점",
+      "reliable": false,
       "countFirst": 34,
       "countLast": 35,
       "disappearRate": 0.0588,
@@ -8756,6 +9170,7 @@
     {
       "district": "중구 성내2동",
       "sector": "김밥/만두/분식",
+      "reliable": false,
       "countFirst": 34,
       "countLast": 37,
       "disappearRate": 0.0588,
@@ -8770,6 +9185,7 @@
     {
       "district": "동구 효목1동",
       "sector": "카페",
+      "reliable": false,
       "countFirst": 34,
       "countLast": 33,
       "disappearRate": 0.0588,
@@ -8784,6 +9200,7 @@
     {
       "district": "수성구 범어1동",
       "sector": "부동산 중개/대리업",
+      "reliable": false,
       "countFirst": 70,
       "countLast": 89,
       "disappearRate": 0.0571,
@@ -8798,6 +9215,7 @@
     {
       "district": "중구 성내3동",
       "sector": "백반/한정식",
+      "reliable": false,
       "countFirst": 35,
       "countLast": 41,
       "disappearRate": 0.0571,
@@ -8812,6 +9230,7 @@
     {
       "district": "서구 비산2.3동",
       "sector": "요리 주점",
+      "reliable": false,
       "countFirst": 35,
       "countLast": 33,
       "disappearRate": 0.0571,
@@ -8826,6 +9245,7 @@
     {
       "district": "중구 성내2동",
       "sector": "미용실",
+      "reliable": false,
       "countFirst": 35,
       "countLast": 41,
       "disappearRate": 0.0571,
@@ -8840,6 +9260,7 @@
     {
       "district": "달서구 성당동",
       "sector": "미용실",
+      "reliable": false,
       "countFirst": 70,
       "countLast": 72,
       "disappearRate": 0.0571,
@@ -8854,6 +9275,7 @@
     {
       "district": "달서구 성당동",
       "sector": "요리 주점",
+      "reliable": false,
       "countFirst": 35,
       "countLast": 33,
       "disappearRate": 0.0571,
@@ -8868,6 +9290,7 @@
     {
       "district": "중구 대신동",
       "sector": "주방/가정용품 소매업",
+      "reliable": false,
       "countFirst": 53,
       "countLast": 50,
       "disappearRate": 0.0566,
@@ -8882,6 +9305,7 @@
     {
       "district": "수성구 상동",
       "sector": "백반/한정식",
+      "reliable": false,
       "countFirst": 53,
       "countLast": 56,
       "disappearRate": 0.0566,
@@ -8896,6 +9320,7 @@
     {
       "district": "달성군 화원읍",
       "sector": "부동산 중개/대리업",
+      "reliable": false,
       "countFirst": 53,
       "countLast": 57,
       "disappearRate": 0.0566,
@@ -8910,6 +9335,7 @@
     {
       "district": "중구 성내1동",
       "sector": "성형외과 의원",
+      "reliable": false,
       "countFirst": 36,
       "countLast": 34,
       "disappearRate": 0.0556,
@@ -8924,6 +9350,7 @@
     {
       "district": "달서구 도원동",
       "sector": "백반/한정식",
+      "reliable": false,
       "countFirst": 36,
       "countLast": 45,
       "disappearRate": 0.0556,
@@ -8938,6 +9365,7 @@
     {
       "district": "중구 성내2동",
       "sector": "일식 회/초밥",
+      "reliable": false,
       "countFirst": 36,
       "countLast": 40,
       "disappearRate": 0.0556,
@@ -8952,6 +9380,7 @@
     {
       "district": "중구 성내2동",
       "sector": "기타 의류 소매업",
+      "reliable": true,
       "countFirst": 145,
       "countLast": 156,
       "disappearRate": 0.0552,
@@ -8966,6 +9395,7 @@
     {
       "district": "수성구 범어3동",
       "sector": "요리 주점",
+      "reliable": false,
       "countFirst": 38,
       "countLast": 36,
       "disappearRate": 0.0526,
@@ -8980,6 +9410,7 @@
     {
       "district": "동구 안심3동",
       "sector": "미용실",
+      "reliable": false,
       "countFirst": 57,
       "countLast": 55,
       "disappearRate": 0.0526,
@@ -8994,6 +9425,7 @@
     {
       "district": "북구 구암동",
       "sector": "미용실",
+      "reliable": false,
       "countFirst": 57,
       "countLast": 70,
       "disappearRate": 0.0526,
@@ -9008,6 +9440,7 @@
     {
       "district": "달성군 논공읍",
       "sector": "미용실",
+      "reliable": false,
       "countFirst": 58,
       "countLast": 60,
       "disappearRate": 0.0517,
@@ -9022,6 +9455,7 @@
     {
       "district": "북구 복현1동",
       "sector": "일반 유흥 주점",
+      "reliable": false,
       "countFirst": 58,
       "countLast": 58,
       "disappearRate": 0.0517,
@@ -9036,6 +9470,7 @@
     {
       "district": "수성구 지산1동",
       "sector": "미용실",
+      "reliable": false,
       "countFirst": 78,
       "countLast": 81,
       "disappearRate": 0.0513,
@@ -9050,6 +9485,7 @@
     {
       "district": "북구 관문동",
       "sector": "미용실",
+      "reliable": false,
       "countFirst": 39,
       "countLast": 45,
       "disappearRate": 0.0513,
@@ -9064,6 +9500,7 @@
     {
       "district": "달서구 진천동",
       "sector": "입시·교과학원",
+      "reliable": false,
       "countFirst": 39,
       "countLast": 39,
       "disappearRate": 0.0513,
@@ -9078,6 +9515,7 @@
     {
       "district": "달서구 장기동",
       "sector": "백반/한정식",
+      "reliable": false,
       "countFirst": 40,
       "countLast": 51,
       "disappearRate": 0.05,
@@ -9092,6 +9530,7 @@
     {
       "district": "달서구 이곡2동",
       "sector": "구내식당",
+      "reliable": false,
       "countFirst": 40,
       "countLast": 39,
       "disappearRate": 0.05,
@@ -9106,6 +9545,7 @@
     {
       "district": "달성군 화원읍",
       "sector": "슈퍼마켓",
+      "reliable": false,
       "countFirst": 40,
       "countLast": 43,
       "disappearRate": 0.05,
@@ -9120,6 +9560,7 @@
     {
       "district": "수성구 범어2동",
       "sector": "부동산 중개/대리업",
+      "reliable": false,
       "countFirst": 60,
       "countLast": 58,
       "disappearRate": 0.05,
@@ -9134,6 +9575,7 @@
     {
       "district": "달성군 구지면",
       "sector": "부동산 중개/대리업",
+      "reliable": false,
       "countFirst": 40,
       "countLast": 39,
       "disappearRate": 0.05,
@@ -9148,6 +9590,7 @@
     {
       "district": "동구 안심1동",
       "sector": "기타 의류 소매업",
+      "reliable": false,
       "countFirst": 80,
       "countLast": 77,
       "disappearRate": 0.05,
@@ -9162,6 +9605,7 @@
     {
       "district": "수성구 만촌3동",
       "sector": "미용실",
+      "reliable": false,
       "countFirst": 61,
       "countLast": 60,
       "disappearRate": 0.0492,
@@ -9176,6 +9620,7 @@
     {
       "district": "수성구 만촌1동",
       "sector": "미용실",
+      "reliable": false,
       "countFirst": 41,
       "countLast": 46,
       "disappearRate": 0.0488,
@@ -9190,6 +9635,7 @@
     {
       "district": "중구 성내1동",
       "sector": "기타 의류 소매업",
+      "reliable": true,
       "countFirst": 123,
       "countLast": 147,
       "disappearRate": 0.0488,
@@ -9204,6 +9650,7 @@
     {
       "district": "달서구 두류1.2동",
       "sector": "미용실",
+      "reliable": false,
       "countFirst": 41,
       "countLast": 42,
       "disappearRate": 0.0488,
@@ -9218,6 +9665,7 @@
     {
       "district": "서구 평리4동",
       "sector": "미용실",
+      "reliable": false,
       "countFirst": 63,
       "countLast": 65,
       "disappearRate": 0.0476,
@@ -9232,6 +9680,7 @@
     {
       "district": "수성구 수성1가동",
       "sector": "부동산 중개/대리업",
+      "reliable": false,
       "countFirst": 42,
       "countLast": 49,
       "disappearRate": 0.0476,
@@ -9246,6 +9695,7 @@
     {
       "district": "동구 안심1동",
       "sector": "미용실",
+      "reliable": true,
       "countFirst": 128,
       "countLast": 138,
       "disappearRate": 0.0469,
@@ -9260,6 +9710,7 @@
     {
       "district": "중구 성내1동",
       "sector": "여행사",
+      "reliable": false,
       "countFirst": 64,
       "countLast": 61,
       "disappearRate": 0.0469,
@@ -9274,6 +9725,7 @@
     {
       "district": "수성구 범어2동",
       "sector": "건축 설계 및 관련 서비스업",
+      "reliable": false,
       "countFirst": 43,
       "countLast": 41,
       "disappearRate": 0.0465,
@@ -9288,6 +9740,7 @@
     {
       "district": "북구 무태조야동",
       "sector": "입시·교과학원",
+      "reliable": false,
       "countFirst": 43,
       "countLast": 47,
       "disappearRate": 0.0465,
@@ -9302,6 +9755,7 @@
     {
       "district": "달성군 논공읍",
       "sector": "부동산 중개/대리업",
+      "reliable": false,
       "countFirst": 43,
       "countLast": 48,
       "disappearRate": 0.0465,
@@ -9316,6 +9770,7 @@
     {
       "district": "달서구 월성2동",
       "sector": "자동차 정비소",
+      "reliable": false,
       "countFirst": 43,
       "countLast": 41,
       "disappearRate": 0.0465,
@@ -9330,6 +9785,7 @@
     {
       "district": "남구 대명10동",
       "sector": "미용실",
+      "reliable": false,
       "countFirst": 43,
       "countLast": 46,
       "disappearRate": 0.0465,
@@ -9344,6 +9800,7 @@
     {
       "district": "중구 대봉1동",
       "sector": "의류 대여업",
+      "reliable": false,
       "countFirst": 43,
       "countLast": 41,
       "disappearRate": 0.0465,
@@ -9358,6 +9815,7 @@
     {
       "district": "동구 신천4동",
       "sector": "돼지고기 구이/찜",
+      "reliable": false,
       "countFirst": 43,
       "countLast": 46,
       "disappearRate": 0.0465,
@@ -9372,6 +9830,7 @@
     {
       "district": "수성구 범어1동",
       "sector": "입시·교과학원",
+      "reliable": false,
       "countFirst": 43,
       "countLast": 50,
       "disappearRate": 0.0465,
@@ -9386,6 +9845,7 @@
     {
       "district": "남구 대명10동",
       "sector": "세무사",
+      "reliable": false,
       "countFirst": 43,
       "countLast": 41,
       "disappearRate": 0.0465,
@@ -9400,6 +9860,7 @@
     {
       "district": "중구 대신동",
       "sector": "유아용 의류 소매업",
+      "reliable": false,
       "countFirst": 65,
       "countLast": 64,
       "disappearRate": 0.0462,
@@ -9414,6 +9875,7 @@
     {
       "district": "수성구 고산1동",
       "sector": "미용실",
+      "reliable": false,
       "countFirst": 65,
       "countLast": 74,
       "disappearRate": 0.0462,
@@ -9428,6 +9890,7 @@
     {
       "district": "중구 대신동",
       "sector": "여성 의류 소매업",
+      "reliable": true,
       "countFirst": 349,
       "countLast": 333,
       "disappearRate": 0.0458,
@@ -9442,6 +9905,7 @@
     {
       "district": "달서구 용산1동",
       "sector": "미용실",
+      "reliable": false,
       "countFirst": 44,
       "countLast": 47,
       "disappearRate": 0.0455,
@@ -9456,6 +9920,7 @@
     {
       "district": "북구 칠성동",
       "sector": "여성 의류 소매업",
+      "reliable": false,
       "countFirst": 89,
       "countLast": 86,
       "disappearRate": 0.0449,
@@ -9470,6 +9935,7 @@
     {
       "district": "달성군 다사읍",
       "sector": "미용실",
+      "reliable": true,
       "countFirst": 112,
       "countLast": 128,
       "disappearRate": 0.0446,
@@ -9484,6 +9950,7 @@
     {
       "district": "동구 동촌동",
       "sector": "미용실",
+      "reliable": false,
       "countFirst": 45,
       "countLast": 43,
       "disappearRate": 0.0444,
@@ -9498,6 +9965,7 @@
     {
       "district": "북구 산격2동",
       "sector": "기타 의류 소매업",
+      "reliable": false,
       "countFirst": 68,
       "countLast": 69,
       "disappearRate": 0.0441,
@@ -9512,6 +9980,7 @@
     {
       "district": "중구 성내1동",
       "sector": "중고 상품 소매업",
+      "reliable": false,
       "countFirst": 46,
       "countLast": 44,
       "disappearRate": 0.0435,
@@ -9526,6 +9995,7 @@
     {
       "district": "북구 읍내동",
       "sector": "미용실",
+      "reliable": false,
       "countFirst": 69,
       "countLast": 75,
       "disappearRate": 0.0435,
@@ -9540,6 +10010,7 @@
     {
       "district": "중구 대신동",
       "sector": "한복 소매업",
+      "reliable": false,
       "countFirst": 47,
       "countLast": 45,
       "disappearRate": 0.0426,
@@ -9554,6 +10025,7 @@
     {
       "district": "달서구 두류1.2동",
       "sector": "부동산 중개/대리업",
+      "reliable": false,
       "countFirst": 48,
       "countLast": 46,
       "disappearRate": 0.0417,
@@ -9568,6 +10040,7 @@
     {
       "district": "북구 구암동",
       "sector": "카페",
+      "reliable": false,
       "countFirst": 48,
       "countLast": 47,
       "disappearRate": 0.0417,
@@ -9582,6 +10055,7 @@
     {
       "district": "달서구 두류3동",
       "sector": "세무사",
+      "reliable": false,
       "countFirst": 48,
       "countLast": 46,
       "disappearRate": 0.0417,
@@ -9596,6 +10070,7 @@
     {
       "district": "중구 대신동",
       "sector": "기타 의류 소매업",
+      "reliable": true,
       "countFirst": 728,
       "countLast": 765,
       "disappearRate": 0.0412,
@@ -9610,6 +10085,7 @@
     {
       "district": "북구 동천동",
       "sector": "미용실",
+      "reliable": false,
       "countFirst": 73,
       "countLast": 80,
       "disappearRate": 0.0411,
@@ -9624,6 +10100,7 @@
     {
       "district": "중구 대신동",
       "sector": "액세서리/잡화 소매업",
+      "reliable": false,
       "countFirst": 73,
       "countLast": 70,
       "disappearRate": 0.0411,
@@ -9638,6 +10115,7 @@
     {
       "district": "중구 대봉1동",
       "sector": "기타 의류 소매업",
+      "reliable": false,
       "countFirst": 49,
       "countLast": 55,
       "disappearRate": 0.0408,
@@ -9652,6 +10130,7 @@
     {
       "district": "북구 노원동",
       "sector": "자동차 정비소",
+      "reliable": false,
       "countFirst": 74,
       "countLast": 71,
       "disappearRate": 0.0405,
@@ -9666,6 +10145,7 @@
     {
       "district": "달서구 월성1동",
       "sector": "미용실",
+      "reliable": false,
       "countFirst": 99,
       "countLast": 109,
       "disappearRate": 0.0404,
@@ -9680,6 +10160,7 @@
     {
       "district": "수성구 중동",
       "sector": "백반/한정식",
+      "reliable": false,
       "countFirst": 50,
       "countLast": 60,
       "disappearRate": 0.04,
@@ -9694,6 +10175,7 @@
     {
       "district": "달서구 도원동",
       "sector": "미용실",
+      "reliable": false,
       "countFirst": 51,
       "countLast": 56,
       "disappearRate": 0.0392,
@@ -9708,6 +10190,7 @@
     {
       "district": "남구 대명9동",
       "sector": "카페",
+      "reliable": false,
       "countFirst": 51,
       "countLast": 53,
       "disappearRate": 0.0392,
@@ -9722,6 +10205,7 @@
     {
       "district": "동구 안심4동",
       "sector": "자동차 정비소",
+      "reliable": false,
       "countFirst": 79,
       "countLast": 77,
       "disappearRate": 0.038,
@@ -9736,6 +10220,7 @@
     {
       "district": "동구 방촌동",
       "sector": "미용실",
+      "reliable": false,
       "countFirst": 54,
       "countLast": 57,
       "disappearRate": 0.037,
@@ -9750,6 +10235,7 @@
     {
       "district": "달성군 다사읍",
       "sector": "입시·교과학원",
+      "reliable": false,
       "countFirst": 83,
       "countLast": 101,
       "disappearRate": 0.0361,
@@ -9764,6 +10250,7 @@
     {
       "district": "중구 대신동",
       "sector": "침구류/커튼 소매업",
+      "reliable": true,
       "countFirst": 142,
       "countLast": 142,
       "disappearRate": 0.0352,
@@ -9778,6 +10265,7 @@
     {
       "district": "수성구 상동",
       "sector": "미용실",
+      "reliable": false,
       "countFirst": 57,
       "countLast": 59,
       "disappearRate": 0.0351,
@@ -9792,6 +10280,7 @@
     {
       "district": "중구 성내1동",
       "sector": "네일숍",
+      "reliable": false,
       "countFirst": 57,
       "countLast": 56,
       "disappearRate": 0.0351,
@@ -9806,6 +10295,7 @@
     {
       "district": "중구 성내1동",
       "sector": "미용실",
+      "reliable": true,
       "countFirst": 116,
       "countLast": 127,
       "disappearRate": 0.0345,
@@ -9820,6 +10310,7 @@
     {
       "district": "수성구 고산3동",
       "sector": "미용실",
+      "reliable": false,
       "countFirst": 58,
       "countLast": 63,
       "disappearRate": 0.0345,
@@ -9834,6 +10325,7 @@
     {
       "district": "남구 봉덕1동",
       "sector": "미용실",
+      "reliable": false,
       "countFirst": 30,
       "countLast": 30,
       "disappearRate": 0.0333,
@@ -9848,6 +10340,7 @@
     {
       "district": "중구 성내2동",
       "sector": "명함/간판/광고물 제작",
+      "reliable": false,
       "countFirst": 30,
       "countLast": 29,
       "disappearRate": 0.0333,
@@ -9862,6 +10355,7 @@
     {
       "district": "북구 동천동",
       "sector": "빵/도넛",
+      "reliable": false,
       "countFirst": 30,
       "countLast": 30,
       "disappearRate": 0.0333,
@@ -9876,6 +10370,7 @@
     {
       "district": "중구 남산4동",
       "sector": "미용실",
+      "reliable": false,
       "countFirst": 30,
       "countLast": 35,
       "disappearRate": 0.0333,
@@ -9890,6 +10385,7 @@
     {
       "district": "달서구 신당동",
       "sector": "경영 컨설팅업",
+      "reliable": false,
       "countFirst": 30,
       "countLast": 29,
       "disappearRate": 0.0333,
@@ -9904,6 +10400,7 @@
     {
       "district": "중구 성내1동",
       "sector": "가전제품 소매업",
+      "reliable": false,
       "countFirst": 30,
       "countLast": 29,
       "disappearRate": 0.0333,
@@ -9918,6 +10415,7 @@
     {
       "district": "남구 봉덕3동",
       "sector": "미용실",
+      "reliable": false,
       "countFirst": 61,
       "countLast": 63,
       "disappearRate": 0.0328,
@@ -9932,6 +10430,7 @@
     {
       "district": "북구 동천동",
       "sector": "기타 의류 소매업",
+      "reliable": false,
       "countFirst": 31,
       "countLast": 32,
       "disappearRate": 0.0323,
@@ -9946,6 +10445,7 @@
     {
       "district": "서구 상중이동",
       "sector": "돼지고기 구이/찜",
+      "reliable": false,
       "countFirst": 31,
       "countLast": 31,
       "disappearRate": 0.0323,
@@ -9960,6 +10460,7 @@
     {
       "district": "북구 읍내동",
       "sector": "기타 의류 소매업",
+      "reliable": false,
       "countFirst": 31,
       "countLast": 31,
       "disappearRate": 0.0323,
@@ -9974,6 +10475,7 @@
     {
       "district": "서구 상중이동",
       "sector": "명함/간판/광고물 제작",
+      "reliable": false,
       "countFirst": 31,
       "countLast": 30,
       "disappearRate": 0.0323,
@@ -9988,6 +10490,7 @@
     {
       "district": "수성구 지산2동",
       "sector": "백반/한정식",
+      "reliable": false,
       "countFirst": 31,
       "countLast": 42,
       "disappearRate": 0.0323,
@@ -10002,6 +10505,7 @@
     {
       "district": "달서구 죽전동",
       "sector": "미용실",
+      "reliable": false,
       "countFirst": 63,
       "countLast": 63,
       "disappearRate": 0.0317,
@@ -10016,6 +10520,7 @@
     {
       "district": "달서구 신당동",
       "sector": "자동차 정비소",
+      "reliable": false,
       "countFirst": 63,
       "countLast": 61,
       "disappearRate": 0.0317,
@@ -10030,6 +10535,7 @@
     {
       "district": "중구 대신동",
       "sector": "가방 소매업",
+      "reliable": false,
       "countFirst": 63,
       "countLast": 63,
       "disappearRate": 0.0317,
@@ -10044,6 +10550,7 @@
     {
       "district": "중구 대신동",
       "sector": "실/섬유제품 소매업",
+      "reliable": true,
       "countFirst": 348,
       "countLast": 338,
       "disappearRate": 0.0316,
@@ -10058,6 +10565,7 @@
     {
       "district": "수성구 범어3동",
       "sector": "법무사",
+      "reliable": false,
       "countFirst": 95,
       "countLast": 93,
       "disappearRate": 0.0316,
@@ -10072,6 +10580,7 @@
     {
       "district": "달서구 진천동",
       "sector": "자동차 정비소",
+      "reliable": false,
       "countFirst": 32,
       "countLast": 31,
       "disappearRate": 0.0313,
@@ -10086,6 +10595,7 @@
     {
       "district": "달성군 논공읍",
       "sector": "자동차 정비소",
+      "reliable": false,
       "countFirst": 32,
       "countLast": 31,
       "disappearRate": 0.0313,
@@ -10100,6 +10610,7 @@
     {
       "district": "수성구 범어1동",
       "sector": "요리 주점",
+      "reliable": false,
       "countFirst": 32,
       "countLast": 32,
       "disappearRate": 0.0313,
@@ -10114,6 +10625,7 @@
     {
       "district": "달서구 월성1동",
       "sector": "부동산 중개/대리업",
+      "reliable": false,
       "countFirst": 32,
       "countLast": 39,
       "disappearRate": 0.0313,
@@ -10128,6 +10640,7 @@
     {
       "district": "수성구 범물1동",
       "sector": "기타 의류 소매업",
+      "reliable": false,
       "countFirst": 32,
       "countLast": 32,
       "disappearRate": 0.0313,
@@ -10142,6 +10655,7 @@
     {
       "district": "동구 신암3동",
       "sector": "미용실",
+      "reliable": false,
       "countFirst": 32,
       "countLast": 36,
       "disappearRate": 0.0313,
@@ -10156,6 +10670,7 @@
     {
       "district": "북구 산격2동",
       "sector": "카페",
+      "reliable": false,
       "countFirst": 32,
       "countLast": 34,
       "disappearRate": 0.0313,
@@ -10170,6 +10685,7 @@
     {
       "district": "달서구 이곡2동",
       "sector": "요리 주점",
+      "reliable": false,
       "countFirst": 32,
       "countLast": 33,
       "disappearRate": 0.0313,
@@ -10184,6 +10700,7 @@
     {
       "district": "중구 남산2동",
       "sector": "광고물 설계/제작업",
+      "reliable": false,
       "countFirst": 33,
       "countLast": 32,
       "disappearRate": 0.0303,
@@ -10198,6 +10715,7 @@
     {
       "district": "달서구 본리동",
       "sector": "미용실",
+      "reliable": false,
       "countFirst": 33,
       "countLast": 38,
       "disappearRate": 0.0303,
@@ -10212,6 +10730,7 @@
     {
       "district": "동구 해안동",
       "sector": "미용실",
+      "reliable": false,
       "countFirst": 33,
       "countLast": 34,
       "disappearRate": 0.0303,
@@ -10226,6 +10745,7 @@
     {
       "district": "달서구 상인2동",
       "sector": "미용실",
+      "reliable": false,
       "countFirst": 66,
       "countLast": 69,
       "disappearRate": 0.0303,
@@ -10240,6 +10760,7 @@
     {
       "district": "북구 태전1동",
       "sector": "미용실",
+      "reliable": false,
       "countFirst": 67,
       "countLast": 78,
       "disappearRate": 0.0299,
@@ -10254,6 +10775,7 @@
     {
       "district": "달성군 화원읍",
       "sector": "미용실",
+      "reliable": true,
       "countFirst": 101,
       "countLast": 112,
       "disappearRate": 0.0297,
@@ -10268,6 +10790,7 @@
     {
       "district": "달서구 감삼동",
       "sector": "미용실",
+      "reliable": true,
       "countFirst": 101,
       "countLast": 110,
       "disappearRate": 0.0297,
@@ -10282,6 +10805,7 @@
     {
       "district": "달서구 신당동",
       "sector": "미용실",
+      "reliable": true,
       "countFirst": 101,
       "countLast": 107,
       "disappearRate": 0.0297,
@@ -10296,6 +10820,7 @@
     {
       "district": "수성구 지산2동",
       "sector": "부동산 중개/대리업",
+      "reliable": false,
       "countFirst": 34,
       "countLast": 38,
       "disappearRate": 0.0294,
@@ -10310,6 +10835,7 @@
     {
       "district": "중구 성내2동",
       "sector": "광고 대행업",
+      "reliable": false,
       "countFirst": 34,
       "countLast": 33,
       "disappearRate": 0.0294,
@@ -10324,6 +10850,7 @@
     {
       "district": "수성구 만촌2동",
       "sector": "미용실",
+      "reliable": false,
       "countFirst": 34,
       "countLast": 36,
       "disappearRate": 0.0294,
@@ -10338,6 +10865,7 @@
     {
       "district": "서구 평리4동",
       "sector": "여관/모텔",
+      "reliable": false,
       "countFirst": 34,
       "countLast": 35,
       "disappearRate": 0.0294,
@@ -10352,6 +10880,7 @@
     {
       "district": "달서구 진천동",
       "sector": "미용실",
+      "reliable": true,
       "countFirst": 139,
       "countLast": 147,
       "disappearRate": 0.0288,
@@ -10366,6 +10895,7 @@
     {
       "district": "북구 침산2동",
       "sector": "입시·교과학원",
+      "reliable": false,
       "countFirst": 35,
       "countLast": 53,
       "disappearRate": 0.0286,
@@ -10380,6 +10910,7 @@
     {
       "district": "북구 대현동",
       "sector": "부동산 중개/대리업",
+      "reliable": false,
       "countFirst": 35,
       "countLast": 36,
       "disappearRate": 0.0286,
@@ -10394,6 +10925,7 @@
     {
       "district": "서구 원대동",
       "sector": "백반/한정식",
+      "reliable": false,
       "countFirst": 35,
       "countLast": 39,
       "disappearRate": 0.0286,
@@ -10408,6 +10940,7 @@
     {
       "district": "북구 칠성동",
       "sector": "미용실",
+      "reliable": false,
       "countFirst": 35,
       "countLast": 36,
       "disappearRate": 0.0286,
@@ -10422,6 +10955,7 @@
     {
       "district": "남구 대명9동",
       "sector": "미용실",
+      "reliable": false,
       "countFirst": 35,
       "countLast": 37,
       "disappearRate": 0.0286,
@@ -10436,6 +10970,7 @@
     {
       "district": "달서구 상인1동",
       "sector": "기타 의류 소매업",
+      "reliable": false,
       "countFirst": 70,
       "countLast": 70,
       "disappearRate": 0.0286,
@@ -10450,6 +10985,7 @@
     {
       "district": "달서구 용산1동",
       "sector": "카페",
+      "reliable": false,
       "countFirst": 35,
       "countLast": 35,
       "disappearRate": 0.0286,
@@ -10464,6 +11000,7 @@
     {
       "district": "수성구 황금1동",
       "sector": "입시·교과학원",
+      "reliable": false,
       "countFirst": 36,
       "countLast": 48,
       "disappearRate": 0.0278,
@@ -10478,6 +11015,7 @@
     {
       "district": "달서구 장기동",
       "sector": "부동산 중개/대리업",
+      "reliable": false,
       "countFirst": 36,
       "countLast": 36,
       "disappearRate": 0.0278,
@@ -10492,6 +11030,7 @@
     {
       "district": "서구 비산2.3동",
       "sector": "미용실",
+      "reliable": false,
       "countFirst": 36,
       "countLast": 35,
       "disappearRate": 0.0278,
@@ -10506,6 +11045,7 @@
     {
       "district": "동구 신천4동",
       "sector": "미용실",
+      "reliable": false,
       "countFirst": 36,
       "countLast": 39,
       "disappearRate": 0.0278,
@@ -10520,6 +11060,7 @@
     {
       "district": "동구 안심1동",
       "sector": "여성 의류 소매업",
+      "reliable": false,
       "countFirst": 37,
       "countLast": 37,
       "disappearRate": 0.027,
@@ -10534,6 +11075,7 @@
     {
       "district": "달성군 옥포읍",
       "sector": "카페",
+      "reliable": false,
       "countFirst": 38,
       "countLast": 38,
       "disappearRate": 0.0263,
@@ -10548,6 +11090,7 @@
     {
       "district": "동구 안심4동",
       "sector": "부동산 중개/대리업",
+      "reliable": false,
       "countFirst": 38,
       "countLast": 43,
       "disappearRate": 0.0263,
@@ -10562,6 +11105,7 @@
     {
       "district": "남구 대명6동",
       "sector": "미용실",
+      "reliable": false,
       "countFirst": 38,
       "countLast": 37,
       "disappearRate": 0.0263,
@@ -10576,6 +11120,7 @@
     {
       "district": "중구 남산3동",
       "sector": "명함/간판/광고물 제작",
+      "reliable": false,
       "countFirst": 38,
       "countLast": 37,
       "disappearRate": 0.0263,
@@ -10590,6 +11135,7 @@
     {
       "district": "중구 성내2동",
       "sector": "약국",
+      "reliable": false,
       "countFirst": 39,
       "countLast": 38,
       "disappearRate": 0.0256,
@@ -10604,6 +11150,7 @@
     {
       "district": "수성구 범어3동",
       "sector": "미용실",
+      "reliable": false,
       "countFirst": 40,
       "countLast": 44,
       "disappearRate": 0.025,
@@ -10618,6 +11165,7 @@
     {
       "district": "중구 성내2동",
       "sector": "남성 의류 소매업",
+      "reliable": false,
       "countFirst": 82,
       "countLast": 80,
       "disappearRate": 0.0244,
@@ -10632,6 +11180,7 @@
     {
       "district": "달서구 본리동",
       "sector": "부동산 중개/대리업",
+      "reliable": false,
       "countFirst": 41,
       "countLast": 40,
       "disappearRate": 0.0244,
@@ -10646,6 +11195,7 @@
     {
       "district": "남구 대명3동",
       "sector": "미용실",
+      "reliable": false,
       "countFirst": 41,
       "countLast": 45,
       "disappearRate": 0.0244,
@@ -10660,6 +11210,7 @@
     {
       "district": "달성군 다사읍",
       "sector": "자동차 정비소",
+      "reliable": false,
       "countFirst": 44,
       "countLast": 43,
       "disappearRate": 0.0227,
@@ -10674,6 +11225,7 @@
     {
       "district": "동구 효목1동",
       "sector": "미용실",
+      "reliable": false,
       "countFirst": 44,
       "countLast": 45,
       "disappearRate": 0.0227,
@@ -10688,6 +11240,7 @@
     {
       "district": "달서구 유천동",
       "sector": "입시·교과학원",
+      "reliable": false,
       "countFirst": 89,
       "countLast": 94,
       "disappearRate": 0.0225,
@@ -10702,6 +11255,7 @@
     {
       "district": "달서구 상인1동",
       "sector": "미용실",
+      "reliable": false,
       "countFirst": 47,
       "countLast": 53,
       "disappearRate": 0.0213,
@@ -10716,6 +11270,7 @@
     {
       "district": "북구 복현2동",
       "sector": "미용실",
+      "reliable": false,
       "countFirst": 47,
       "countLast": 53,
       "disappearRate": 0.0213,
@@ -10730,6 +11285,7 @@
     {
       "district": "중구 대신동",
       "sector": "남성 의류 소매업",
+      "reliable": false,
       "countFirst": 47,
       "countLast": 46,
       "disappearRate": 0.0213,
@@ -10744,6 +11300,7 @@
     {
       "district": "서구 내당4동",
       "sector": "미용실",
+      "reliable": false,
       "countFirst": 47,
       "countLast": 51,
       "disappearRate": 0.0213,
@@ -10758,6 +11315,7 @@
     {
       "district": "달성군 화원읍",
       "sector": "자동차 정비소",
+      "reliable": false,
       "countFirst": 48,
       "countLast": 47,
       "disappearRate": 0.0208,
@@ -10772,6 +11330,7 @@
     {
       "district": "북구 칠성동",
       "sector": "남성 의류 소매업",
+      "reliable": false,
       "countFirst": 48,
       "countLast": 47,
       "disappearRate": 0.0208,
@@ -10786,6 +11345,7 @@
     {
       "district": "수성구 중동",
       "sector": "미용실",
+      "reliable": false,
       "countFirst": 48,
       "countLast": 49,
       "disappearRate": 0.0208,
@@ -10800,6 +11360,7 @@
     {
       "district": "중구 동인동",
       "sector": "건축 설계 및 관련 서비스업",
+      "reliable": false,
       "countFirst": 48,
       "countLast": 47,
       "disappearRate": 0.0208,
@@ -10814,6 +11375,7 @@
     {
       "district": "달서구 유천동",
       "sector": "미용실",
+      "reliable": false,
       "countFirst": 49,
       "countLast": 54,
       "disappearRate": 0.0204,
@@ -10828,6 +11390,7 @@
     {
       "district": "북구 대현동",
       "sector": "미용실",
+      "reliable": false,
       "countFirst": 50,
       "countLast": 49,
       "disappearRate": 0.02,
@@ -10842,6 +11405,7 @@
     {
       "district": "달서구 이곡1동",
       "sector": "미용실",
+      "reliable": false,
       "countFirst": 51,
       "countLast": 55,
       "disappearRate": 0.0196,
@@ -10856,6 +11420,7 @@
     {
       "district": "남구 대명4동",
       "sector": "미용실",
+      "reliable": false,
       "countFirst": 52,
       "countLast": 54,
       "disappearRate": 0.0192,
@@ -10870,6 +11435,7 @@
     {
       "district": "중구 남산2동",
       "sector": "명함/간판/광고물 제작",
+      "reliable": true,
       "countFirst": 106,
       "countLast": 104,
       "disappearRate": 0.0189,
@@ -10884,6 +11450,7 @@
     {
       "district": "중구 성내1동",
       "sector": "시계/귀금속 소매업",
+      "reliable": true,
       "countFirst": 267,
       "countLast": 262,
       "disappearRate": 0.0187,
@@ -10898,6 +11465,7 @@
     {
       "district": "북구 태전2동",
       "sector": "미용실",
+      "reliable": false,
       "countFirst": 58,
       "countLast": 61,
       "disappearRate": 0.0172,
@@ -10912,6 +11480,7 @@
     {
       "district": "달서구 신당동",
       "sector": "여성 의류 소매업",
+      "reliable": false,
       "countFirst": 60,
       "countLast": 60,
       "disappearRate": 0.0167,
@@ -10926,6 +11495,7 @@
     {
       "district": "북구 국우동",
       "sector": "미용실",
+      "reliable": false,
       "countFirst": 60,
       "countLast": 66,
       "disappearRate": 0.0167,
@@ -10940,6 +11510,7 @@
     {
       "district": "수성구 고산2동",
       "sector": "백반/한정식",
+      "reliable": false,
       "countFirst": 61,
       "countLast": 72,
       "disappearRate": 0.0164,
@@ -10954,6 +11525,7 @@
     {
       "district": "북구 산격2동",
       "sector": "가전제품 소매업",
+      "reliable": false,
       "countFirst": 64,
       "countLast": 63,
       "disappearRate": 0.0156,
@@ -10968,6 +11540,7 @@
     {
       "district": "북구 칠성동",
       "sector": "중고 상품 소매업",
+      "reliable": false,
       "countFirst": 66,
       "countLast": 65,
       "disappearRate": 0.0152,
@@ -10982,6 +11555,7 @@
     {
       "district": "북구 산격2동",
       "sector": "가구 소매업",
+      "reliable": false,
       "countFirst": 78,
       "countLast": 84,
       "disappearRate": 0.0128,
@@ -10996,6 +11570,7 @@
     {
       "district": "동구 신천4동",
       "sector": "세무사",
+      "reliable": false,
       "countFirst": 81,
       "countLast": 80,
       "disappearRate": 0.0123,
@@ -11010,6 +11585,7 @@
     {
       "district": "달서구 송현1동",
       "sector": "미용실",
+      "reliable": false,
       "countFirst": 70,
       "countLast": 72,
       "disappearRate": 0,
@@ -11024,6 +11600,7 @@
     {
       "district": "서구 상중이동",
       "sector": "포장/충전업",
+      "reliable": false,
       "countFirst": 32,
       "countLast": 32,
       "disappearRate": 0,
@@ -11038,6 +11615,7 @@
     {
       "district": "달서구 장기동",
       "sector": "자동차 정비소",
+      "reliable": false,
       "countFirst": 75,
       "countLast": 75,
       "disappearRate": 0,
@@ -11052,6 +11630,7 @@
     {
       "district": "수성구 범어4동",
       "sector": "미용실",
+      "reliable": false,
       "countFirst": 55,
       "countLast": 57,
       "disappearRate": 0,
@@ -11066,6 +11645,7 @@
     {
       "district": "중구 남산1동",
       "sector": "명함/간판/광고물 제작",
+      "reliable": false,
       "countFirst": 38,
       "countLast": 38,
       "disappearRate": 0,
@@ -11080,6 +11660,7 @@
     {
       "district": "북구 산격3동",
       "sector": "미용실",
+      "reliable": false,
       "countFirst": 59,
       "countLast": 65,
       "disappearRate": 0,
@@ -11094,6 +11675,7 @@
     {
       "district": "서구 상중이동",
       "sector": "미용실",
+      "reliable": false,
       "countFirst": 33,
       "countLast": 35,
       "disappearRate": 0,
@@ -11108,6 +11690,7 @@
     {
       "district": "중구 동인동",
       "sector": "여행사",
+      "reliable": false,
       "countFirst": 72,
       "countLast": 76,
       "disappearRate": 0,
@@ -11122,6 +11705,7 @@
     {
       "district": "달성군 옥포읍",
       "sector": "미용실",
+      "reliable": false,
       "countFirst": 32,
       "countLast": 40,
       "disappearRate": 0,
@@ -11136,6 +11720,7 @@
     {
       "district": "수성구 범어2동",
       "sector": "법무사",
+      "reliable": false,
       "countFirst": 77,
       "countLast": 78,
       "disappearRate": 0,
@@ -11150,6 +11735,7 @@
     {
       "district": "동구 효목2동",
       "sector": "미용실",
+      "reliable": false,
       "countFirst": 37,
       "countLast": 41,
       "disappearRate": 0,
@@ -11164,6 +11750,7 @@
     {
       "district": "동구 신천3동",
       "sector": "건축 설계 및 관련 서비스업",
+      "reliable": false,
       "countFirst": 30,
       "countLast": 30,
       "disappearRate": 0,
@@ -11178,6 +11765,7 @@
     {
       "district": "서구 상중이동",
       "sector": "자동차 정비소",
+      "reliable": true,
       "countFirst": 115,
       "countLast": 115,
       "disappearRate": 0,
@@ -11192,6 +11780,7 @@
     {
       "district": "북구 산격2동",
       "sector": "컴퓨터/소프트웨어 소매업",
+      "reliable": true,
       "countFirst": 116,
       "countLast": 116,
       "disappearRate": 0,
@@ -11206,6 +11795,7 @@
     {
       "district": "서구 내당1동",
       "sector": "미용실",
+      "reliable": false,
       "countFirst": 35,
       "countLast": 38,
       "disappearRate": 0,
@@ -11220,6 +11810,7 @@
     {
       "district": "수성구 황금2동",
       "sector": "미용실",
+      "reliable": false,
       "countFirst": 49,
       "countLast": 54,
       "disappearRate": 0,
@@ -11234,6 +11825,7 @@
     {
       "district": "중구 성내3동",
       "sector": "철물/공구 소매업",
+      "reliable": false,
       "countFirst": 32,
       "countLast": 32,
       "disappearRate": 0,
@@ -11248,6 +11840,7 @@
     {
       "district": "달성군 현풍읍",
       "sector": "자동차 정비소",
+      "reliable": false,
       "countFirst": 30,
       "countLast": 30,
       "disappearRate": 0,
@@ -11262,6 +11855,7 @@
     {
       "district": "수성구 상동",
       "sector": "자동차 정비소",
+      "reliable": false,
       "countFirst": 34,
       "countLast": 34,
       "disappearRate": 0,
@@ -11276,6 +11870,7 @@
     {
       "district": "수성구 고산3동",
       "sector": "부동산 중개/대리업",
+      "reliable": false,
       "countFirst": 35,
       "countLast": 44,
       "disappearRate": 0,
@@ -11290,6 +11885,7 @@
     {
       "district": "중구 대신동",
       "sector": "시계/귀금속 소매업",
+      "reliable": false,
       "countFirst": 32,
       "countLast": 32,
       "disappearRate": 0,
@@ -11304,6 +11900,7 @@
     {
       "district": "수성구 만촌1동",
       "sector": "자동차 정비소",
+      "reliable": false,
       "countFirst": 32,
       "countLast": 33,
       "disappearRate": 0,
@@ -11318,6 +11915,7 @@
     {
       "district": "서구 비산7동",
       "sector": "자동차 정비소",
+      "reliable": false,
       "countFirst": 64,
       "countLast": 64,
       "disappearRate": 0,
@@ -11332,6 +11930,7 @@
     {
       "district": "동구 신암1동",
       "sector": "미용실",
+      "reliable": false,
       "countFirst": 39,
       "countLast": 39,
       "disappearRate": 0,
@@ -11346,6 +11945,7 @@
     {
       "district": "동구 신천1.2동",
       "sector": "미용실",
+      "reliable": false,
       "countFirst": 38,
       "countLast": 38,
       "disappearRate": 0,
@@ -11360,6 +11960,7 @@
     {
       "district": "수성구 고산2동",
       "sector": "미용실",
+      "reliable": false,
       "countFirst": 42,
       "countLast": 48,
       "disappearRate": 0,
@@ -11374,6 +11975,7 @@
     {
       "district": "수성구 수성4가동",
       "sector": "요리 주점",
+      "reliable": false,
       "countFirst": 30,
       "countLast": 30,
       "disappearRate": 0,
@@ -11388,6 +11990,7 @@
     {
       "district": "수성구 상동",
       "sector": "건축 설계 및 관련 서비스업",
+      "reliable": false,
       "countFirst": 35,
       "countLast": 35,
       "disappearRate": 0,
@@ -11402,6 +12005,7 @@
     {
       "district": "수성구 황금2동",
       "sector": "피부 관리실",
+      "reliable": false,
       "countFirst": 35,
       "countLast": 37,
       "disappearRate": 0,
@@ -11416,6 +12020,7 @@
     {
       "district": "달서구 용산2동",
       "sector": "미용실",
+      "reliable": false,
       "countFirst": 33,
       "countLast": 45,
       "disappearRate": 0,
@@ -11430,6 +12035,7 @@
     {
       "district": "북구 침산2동",
       "sector": "미용실",
+      "reliable": false,
       "countFirst": 31,
       "countLast": 36,
       "disappearRate": 0,
@@ -11444,6 +12050,7 @@
     {
       "district": "수성구 수성4가동",
       "sector": "미용실",
+      "reliable": false,
       "countFirst": 31,
       "countLast": 35,
       "disappearRate": 0,
@@ -11458,6 +12065,7 @@
     {
       "district": "북구 노원동",
       "sector": "세무사",
+      "reliable": false,
       "countFirst": 37,
       "countLast": 37,
       "disappearRate": 0,
