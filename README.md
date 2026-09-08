@@ -33,6 +33,7 @@ npm install
 npm test          # 컨트랙트 테스트 10개
 npm run sim       # 12개월 정산 시뮬레이션 (콘솔)
 npm run market    # 상권 분석 (data/raw/ 에 CSV를 넣은 뒤)
+node scripts/analyze/build-dataset.js && python scripts/analyze/train_risk.py   # 예측 가능성 검증
 
 # 화면까지 — 터미널 3개
 npm run chain     # 1) 로컬 체인
@@ -54,6 +55,9 @@ cd web && npm install && npm run dev   # 3) http://localhost:5173
 | `scripts/deploy-dev.js` | 배포 + 프런트 설정 생성 (`ACTIVATE=1`이면 활성화까지) |
 | `web/src/Statement.jsx` | 계약 요약 + 월별 정산 명세서 (인쇄하면 PDF) |
 | `scripts/fast-forward.js` | 시연용: 로컬 체인 시간을 앞으로 돌려 기한 규칙을 보여준다 |
+| `scripts/analyze/build-dataset.js` | 점포 단위 학습 데이터셋 생성 (밀도·버스 접근성 피처 포함) |
+| `scripts/analyze/train_risk.py` | 폐업 예측 가능성 시점 분리 검증. 결과를 화면이 읽는다 |
+| `data/external/daegu_bus_stops.csv` | 대구 시내버스 정류소 위치 (공공데이터포털 15050946) |
 | `web/src/Contract.jsx` | 계약 체결 마법사(권장값 → 임대인·임차인 서명 → 체인 확정)와 확정 조건 화면 |
 | `web/src/Activity.jsx` | 컨트랙트 이벤트 타임라인 |
 | `web/src/lease.js` | 체인 연결 계층 |
@@ -86,6 +90,11 @@ cd web && npm install && npm run dev   # 3) http://localhost:5173
 
 - **결제 게이트웨이는 목업.** `gateway` 주소로 추상화만 되어 있고 실제 카드 매출 연동은 불가.
   제안서에 "iM뱅크 가맹점 결제 인프라 연동 전제"로 명시할 것.
+- **개별 점포 폐업은 예측되지 않는다(검증됨).** 시점 분리 검증에서 머신러닝이 업종 평균을 이기지 못했다
+  (ROC-AUC 0.60). 업종 외 피처는 전부 무신호다. 상가정보에 매출·임대료·개업일이 없기 때문이다.
+  `python scripts/analyze/train_risk.py` 로 재현되며 결과는 `web/public/model-validation.json` 에 있다.
+- **상권x업종은 표본 100개 이상만 근거로 쓴다.** 그 미만은 다음 분기에 재현되지 않아(상관 0.29)
+  화면에서 업종 평균으로 대체하고 이유를 표시한다.
 - **소멸률은 추정치다.** 상가정보에는 공식 폐업 플래그가 없다. 직전 스냅샷의 상가업소번호가
   사라진 것을 소멸로 본 것이라 이전·상호변경·휴업이 섞여 있다. 제안서에 명시할 것.
   현재 결과: 대구 2025-06-30 → 2026-03-31(9개월), 업종 211종 · 상권×업종 607조합.

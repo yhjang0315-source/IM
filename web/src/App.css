@@ -206,3 +206,6 @@ tfoot td{border-top:1px solid var(--line);font-weight:600;background:var(--surfa
 }
 .due{margin-left:10px;font-family:var(--mono);font-size:10.5px;color:var(--accent-ink);text-transform:none;letter-spacing:0}
 .due.late{color:var(--bad)}
+.warn-note{background:var(--warn-soft);border-left:3px solid var(--warn);padding:10px 13px;font-size:13px;color:var(--ink2);line-height:1.6}
+tbody tr.weak td{color:var(--ink3)}
+tbody tr.weak td:first-child{font-style:italic}
