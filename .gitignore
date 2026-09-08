@@ -15,5 +15,5 @@ typechain-types/
 .idea/
 data/raw/
 
-# 분석 산출물
-web/public/market.json
+# 분석 산출물 — market.json 은 화면이 직접 읽고, 원본 zip(각 340MB)은 저장소에 못 넣는다.
+# 이 파일이 없으면 클론한 쪽에서 "업종 근거" 탭이 빈 화면이 되므로 커밋한다(약 300KB).
