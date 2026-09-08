@@ -36,11 +36,13 @@ npm run market    # 상권 분석 (data/raw/ 에 CSV를 넣은 뒤)
 
 # 화면까지 — 터미널 3개
 npm run chain     # 1) 로컬 체인
-npm run deploy    # 2) 배포 + 조건 활성화 + web/src/deployed.json 갱신
+npm run deploy    # 2) 배포(미체결 상태) + web/src/deployed.json 갱신. 조건 작성·서명·확정은 화면에서
+#   npm run deploy:active  — 체결 화면을 건너뛰고 바로 활성화(정산 시연만 할 때)
 cd web && npm install && npm run dev   # 3) http://localhost:5173
 ```
 
 `npm run deploy`는 반드시 `npm run chain` 이후에. 체인을 다시 켤 때마다 재배포가 필요하다.
+기한이 걸린 규칙(이의 7일, 조정 개시 14일)을 시연할 때는 `npm run demo:ff` 로 체인 시간을 15일 앞으로 돌린다.
 
 ## 구성
 
@@ -49,7 +51,11 @@ cd web && npm install && npm run dev   # 3) http://localhost:5173
 | `contracts/RevenueLease.sol` | 컨트랙트 본체 (196줄) |
 | `test/RevenueLease.test.js` | 테스트 10개 |
 | `scripts/simulate.js` | 12개월 온체인 정산 시뮬레이션 |
-| `scripts/deploy-dev.js` | 배포 + 활성화 + 프런트 설정 생성 |
+| `scripts/deploy-dev.js` | 배포 + 프런트 설정 생성 (`ACTIVATE=1`이면 활성화까지) |
+| `web/src/Statement.jsx` | 계약 요약 + 월별 정산 명세서 (인쇄하면 PDF) |
+| `scripts/fast-forward.js` | 시연용: 로컬 체인 시간을 앞으로 돌려 기한 규칙을 보여준다 |
+| `web/src/Contract.jsx` | 계약 체결 마법사(권장값 → 임대인·임차인 서명 → 체인 확정)와 확정 조건 화면 |
+| `web/src/Activity.jsx` | 컨트랙트 이벤트 타임라인 |
 | `web/src/lease.js` | 체인 연결 계층 |
 | `web/src/App.jsx` | 임차인 / 임대인 / 결제 게이트웨이 3화면 |
 | `scripts/analyze/` | 상가정보 분기 비교 → 업종별 소멸률·권장 연동률 산출 |
@@ -80,10 +86,16 @@ cd web && npm install && npm run dev   # 3) http://localhost:5173
 
 - **결제 게이트웨이는 목업.** `gateway` 주소로 추상화만 되어 있고 실제 카드 매출 연동은 불가.
   제안서에 "iM뱅크 가맹점 결제 인프라 연동 전제"로 명시할 것.
-- **실데이터 미연결.** 분석 스크립트는 준비돼 있다 — `data/raw/` 에 상가정보 분기 스냅샷 CSV를 2개 이상 넣고
-  `npm run market` 을 돌리면 대구 업종별 소멸률과 권장 연동률이 `web/public/market.json` 으로 나온다.
-  CSV 다운로드에 data.go.kr 로그인이 필요해 수동으로 받아야 한다. `scripts/analyze/README.md` 참조.
+- **소멸률은 추정치다.** 상가정보에는 공식 폐업 플래그가 없다. 직전 스냅샷의 상가업소번호가
+  사라진 것을 소멸로 본 것이라 이전·상호변경·휴업이 섞여 있다. 제안서에 명시할 것.
+  현재 결과: 대구 2025-06-30 → 2026-03-31(9개월), 업종 211종 · 상권×업종 607조합.
+  예) 카페 5,363개 · 9개월 소멸률 12.8% · 권장 연동분 69%.
+  갱신하려면 `data/raw/` 에 분기 zip을 넣고 `npm run market`. `scripts/analyze/README.md` 참조.
 - **현금 매출 누락은 구조적으로 못 푼다.** "카드·간편결제 비중 90% 이상 업종부터"로 범위를 한정할 것.
+- **지갑은 데모용이다.** 화면이 하드햇 기본 계정 키를 들고 세 역할을 흉내낸다. 실서비스는 은행 앱 내장 키나 서버 서명으로 대체해야 한다.
+- **조정인은 선택 사항이다.** 지정하면 이의 교착 14일 뒤에만, 그것도 양측이 체결 시 함께 서명한 주소만 개입할 수 있다.
+  지정하지 않은 계약은 합의로만 풀리며 그 경우 교착은 계약 외부 절차로 간다.
+- **다중 점포 관리와 실지갑(MetaMask) 연결은 없다.** 한 계약 = 한 컨트랙트이고, 화면은 데모용 키로 역할을 흉내낸다.
 
 ## 주의
 
