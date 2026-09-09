@@ -1,6 +1,6 @@
 import { useMemo, useRef, useState } from "react";
 import {
-  site, roles, ROLE_LABEL, FIXED_RENT, address, won, pct, bpsPct, short, monthLabel,
+  roles, ROLE_LABEL, FIXED_RENT, address, won, pct, bpsPct, short, monthLabel,
   termsDigest, loadDraft, DISPUTE_DAYS, MEDIATION_DAYS, ZERO, hashOf, siteParts,
 } from "./lease";
 
