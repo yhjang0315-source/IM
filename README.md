@@ -23,7 +23,7 @@
 ## 왜 블록체인 신뢰 인프라인가
 
 매출연동 임대차가 골목상권에 없는 이유는 금융 상품이 없어서가 아니다. **양측이 서로를 못 믿어서**다.
-못 믿는 것이 정확히 네 가지이고, 이 저장소는 그 넷을 각각 검증 가능하게 만든다.
+못 믿는 것이 정확히 여섯 가지이고, 이 저장소는 그 여섯을 각각 검증 가능하게 만든다.
 
 | 못 믿는 것 | 이 인프라가 하는 일 | 구현 |
 |---|---|---|
@@ -35,13 +35,13 @@
 | 그 해시가 진짜 그 원본의 것인가 | 원본을 넣으면 체인의 해시와 대조해 준다 | 명세서 탭의 증빙 대조 (붙여넣기·파일) |
 
 이것이 공모주제 ❺의 "**자산·거래·증명서 블록체인 검증 인프라**"에 해당한다.
-DB로 만들면 "그 DB를 왜 믿나"로 되돌아오고, 네 항목 중 어느 것도 해결되지 않는다.
+DB로 만들면 "그 DB를 왜 믿나"로 되돌아오고, 여섯 항목 중 어느 것도 해결되지 않는다.
 
 ## 실행
 
 ```bash
 npm install
-npm test          # 컨트랙트 테스트 10개
+npm test          # 컨트랙트 테스트 27개
 npm run sim       # 12개월 정산 시뮬레이션 (콘솔)
 npm run market    # 상권 분석 (data/raw/ 에 CSV를 넣은 뒤)
 node scripts/analyze/build-dataset.js && python scripts/analyze/train_risk.py   # 예측 가능성 검증
@@ -86,8 +86,8 @@ npm run publish:pages            # gh-pages 브랜치로 푸시
 
 | 경로 | 내용 |
 |---|---|
-| `contracts/RevenueLease.sol` | 컨트랙트 본체 (196줄) |
-| `test/RevenueLease.test.js` | 테스트 10개 |
+| `contracts/RevenueLease.sol` | 컨트랙트 본체 (330줄) |
+| `test/RevenueLease.test.js` | 테스트 27개 |
 | `scripts/simulate.js` | 12개월 온체인 정산 시뮬레이션 |
 | `scripts/deploy-dev.js` | 배포 + 프런트 설정 생성 (`ACTIVATE=1`이면 활성화까지) |
 | `web/src/Statement.jsx` | 계약 요약 + 월별 정산 명세서 (인쇄하면 PDF) |
@@ -152,4 +152,5 @@ npm run publish:pages            # gh-pages 브랜치로 푸시
 ## 주의
 
 프로토타입에서 **1 wei = 1 원**으로 취급한다. 실서비스에서는 원화 스테이블 토큰 또는 은행 원장 연동으로 대체된다.
-`web/src/lease.js`의 개인키는 **하드햇 기본 테스트 계정으로 공개된 값**이다. 실제 자산이 있는 네트워크에 절대 사용하지 말 것.
+화면이 쓰는 개인키는 배포 스크립트가 `web/src/deployed.json` 에 넣는다. 로컬은 **하드햇 기본 테스트 계정으로 공개된 값**이고,
+공개 테스트넷은 `npm run keys:new` 가 만든 데모 전용 계정이다. 어느 쪽이든 실제 자산이 있는 네트워크에 절대 사용하지 말 것.
