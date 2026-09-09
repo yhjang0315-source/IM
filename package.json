@@ -16,13 +16,16 @@
     "sim": "hardhat run scripts/simulate.js",
     "web": "npm --prefix web run dev",
     "market": "node scripts/analyze/build-market.js",
-    "market:inspect": "node scripts/analyze/build-market.js --inspect"
+    "market:inspect": "node scripts/analyze/build-market.js --inspect",
+    "proposal": "node scripts/make-proposal-docx.js",
+    "diagram": "python scripts/svg-to-png.py"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "@nomicfoundation/hardhat-toolbox": "^5.0.0",
+    "docx": "^9.7.1",
     "dotenv": "^17.4.2",
     "hardhat": "^2.29.1"
   },
