@@ -98,6 +98,7 @@ npm run publish:pages            # gh-pages 브랜치로 푸시
 | `scripts/make-proposal-docx.js` | 제안요약서(붙임4) 워드 파일 생성 — `npm run proposal` |
 | `scripts/svg-to-png.py` | 구조도 SVG 를 인쇄용 PNG 로 변환 — `npm run diagram` |
 | `scripts/count-summary.js` | 과제요약 500자 제한 검사 |
+| `scripts/make-submission-zip.py` | 제출용 프로토타입 ZIP 생성 — `npm run submit` |
 | `render.yaml` | Render 정적 사이트 설정 |
 | `scripts/analyze/build-dataset.js` | 점포 단위 학습 데이터셋 생성 (밀도·버스 접근성 피처 포함) |
 | `scripts/analyze/train_risk.py` | 폐업 예측 가능성 시점 분리 검증. 결과를 화면이 읽는다 |
@@ -107,7 +108,7 @@ npm run publish:pages            # gh-pages 브랜치로 푸시
 | `web/src/lease.js` | 체인 연결 계층 |
 | `web/src/App.jsx` | 임차인 / 임대인 / 결제 게이트웨이 3화면 |
 | `scripts/analyze/` | 상가정보 분기 비교 → 업종별 소멸률·권장 연동률 산출 |
-| `docs/` | 대회 요건, 선정 근거, 발표 대비, 법적 검토 |
+| `docs/` | 대회 요건, 선정 근거, 발표 대비, 법적 검토, 배포, 제안요약서, 시연영상 대본 |
 | `data/` | 공공데이터 원본 자리 (gitignore) |
 
 ## 컨트랙트 설계 요지

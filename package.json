@@ -18,7 +18,8 @@
     "market": "node scripts/analyze/build-market.js",
     "market:inspect": "node scripts/analyze/build-market.js --inspect",
     "proposal": "node scripts/make-proposal-docx.js",
-    "diagram": "python scripts/svg-to-png.py"
+    "diagram": "python scripts/svg-to-png.py",
+    "submit": "python scripts/make-submission-zip.py"
   },
   "keywords": [],
   "author": "",
