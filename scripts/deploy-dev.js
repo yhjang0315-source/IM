@@ -15,6 +15,8 @@ const T = {
   totalPeriods: 12, deposit: 10_000_000n,
 };
 const ACTIVATE = process.env.ACTIVATE === "1";
+// 화면의 목적물 입력 기본값. 체결은 화면에서 하므로 여기 값은 시작점일 뿐이다.
+const SITE = { name: "동성로 15평 매장", district: "대구 중구 동성로", areaPyeong: 15, vacancyPct: 23.3 };
 
 // 역할 계정이 트랜잭션을 보내려면 가스가 있어야 한다. 공개 테스트넷에서는
 // faucet 을 네 번 받는 대신 배포자가 한 번 받아 나눠준다.
@@ -85,11 +87,13 @@ async function main() {
   const addr = await c.getAddress();
 
   if (ACTIVATE) {
+    const site = `${SITE.name} · ${SITE.district} · ${SITE.areaPyeong}평`;
     const digest = ethers.keccak256(ethers.AbiCoder.defaultAbiCoder().encode(
-      ["address", "uint256", "uint16", "uint256", "uint256", "uint16", "uint256", "address"],
-      [addr, T.baseRent, T.pctBps, T.floorRent, T.capRent, T.totalPeriods, T.deposit, mediator.address]));
+      ["address", "uint256", "uint16", "uint256", "uint256", "uint16", "uint256", "address", "bytes32"],
+      [addr, T.baseRent, T.pctBps, T.floorRent, T.capRent, T.totalPeriods, T.deposit, mediator.address,
+       ethers.keccak256(ethers.toUtf8Bytes(site))]));
     await (await c.activate(
-      T.baseRent, T.pctBps, T.floorRent, T.capRent, T.totalPeriods, T.deposit, mediator.address,
+      [T.baseRent, T.pctBps, T.floorRent, T.capRent, T.totalPeriods, T.deposit], mediator.address, site,
       await landlord.signMessage(ethers.getBytes(digest)),
       await tenant.signMessage(ethers.getBytes(digest))
     )).wait();
@@ -111,7 +115,7 @@ async function main() {
       totalPeriods: T.totalPeriods, deposit: T.deposit.toString(),
     },
     fixedRentComparison: "2500000",
-    site: { name: "동성로 15평 매장", district: "대구 중구 동성로", areaPyeong: 15, vacancyPct: 23.3 },
+    site: SITE,
     roles: {
       landlord: landlord.address, tenant: tenant.address, gateway: gateway.address,
       mediator: mediator.address,

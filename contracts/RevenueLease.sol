@@ -46,12 +46,16 @@ contract RevenueLease {
 
     Terms public terms;
     LeaseState public state;
+
+    /// @notice 계약 목적물. 임대차 계약은 무엇을 빌리는지가 특정되어야 성립한다.
+    ///         서명 대상 해시에 포함되므로 확정 후 바꿀 수 없다.
+    string public site;
     uint256 public depositPaid; // 임차인이 실제로 넣은 보증금 잔액
 
     mapping(uint16 => Period) private periods;
     mapping(uint16 => uint256) public escrow; // 기간별 예치금
 
-    event Activated(uint256 baseRent, uint16 pctBps, uint256 floorRent, uint256 capRent, uint16 totalPeriods, uint256 deposit, address mediator);
+    event Activated(uint256 baseRent, uint16 pctBps, uint256 floorRent, uint256 capRent, uint16 totalPeriods, uint256 deposit, address mediator, string site);
     event DepositPaid(uint256 amount, uint256 total);
     event Funded(uint16 indexed period, uint256 amount);
     event RevenuePosted(uint16 indexed period, uint256 revenue, uint256 rent, bytes32 proof);
@@ -87,33 +91,35 @@ contract RevenueLease {
     /// @notice 조건 확정. 양측이 서명한 조건을 한 번만 기록하며, 이후 변경 함수는 존재하지 않는다.
     /// @param _mediator 교착된 분쟁을 풀 제3자. 0이면 조정 절차 없음.
     ///        서명 대상에 포함되므로, 양측이 동의하지 않은 조정인은 지정될 수 없다.
+    /// @param _site 계약 목적물(매장명·주소·면적 등). 이것도 서명 대상이다.
+    /// @dev 조건을 구조체로 받는다. 인자를 하나씩 늘어놓으면 스택 한계에 걸린다.
     function activate(
-        uint256 baseRent,
-        uint16 pctBps,
-        uint256 floorRent,
-        uint256 capRent,
-        uint16 totalPeriods,
-        uint256 deposit,
+        Terms calldata t,
         address _mediator,
+        string calldata _site,
         bytes calldata landlordSig,
         bytes calldata tenantSig
     ) external {
         if (state != LeaseState.Draft) revert BadState();
-        if (pctBps > 10_000) revert BadTerms();
-        if (floorRent > capRent) revert BadTerms();
-        if (totalPeriods == 0) revert BadTerms();
+        if (t.pctBps > 10_000) revert BadTerms();
+        if (t.floorRent > t.capRent) revert BadTerms();
+        if (t.totalPeriods == 0) revert BadTerms();
+        if (bytes(_site).length == 0) revert BadTerms();
         if (_mediator == landlord || _mediator == tenant || _mediator == gateway) revert BadTerms();
 
+        // 문자열은 동적 타입이라 해시로 넣는다. 그래야 인코딩이 프런트와 어긋나지 않는다.
         bytes32 digest = keccak256(
-            abi.encode(address(this), baseRent, pctBps, floorRent, capRent, totalPeriods, deposit, _mediator)
+            abi.encode(address(this), t.baseRent, t.pctBps, t.floorRent, t.capRent, t.totalPeriods, t.deposit,
+                       _mediator, keccak256(bytes(_site)))
         );
         if (_recover(digest, landlordSig) != landlord) revert NotAuthorized();
         if (_recover(digest, tenantSig) != tenant) revert NotAuthorized();
 
-        terms = Terms(baseRent, pctBps, floorRent, capRent, totalPeriods, deposit);
+        terms = t;
         mediator = _mediator;
+        site = _site;
         state = LeaseState.Active;
-        emit Activated(baseRent, pctBps, floorRent, capRent, totalPeriods, deposit, _mediator);
+        emit Activated(t.baseRent, t.pctBps, t.floorRent, t.capRent, t.totalPeriods, t.deposit, _mediator, _site);
     }
 
     /// @notice 보증금 납입. 여러 번 나눠 넣을 수 있다.

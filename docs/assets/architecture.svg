@@ -1,0 +1,145 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1060 700" width="1060" height="700" font-family="'Malgun Gothic','Apple SD Gothic Neo','Noto Sans KR',sans-serif">
+  <!-- 제안요약서 2절 시스템 구조도. 인쇄(흑백 A4)를 전제로 흰 바탕·검은 선으로 그린다. -->
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#1a1a1a"/>
+    </marker>
+    <marker id="arrowLight" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#767676"/>
+    </marker>
+  </defs>
+
+  <rect width="1060" height="700" fill="#ffffff"/>
+
+  <text x="30" y="38" font-size="20" font-weight="700" fill="#111">매출연동 임대차 — 시스템 구조</text>
+  <text x="30" y="60" font-size="13" fill="#666">계약 조건과 매출은 서명·게시 주체가 분리되어, 어느 한쪽도 혼자 값을 바꿀 수 없다</text>
+
+  <!-- ================= 계약 당사자 ================= -->
+  <g>
+    <rect x="330" y="92" width="150" height="52" rx="6" fill="#fff" stroke="#1a1a1a" stroke-width="1.6"/>
+    <text x="405" y="115" font-size="14" font-weight="700" text-anchor="middle" fill="#111">임대인</text>
+    <text x="405" y="133" font-size="11" text-anchor="middle" fill="#666">조건 작성 · 서명</text>
+
+    <rect x="500" y="92" width="150" height="52" rx="6" fill="#fff" stroke="#1a1a1a" stroke-width="1.6"/>
+    <text x="575" y="115" font-size="14" font-weight="700" text-anchor="middle" fill="#111">임차인</text>
+    <text x="575" y="133" font-size="11" text-anchor="middle" fill="#666">검토 · 서명 · 예치</text>
+  </g>
+  <path d="M 405 144 L 405 186" stroke="#1a1a1a" stroke-width="1.4" marker-end="url(#arrow)"/>
+  <path d="M 575 144 L 575 186" stroke="#1a1a1a" stroke-width="1.4" marker-end="url(#arrow)"/>
+
+  <!-- ================= 웹 애플리케이션 ================= -->
+  <g>
+    <rect x="300" y="188" width="380" height="196" rx="8" fill="#fafafa" stroke="#1a1a1a" stroke-width="1.6"/>
+    <text x="316" y="211" font-size="14" font-weight="700" fill="#111">웹 애플리케이션</text>
+    <text x="664" y="211" font-size="11" text-anchor="end" fill="#767676">React 19 · Vite · ethers v6</text>
+
+    <rect x="316" y="224" width="348" height="40" rx="5" fill="#fff" stroke="#c9c9c9"/>
+    <text x="328" y="242" font-size="12" font-weight="700" fill="#111">계약 체결 마법사</text>
+    <text x="328" y="257" font-size="11" fill="#666">권장 연동률 제시 → 12개월 시뮬레이션 → 2-of-2 서명</text>
+
+    <rect x="316" y="272" width="348" height="40" rx="5" fill="#fff" stroke="#c9c9c9"/>
+    <text x="328" y="290" font-size="12" font-weight="700" fill="#111">운영 화면 (역할 전환)</text>
+    <text x="328" y="305" font-size="11" fill="#666">임차인 예치 · 임대인 수취 · 게이트웨이 게시 · 이의/조정</text>
+
+    <rect x="316" y="320" width="348" height="48" rx="5" fill="#fff" stroke="#c9c9c9"/>
+    <text x="328" y="338" font-size="12" font-weight="700" fill="#111">명세서 · 증빙 대조</text>
+    <text x="328" y="353" font-size="11" fill="#666">원본을 붙여넣거나 올리면 체인의 해시와 대조</text>
+    <text x="328" y="366" font-size="10.5" fill="#8a8a8a">keccak256(원본) == 체인 기록 ?</text>
+  </g>
+
+  <!-- 웹앱 → 컨트랙트 -->
+  <path d="M 680 250 L 754 250" stroke="#1a1a1a" stroke-width="1.4" marker-end="url(#arrow)"/>
+  <text x="717" y="242" font-size="10.5" text-anchor="middle" fill="#444">서명·거래</text>
+  <path d="M 754 330 L 680 330" stroke="#767676" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#arrowLight)"/>
+  <text x="717" y="322" font-size="10.5" text-anchor="middle" fill="#767676">조회</text>
+
+  <!-- ================= 스마트컨트랙트 ================= -->
+  <g>
+    <rect x="756" y="188" width="278" height="330" rx="8" fill="#fafafa" stroke="#1a1a1a" stroke-width="2"/>
+    <text x="772" y="211" font-size="14" font-weight="700" fill="#111">RevenueLease.sol</text>
+    <text x="1018" y="211" font-size="11" text-anchor="end" fill="#767676">Kaia Kairos</text>
+
+    <rect x="772" y="224" width="246" height="58" rx="5" fill="#fff" stroke="#c9c9c9"/>
+    <text x="784" y="242" font-size="12" font-weight="700" fill="#111">확정된 조건 (변경 함수 없음)</text>
+    <text x="784" y="258" font-size="11" fill="#444">임대료 = clamp(기본료 + 매출×연동률,</text>
+    <text x="784" y="272" font-size="11" fill="#444">　　　　　　　하한, 상한)</text>
+
+    <rect x="772" y="290" width="246" height="52" rx="5" fill="#fff" stroke="#c9c9c9"/>
+    <text x="784" y="308" font-size="12" font-weight="700" fill="#111">서명 해시로 고정된 값</text>
+    <text x="784" y="324" font-size="11" fill="#666">조건 · 계약 목적물 · 조정인</text>
+    <text x="784" y="337" font-size="10.5" fill="#8a8a8a">양측 서명 없이는 확정 불가</text>
+
+    <rect x="772" y="350" width="246" height="52" rx="5" fill="#fff" stroke="#c9c9c9"/>
+    <text x="784" y="368" font-size="12" font-weight="700" fill="#111">회차 상태 기계</text>
+    <text x="784" y="384" font-size="11" fill="#666">게시 → 이의 7일 → 확정 → 정산</text>
+    <text x="784" y="397" font-size="10.5" fill="#8a8a8a">합의 불발 시 14일 후 조정 개시</text>
+
+    <rect x="772" y="410" width="246" height="46" rx="5" fill="#fff" stroke="#c9c9c9"/>
+    <text x="784" y="428" font-size="12" font-weight="700" fill="#111">이벤트 원장</text>
+    <text x="784" y="444" font-size="11" fill="#666">예치 · 지급 · 미납 · 분쟁 · 종료</text>
+
+    <rect x="772" y="464" width="246" height="40" rx="5" fill="#fff" stroke="#c9c9c9"/>
+    <text x="784" y="482" font-size="12" font-weight="700" fill="#111">증빙 해시</text>
+    <text x="784" y="497" font-size="11" fill="#666">원본은 은행 보관 · 체인에는 해시만</text>
+  </g>
+
+  <!-- ================= 결제 게이트웨이 ================= -->
+  <g>
+    <rect x="756" y="556" width="278" height="72" rx="6" fill="#fff" stroke="#1a1a1a" stroke-width="1.6"/>
+    <text x="772" y="579" font-size="14" font-weight="700" fill="#111">iM뱅크 결제 게이트웨이</text>
+    <text x="772" y="597" font-size="11" fill="#666">카드·간편결제 정산 데이터 보유</text>
+    <text x="772" y="614" font-size="11" fill="#444">postRevenue(회차, 매출, 증빙해시)</text>
+  </g>
+  <path d="M 895 556 L 895 520" stroke="#1a1a1a" stroke-width="1.8" marker-end="url(#arrow)"/>
+  <text x="905" y="540" font-size="10.5" fill="#444">이 주소만 게시 가능</text>
+
+  <!-- 당사자는 매출을 쓸 수 없다 -->
+  <text x="530" y="586" font-size="11" text-anchor="middle" fill="#767676">계약 당사자는 매출을 게시할 수 없다</text>
+  <text x="530" y="602" font-size="10.5" text-anchor="middle" fill="#8a8a8a">컨트랙트가 게이트웨이 외 주소의 게시를 거부한다</text>
+  <line x1="360" y1="622" x2="750" y2="622" stroke="#9a9a9a" stroke-width="1.2" stroke-dasharray="5 4"/>
+  <g stroke="#1a1a1a" stroke-width="1.8">
+    <line x1="548" y1="614" x2="562" y2="630"/>
+    <line x1="562" y1="614" x2="548" y2="630"/>
+  </g>
+
+  <!-- ================= 조정인 ================= -->
+  <g>
+    <rect x="330" y="418" width="150" height="52" rx="6" fill="#fff" stroke="#1a1a1a" stroke-width="1.6"/>
+    <text x="405" y="441" font-size="14" font-weight="700" text-anchor="middle" fill="#111">지정 조정인</text>
+    <text x="405" y="459" font-size="11" text-anchor="middle" fill="#666">14일 경과 후에만 개입</text>
+  </g>
+  <path d="M 480 444 L 754 444" stroke="#767676" stroke-width="1.2" marker-end="url(#arrowLight)"/>
+  <text x="617" y="436" font-size="10.5" text-anchor="middle" fill="#767676">mediate()</text>
+
+  <!-- ================= 공공데이터 파이프라인 ================= -->
+  <g>
+    <rect x="26" y="188" width="248" height="86" rx="6" fill="#fff" stroke="#1a1a1a" stroke-width="1.6"/>
+    <text x="42" y="211" font-size="13" font-weight="700" fill="#111">공공데이터</text>
+    <text x="42" y="230" font-size="11" fill="#666">상가(상권)정보 대구 3개 분기</text>
+    <text x="42" y="245" font-size="11" fill="#666">= 23만 행 · 211개 업종</text>
+    <text x="42" y="263" font-size="11" fill="#666">대구 시내버스 정류소 3,981곳</text>
+
+    <rect x="26" y="296" width="248" height="72" rx="6" fill="#fafafa" stroke="#1a1a1a" stroke-width="1.6"/>
+    <text x="42" y="319" font-size="13" font-weight="700" fill="#111">분석 파이프라인</text>
+    <text x="42" y="337" font-size="11" fill="#666">Node.js 스트리밍 파싱 · Python</text>
+    <text x="42" y="354" font-size="11" fill="#666">분기 비교로 업종별 소멸률 산출</text>
+
+    <rect x="26" y="390" width="248" height="80" rx="6" fill="#fff" stroke="#1a1a1a" stroke-width="1.6"/>
+    <text x="42" y="413" font-size="13" font-weight="700" fill="#111">권장 연동률</text>
+    <text x="42" y="431" font-size="11" fill="#666">연 잔존율 → 기본료 비중 25~65%</text>
+    <text x="42" y="448" font-size="11" fill="#666">표본 100건 미만 상권은 업종 평균</text>
+    <text x="42" y="463" font-size="10.5" fill="#8a8a8a">시점 분리 검증으로 신뢰구간 확인</text>
+  </g>
+  <path d="M 150 274 L 150 294" stroke="#1a1a1a" stroke-width="1.4" marker-end="url(#arrow)"/>
+  <path d="M 150 368 L 150 388" stroke="#1a1a1a" stroke-width="1.4" marker-end="url(#arrow)"/>
+  <path d="M 274 420 C 292 420 292 250 298 250" fill="none" stroke="#1a1a1a" stroke-width="1.4" marker-end="url(#arrow)"/>
+
+  <!-- ================= 범례 ================= -->
+  <g>
+    <line x1="30" y1="646" x2="60" y2="646" stroke="#1a1a1a" stroke-width="1.4" marker-end="url(#arrow)"/>
+    <text x="68" y="650" font-size="11" fill="#444">거래(체인에 기록됨)</text>
+    <line x1="200" y1="646" x2="230" y2="646" stroke="#767676" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#arrowLight)"/>
+    <text x="238" y="650" font-size="11" fill="#444">조회 · 조건부 권한</text>
+    <text x="30" y="676" font-size="10.5" fill="#8a8a8a">계약 조건을 바꾸는 함수는 컨트랙트에 존재하지 않는다. 확정 이후 변경 경로가 코드 수준에서 없다.</text>
+  </g>
+</svg>

@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
-  read, site, roles, ROLE_LABEL, FIXED_RENT, won, pct, short, monthLabel, quoteLocal,
-  loadLease, loadMonths, loadActivity, makeProof, monthDue, DISPUTE_DAYS, MEDIATION_DAYS, ZERO,
+  read, site, roles, ROLE_LABEL, FIXED_RENT, won, pct, bpsPct, short, monthLabel, quoteLocal,
+  loadLease, loadMonths, loadActivity, makeProof, monthDue, siteParts, DISPUTE_DAYS, MEDIATION_DAYS, ZERO,
   chainName, explorer, txLink, address as contractAddress,
   fund, postRevenue, settle, dispute, agree, repay, payDeposit, mediate, runMonth,
 } from "./lease";
@@ -51,12 +51,13 @@ export default function App() {
   const refresh = useCallback(async () => {
     try {
       const l = await loadLease();
-      setLease(l); setChainErr("");
       const [m, a] = await Promise.all([
         l.terms ? loadMonths(l.terms.totalPeriods) : Promise.resolve([]),
         loadActivity(),
       ]);
-      setMonths(m); setActivity(a);
+      // 셋을 한 번에 넣는다. 따로 넣으면 계약은 있는데 월별 데이터는 빈
+      // 중간 상태가 렌더되어 "정산된 달이 없습니다"가 잠깐 뜬다.
+      setLease(l); setMonths(m); setActivity(a); setChainErr("");
     } catch (e) {
       setChainErr(`체인에 연결할 수 없습니다 (${site.name}). npm run chain → npm run deploy 순서로 띄우십시오. ${explain(e)}`);
     }
@@ -113,6 +114,7 @@ export default function App() {
     return { rent, rev, fixed: FIXED_RENT * BigInt(settled.length), n: settled.length };
   }, [months]);
 
+  const sp = siteParts(lease?.site);
   const hasMediator = !!lease?.mediator && lease.mediator !== ZERO;
   useEffect(() => { if (!hasMediator && role === "mediator") setRole("landlord"); }, [hasMediator]);
   const stateLabel = ["미체결 · 조건 작성 중", "체결됨 · 진행 중", "종료"][lease?.state ?? 0];
@@ -120,15 +122,16 @@ export default function App() {
     ["contract", "계약"], ["tenant", "임차인"], ["landlord", "임대인"], ["gateway", "게이트웨이"],
     ["evidence", "업종 근거"], ["statement", "명세서"], ["activity", `활동${activity.length ? ` (${activity.length})` : ""}`],
   ];
-  const gated = (node) => (terms ? node : <NotYet onGo={() => setTab("contract")} />);
+  const loading = !lease && !chainErr;
+  const gated = (node) => (loading ? <Loading /> : terms ? node : <NotYet onGo={() => setTab("contract")} />);
 
   return (
     <div className="app">
       <header className="hd">
         <div className="hd-l">
           <span className="eyebrow">매출연동 임대차 · RevenueLease</span>
-          <h1>{site.name}</h1>
-          <p className="sub">{site.district} · 중대형 상가 공실률 <b>{site.vacancyPct}%</b></p>
+          <h1>{sp.name}</h1>
+          <p className="sub">{sp.rest} · 중대형 상가 공실률 <b>{site.vacancyPct}%</b></p>
           <p className="chainline">
             {chainName === "kairos" ? "Kaia Kairos 테스트넷" : "로컬 체인"} ·{" "}
             {explorer
@@ -139,7 +142,7 @@ export default function App() {
         {terms ? (
           <dl className="tms">
             <div><dt>기본료</dt><dd>{won(terms.baseRent)}</dd></div>
-            <div><dt>매출 연동률</dt><dd>{(terms.pctBps / 100).toFixed(1)}%</dd></div>
+            <div><dt>매출 연동률</dt><dd>{bpsPct(terms.pctBps)}%</dd></div>
             <div><dt>하한</dt><dd>{won(terms.floorRent)}</dd></div>
             <div><dt>상한</dt><dd>{won(terms.capRent)}</dd></div>
             <div><dt>기간</dt><dd>{monthLabel(1)} ~ {monthLabel(terms.totalPeriods)}</dd></div>
@@ -171,12 +174,12 @@ export default function App() {
 
       {chainErr && <div className="err">{chainErr}</div>}
 
-      {tab === "contract" && <Contract lease={lease} market={market} role={role} setRole={setRole} act={act} busy={busy} />}
-      {tab === "tenant" && gated(<Tenant months={months} totals={totals} terms={terms} next={next} role={role} setRole={setRole} act={act} busy={busy} lease={lease} />)}
-      {tab === "landlord" && gated(<Landlord months={months} totals={totals} />)}
+      {tab === "contract" && (loading ? <Loading /> : <Contract lease={lease} market={market} role={role} setRole={setRole} act={act} busy={busy} />)}
+      {tab === "tenant" && gated(<Tenant months={months} totals={totals} terms={terms} next={next} pending={pending} role={role} setRole={setRole} act={act} busy={busy} lease={lease} />)}
+      {tab === "landlord" && gated(<Landlord months={months} totals={totals} pending={pending} role={role} busy={busy} act={act} lease={lease} />)}
       {tab === "gateway" && gated(<Gateway next={next} pending={pending} role={role} setRole={setRole} act={act} busy={busy} lease={lease} />)}
       {tab === "evidence" && <Evidence market={market} terms={terms} validation={validation} />}
-      {tab === "statement" && <Statement lease={lease} months={months} activity={activity} />}
+      {tab === "statement" && (loading ? <Loading /> : <Statement lease={lease} months={months} activity={activity} />)}
       {tab === "activity" && <Activity items={activity} />}
 
       {terms && <Ledger months={months} />}
@@ -193,6 +196,54 @@ export default function App() {
       </div>
     </div>
   );
+}
+
+/** 원 단위 금액 입력. bigint 로 주고받는다. 계약 금액을 손으로 못 넣으면 데모가 아니라 안내문이 된다. */
+function MoneyField({ label, value, onChange, hint, warn, disabled }) {
+  return (
+    <div className="money">
+      <label>{label}</label>
+      <input type="number" min="0" step="10000" disabled={disabled}
+        value={String(value)}
+        onChange={(e) => {
+          const n = Math.floor(Number(e.target.value));
+          onChange(BigInt(Number.isFinite(n) && n > 0 ? n : 0));
+        }} />
+      <span className="mv">{won(value)}원</span>
+      {hint && <span className={`mh ${warn ? "bad" : ""}`}>{hint}</span>}
+    </div>
+  );
+}
+
+/** 미납 한 건. 행마다 상환 금액을 따로 잡아야 해서 별도 컴포넌트로 뺀다. */
+function ArrearsRow({ m, role, setRole, busy, act }) {
+  const [amt, setAmt] = useState(m.arrears);
+  useEffect(() => { setAmt(m.arrears); }, [m.arrears]);
+  const over = amt > m.arrears;
+  return (
+    <tr>
+      <td>{monthLabel(m.month)}</td>
+      <td className="r">{won(m.rent)}</td>
+      <td className="r">{won(m.paid)}</td>
+      <td className="r"><b className="bad">{won(m.arrears)}</b></td>
+      <td>
+        {role === "tenant" ? (
+          <div className="rowact">
+            <MoneyField label="상환액" value={amt} onChange={setAmt}
+              hint={over ? "초과분은 즉시 돌아옵니다" : amt < m.arrears ? "부분 상환" : null} />
+            <button className="ghost sm" disabled={!!busy || amt === 0n}
+              onClick={() => act("repay", () => repay(m.month, amt), `${monthLabel(m.month)} 미납 ${won(amt)}원 상환`)}>
+              상환
+            </button>
+          </div>
+        ) : <Need role="tenant" setRole={setRole} what="상환" />}
+      </td>
+    </tr>
+  );
+}
+
+function Loading() {
+  return <section className="pane"><p className="empty">체인에서 계약을 불러오는 중…</p></section>;
 }
 
 function NotYet({ onGo }) {
@@ -215,21 +266,29 @@ function Need({ role, setRole, what }) {
 }
 
 // ------------------------------------------------------------------ 임차인
-function Tenant({ months, totals, terms, next, role, setRole, act, busy, lease }) {
+function Tenant({ months, totals, terms, next, pending, role, setRole, act, busy, lease }) {
   const last = [...months].reverse().find((m) => m.state === 3);
   const done = months.filter((m) => m.state === 3);
   const worstLinked = done.reduce((a, m) => Math.max(a, pct(m.rent, m.revenue)), 0);
   const worstFixed = done.reduce((a, m) => Math.max(a, pct(FIXED_RENT, m.revenue)), 0);
-  const [sim, setSim] = useState(next ? DEFAULT_REV[(next.month - 1) % 12] : 15);
-  useEffect(() => { if (next) setSim(DEFAULT_REV[(next.month - 1) % 12]); }, [next?.month]);
-  const simRev = BigInt(sim) * 1_000_000n;
+  const [simRev, setSimRev] = useState(BigInt(next ? DEFAULT_REV[(next.month - 1) % 12] : 15) * 1_000_000n);
   const simRent = quoteLocal(terms, simRev);
+  const [fundAmt, setFundAmt] = useState(simRent);
+  const [depAmt, setDepAmt] = useState(0n);
+  useEffect(() => {
+    if (next) setSimRev(BigInt(DEFAULT_REV[(next.month - 1) % 12]) * 1_000_000n);
+  }, [next?.month]);
+  // 매출을 바꾸면 예치 기본값도 따라간다. 사용자가 직접 고친 뒤에는 건드리지 않는다.
+  const touched = useRef(false);
+  useEffect(() => { if (!touched.current) setFundAmt(quoteLocal(terms, simRev)); }, [simRev]);
+  useEffect(() => { setDepAmt(terms.deposit - lease.depositPaid); }, [lease.depositPaid, terms.deposit]);
   const clamped = simRent === BigInt(terms.floorRent) ? "하한 적용" : simRent === BigInt(terms.capRent) ? "상한 적용" : null;
   const active = lease.state === 1;
   const arrearsRows = months.filter((m) => m.state === 3 && m.arrears > 0n);
 
   return (
     <section className="pane">
+      {pending && <PendingMonth pending={pending} role={role} busy={busy} act={act} lease={lease} />}
       <h2>{last ? `${monthLabel(last.month)} 정산` : "이번 달"}</h2>
       {last ? (
         <div className="cards">
@@ -245,19 +304,35 @@ function Tenant({ months, totals, terms, next, role, setRole, act, busy, lease }
           <h2>{monthLabel(next.month)} — 매출이 이 정도면</h2>
           <div className="runbox">
             <label>예상 매출</label>
-            <input type="range" min="4" max="40" value={sim} onChange={(e) => setSim(Number(e.target.value))} />
-            <span className="revv">{won(simRev)}원</span>
+            <input type="range" min="4" max="40" value={Number(simRev / 1_000_000n)}
+              onChange={(e) => setSimRev(BigInt(e.target.value) * 1_000_000n)} />
+            <MoneyField label="정확한 금액" value={simRev} onChange={setSimRev} />
             <div className="quote">
               임대료 <b>{won(simRent)}원</b>
               {clamped && <span className="tagc">{clamped}</span>}
               <span className="qsub">부담률 {pct(simRent, simRev).toFixed(1)}% · 고정 월세였다면 {pct(FIXED_RENT, simRev).toFixed(1)}%</span>
             </div>
-            <div className="escrow">이달 예치금 <b>{won(next.escrow)}원</b>{next.escrow > 0n && next.escrow < simRent ? " — 이 매출이면 부족합니다" : ""}</div>
+            <div className="escrow">이미 예치한 금액 <b>{won(next.escrow)}원</b></div>
+            {role === "tenant" && (
+              <MoneyField label="이번에 예치할 금액" value={fundAmt}
+                onChange={(v) => { touched.current = true; setFundAmt(v); }}
+                warn={next.escrow + fundAmt < simRent}
+                hint={next.escrow + fundAmt < simRent
+                  ? `이 매출이면 ${won(simRent - next.escrow - fundAmt)}원이 미납으로 기록됩니다`
+                  : `정산 후 ${won(next.escrow + fundAmt - simRent)}원이 돌아옵니다`} />
+            )}
             <div className="btns">
               {role === "tenant"
-                ? <button disabled={!!busy} onClick={() => act("fund", () => fund(next.month, simRent), `${monthLabel(next.month)} 예치 ${won(simRent)}원`)}>
-                    {busy === "fund" ? "전송 중…" : `${won(simRent)}원 예치`}
-                  </button>
+                ? <>
+                    <button disabled={!!busy || fundAmt === 0n}
+                      onClick={() => act("fund", () => fund(next.month, fundAmt), `${monthLabel(next.month)} 예치 ${won(fundAmt)}원`)}>
+                      {busy === "fund" ? "전송 중…" : `${won(fundAmt)}원 예치`}
+                    </button>
+                    <button className="ghost" disabled={!!busy}
+                      onClick={() => { touched.current = false; setFundAmt(simRent > next.escrow ? simRent - next.escrow : 0n); }}>
+                      부족분 채우기
+                    </button>
+                  </>
                 : <Need role="tenant" setRole={setRole} what="예치" />}
               <span className="hint">예치금은 정산 때 임대료만큼 임대인에게 가고 나머지는 돌아옵니다.</span>
             </div>
@@ -275,11 +350,15 @@ function Tenant({ months, totals, terms, next, role, setRole, act, busy, lease }
             <p className="hint">
               계약이 끝날 때 남은 미납 임대료를 보증금에서 먼저 회수하고, 나머지를 돌려줍니다.
             </p>
+            {role === "tenant" && (
+              <MoneyField label="납입할 금액" value={depAmt} onChange={setDepAmt}
+                hint={depAmt < terms.deposit - lease.depositPaid ? "나눠서 낼 수 있습니다" : null} />
+            )}
             <div className="btns">
               {role === "tenant"
-                ? <button disabled={!!busy}
-                    onClick={() => act("deposit", () => payDeposit(terms.deposit - lease.depositPaid), `보증금 ${won(terms.deposit - lease.depositPaid)}원 납입`)}>
-                    {busy === "deposit" ? "전송 중…" : "잔액 납입"}
+                ? <button disabled={!!busy || depAmt === 0n}
+                    onClick={() => act("deposit", () => payDeposit(depAmt), `보증금 ${won(depAmt)}원 납입`)}>
+                    {busy === "deposit" ? "전송 중…" : `${won(depAmt)}원 납입`}
                   </button>
                 : <Need role="tenant" setRole={setRole} what="보증금 납입" />}
             </div>
@@ -295,23 +374,10 @@ function Tenant({ months, totals, terms, next, role, setRole, act, busy, lease }
           </p>
           <div className="tw">
             <table>
-              <thead><tr><th>기간</th><th className="r">임대료</th><th className="r">지급</th><th className="r">남은 미납</th><th></th></tr></thead>
+              <thead><tr><th>기간</th><th className="r">임대료</th><th className="r">지급</th><th className="r">남은 미납</th><th>상환</th></tr></thead>
               <tbody>
                 {arrearsRows.map((m) => (
-                  <tr key={m.month}>
-                    <td>{monthLabel(m.month)}</td>
-                    <td className="r">{won(m.rent)}</td>
-                    <td className="r">{won(m.paid)}</td>
-                    <td className="r"><b className="bad">{won(m.arrears)}</b></td>
-                    <td className="r">
-                      {role === "tenant"
-                        ? <button className="ghost sm" disabled={!!busy}
-                            onClick={() => act("repay", () => repay(m.month, m.arrears), `${monthLabel(m.month)} 미납 ${won(m.arrears)}원 상환`)}>
-                            전액 상환
-                          </button>
-                        : <span className="hint">임차인만 상환</span>}
-                    </td>
-                  </tr>
+                  <ArrearsRow key={m.month} m={m} role={role} setRole={setRole} busy={busy} act={act} />
                 ))}
               </tbody>
             </table>
@@ -334,16 +400,37 @@ function Tenant({ months, totals, terms, next, role, setRole, act, busy, lease }
 }
 
 // ------------------------------------------------------------------ 임대인
-function Landlord({ months, totals }) {
+function Landlord({ months, totals, pending, role, busy, act, lease }) {
+  const t = lease.terms;
   const max = Number(totals.fixed) || 1;
+  const arrearsTotal = months.reduce((a, m) => a + (m.state === 3 ? m.arrears : 0n), 0n);
+  const depositShort = t.deposit > lease.depositPaid;
   const bars = [
     ["공실 유지 (현재)", 0n, "bad"],
     ["매출연동 실수취", totals.rent, "good"],
     ["고정 월세 (임차인이 들어와야 성립)", totals.fixed, "muted"],
   ];
-  const arrears = months.reduce((a, m) => a + (m.state === 3 ? m.arrears : 0n), 0n);
   return (
     <section className="pane">
+      {pending && <PendingMonth pending={pending} role={role} busy={busy} act={act} lease={lease} />}
+      <h2>담보와 채권</h2>
+      <p className="lead">
+        보증금은 계약이 끝날 때 남은 미납분을 먼저 회수하고 나머지를 돌려줍니다.
+        미납이 보증금을 넘으면 그만큼은 채무로 남습니다.
+      </p>
+      <div className="cards">
+        <Card label="약정 보증금" value={`${won(t.deposit)}원`} />
+        <Card label="납입된 보증금" value={`${won(lease.depositPaid)}원`} muted={depositShort} />
+        <Card label="미납 누계" value={`${won(arrearsTotal)}원`} accent={arrearsTotal > 0n} />
+        <Card label="보증금 대비 미납" value={t.deposit > 0n ? `${pct(arrearsTotal, t.deposit).toFixed(1)}%` : "—"} />
+      </div>
+      {depositShort && (
+        <div className="warn-note">
+          보증금이 <b>{won(t.deposit - lease.depositPaid)}원</b> 덜 납입됐습니다.
+          그만큼 미납 회수 여력이 줄어듭니다.
+        </div>
+      )}
+
       <h2>{totals.n}개월 누적 수취액</h2>
       <div className="bars">
         {bars.map(([label, v, cls]) => (
@@ -357,7 +444,7 @@ function Landlord({ months, totals }) {
       {totals.n > 0 ? (
         <div className="note">
           고정 월세 대비 <b className="good">{pct(totals.rent, totals.fixed).toFixed(1)}%</b>를 수취했습니다.
-          {arrears > 0n && <> 미납 누계 <b className="bad">{won(arrears)}원</b>이 온체인에 기록돼 있습니다.</>}
+          {arrearsTotal > 0n && <> 미납 누계 <b className="bad">{won(arrearsTotal)}원</b>이 온체인에 기록돼 있습니다.</>}
           {" "}호가를 내린 것이 아니라 연동한 것이므로 <b>담보평가 기준 임대료는 유지</b>됩니다.
         </div>
       ) : <p className="empty">첫 정산이 끝나면 누적 수취액이 채워집니다.</p>}
@@ -365,17 +452,89 @@ function Landlord({ months, totals }) {
   );
 }
 
+// --------------------------------------------------------- 처리 중인 달
+/**
+ * 게시됐거나 이의가 걸린 달 하나. 이의·동의·조정·정산이 모두 여기 붙는다.
+ *
+ * 세 화면(임차인·임대인·게이트웨이) 모두에 같은 것을 띄운다. 원래는 게이트웨이
+ * 화면에만 있었는데, 그러면 임대인이 이의를 걸려고 "게이트웨이" 탭을 눌러야 한다.
+ * 자기 화면에서 자기 권한을 쓰지 못하는 것은 그 자체로 설명이 필요한 동선이다.
+ * 버튼은 역할에 따라 갈리므로 같은 것을 세 곳에 띄워도 할 수 있는 일은 달라진다.
+ */
+function PendingMonth({ pending, role, busy, act, lease }) {
+  // 이의·조정 금액은 당사자가 직접 넣는 값이다. 코드에 박아두면 시연에서
+  // "그 숫자는 어디서 나왔나요"에 답할 수 없다.
+  const [proposal, setProposal] = useState(0n);
+  const [mediation, setMediation] = useState(0n);
+  useEffect(() => { if (pending) { setProposal(pending.revenue); setMediation(pending.proposed || pending.revenue); } },
+    [pending?.month, pending?.state, pending?.revenue?.toString(), pending?.proposed?.toString()]);
+  if (!pending) return null;
+  const L = monthLabel(pending.month);
+  const now = lease.chainNow || Date.now();
+  const mediationOpen = pending.state === 2 && pending.disputedAt > 0
+    && now >= pending.disputedAt + MEDIATION_DAYS * 86400000;
+
+  return (
+    <div className="pendbox">
+      <b>{L}</b> — {pending.state === 2 ? "이의 제기로 정산 정지" : "매출 게시됨 · 정산 대기"}
+      <div>매출 {won(pending.revenue)}원 · 임대료 {won(pending.rent)}원 · 예치 {won(pending.escrow)}원
+        {pending.escrow < pending.rent && <b className="bad"> · 부족 {won(pending.rent - pending.escrow)}원 → 미납으로 기록됨</b>}
+      </div>
+      <div className="escrow">
+        증빙 해시 <b>{short(pending.proof)}</b>
+        {pending.postedAt > 0 && <> · 이의 제기 기한 {new Date(pending.postedAt + DISPUTE_DAYS * 86400000).toLocaleDateString("ko-KR")}까지</>}
+      </div>
+      {pending.state === 2 && (
+        <div className="escrow">제안 매출 {won(pending.proposed)}원 · 임대인 {pending.landlordAgreed ? "동의" : "대기"} · 임차인 {pending.tenantAgreed ? "동의" : "대기"}</div>
+      )}
+      <div className="btns">
+        {pending.state === 1 && <>
+          {role === "gateway"
+            ? <button disabled={!!busy} onClick={() => act("settle", () => settle("gateway", pending.month), `${L} 정산`)}>정산 실행</button>
+            : null}
+          {(role === "landlord" || role === "tenant") && (
+            <div className="rowact wide">
+              <MoneyField label="내가 보는 매출" value={proposal} onChange={setProposal}
+                hint={proposal === pending.revenue ? "게시된 값과 같습니다" :
+                  proposal > pending.revenue ? `게시액보다 ${won(proposal - pending.revenue)}원 많음` :
+                  `게시액보다 ${won(pending.revenue - proposal)}원 적음`} />
+              <button className="ghost" disabled={!!busy || proposal === pending.revenue}
+                onClick={() => act("dispute", () => dispute(role, pending.month, proposal), `${L} 이의 제기 (${ROLE_LABEL[role]})`)}>
+                이의 제기
+              </button>
+            </div>
+          )}
+          {role !== "gateway" && <span className="hint">정산 실행은 게이트웨이가 합니다.</span>}
+        </>}
+        {pending.state === 2 && <>
+          {role === "landlord" && <button disabled={!!busy || pending.landlordAgreed} onClick={() => act("agree", () => agree("landlord", pending.month), `${L} 임대인 동의`)}>임대인 동의</button>}
+          {role === "tenant" && <button disabled={!!busy || pending.tenantAgreed} onClick={() => act("agree", () => agree("tenant", pending.month), `${L} 임차인 동의`)}>임차인 동의</button>}
+          {role === "mediator" && (
+            mediationOpen
+              ? <div className="rowact wide">
+                  <MoneyField label="조정으로 확정할 매출" value={mediation} onChange={setMediation}
+                    hint={`게시 ${won(pending.revenue)}원 · 제안 ${won(pending.proposed)}원 사이에서 정합니다`} />
+                  <button disabled={!!busy || mediation === 0n}
+                    onClick={() => act("mediate", () => mediate(pending.month, mediation), `${L} 조정 확정 ${won(mediation)}원`)}>
+                    조정 확정
+                  </button>
+                </div>
+              : <span className="hint">교착 {MEDIATION_DAYS}일이 지나야 개입할 수 있습니다 — {new Date(pending.disputedAt + MEDIATION_DAYS * 86400000).toLocaleDateString("ko-KR")}부터</span>
+          )}
+          <span className="hint">둘 다 동의해야 정산이 풀립니다 (2-of-2). 게이트웨이는 개입할 수 없습니다.</span>
+        </>}
+      </div>
+    </div>
+  );
+}
+
 // ------------------------------------------------------------------ 게이트웨이
 function Gateway({ next, pending, role, setRole, act, busy, lease }) {
-  const [rev, setRev] = useState(next ? DEFAULT_REV[(next.month - 1) % 12] : 15);
-  useEffect(() => { if (next) setRev(DEFAULT_REV[(next.month - 1) % 12]); }, [next?.month]);
-  const revenue = BigInt(rev) * 1_000_000n;
+  const [revenue, setRevenue] = useState(BigInt(next ? DEFAULT_REV[(next.month - 1) % 12] : 15) * 1_000_000n);
+  useEffect(() => { if (next) setRevenue(BigInt(DEFAULT_REV[(next.month - 1) % 12]) * 1_000_000n); }, [next?.month]);
   const active = lease.state === 1;
-  const L = pending ? monthLabel(pending.month) : "";
   const proof = next ? makeProof(next.month, revenue) : null;
   const now = lease.chainNow || Date.now();
-  const mediationOpen = !!pending && pending.state === 2 && pending.disputedAt > 0
-    && now >= pending.disputedAt + MEDIATION_DAYS * 86400000;
   // 게시 예정일: 해당 월이 끝난 다음 달 5일. 결제망 집계가 마감되는 시점을 가정한 값이다.
   const dueInfo = (() => {
     if (!next) return null;
@@ -395,54 +554,7 @@ function Gateway({ next, pending, role, setRole, act, busy, lease }) {
 
       {!active && <p className="empty">계약이 종료되어 더 이상 게시·정산할 수 없습니다.</p>}
 
-      {active && pending && (
-        <div className="pendbox">
-          <b>{L}</b> — {pending.state === 2 ? "이의 제기로 정산 정지" : "매출 게시됨 · 정산 대기"}
-          <div>매출 {won(pending.revenue)}원 · 임대료 {won(pending.rent)}원 · 예치 {won(pending.escrow)}원
-            {pending.escrow < pending.rent && <b className="bad"> · 부족 {won(pending.rent - pending.escrow)}원 → 미납으로 기록됨</b>}
-          </div>
-          <div className="escrow">
-            증빙 해시 <b>{short(pending.proof)}</b>
-            {pending.postedAt > 0 && <> · 이의 제기 기한 {new Date(pending.postedAt + DISPUTE_DAYS * 86400000).toLocaleDateString("ko-KR")}까지</>}
-          </div>
-          {pending.state === 2 && (
-            <div className="escrow">제안 매출 {won(pending.proposed)}원 · 임대인 {pending.landlordAgreed ? "동의" : "대기"} · 임차인 {pending.tenantAgreed ? "동의" : "대기"}</div>
-          )}
-          <div className="btns">
-            {pending.state === 1 && <>
-              {role === "gateway"
-                ? <button disabled={!!busy} onClick={() => act("settle", () => settle("gateway", pending.month), `${L} 정산`)}>정산 실행</button>
-                : null}
-              {role === "landlord" && (
-                <button className="ghost" disabled={!!busy}
-                  onClick={() => act("dispute", () => dispute("landlord", pending.month, pending.revenue + 5_000_000n), `${L} 이의 제기 (임대인)`)}>
-                  이의 제기 — 매출이 더 많다
-                </button>
-              )}
-              {role === "tenant" && (
-                <button className="ghost" disabled={!!busy}
-                  onClick={() => act("dispute", () => dispute("tenant", pending.month, pending.revenue > 3_000_000n ? pending.revenue - 3_000_000n : 0n), `${L} 이의 제기 (임차인)`)}>
-                  이의 제기 — 매출이 더 적다
-                </button>
-              )}
-              {role !== "gateway" && <span className="hint">정산 실행은 게이트웨이가 합니다.</span>}
-            </>}
-            {pending.state === 2 && <>
-              {role === "landlord" && <button disabled={!!busy || pending.landlordAgreed} onClick={() => act("agree", () => agree("landlord", pending.month), `${L} 임대인 동의`)}>임대인 동의</button>}
-              {role === "tenant" && <button disabled={!!busy || pending.tenantAgreed} onClick={() => act("agree", () => agree("tenant", pending.month), `${L} 임차인 동의`)}>임차인 동의</button>}
-              {role === "mediator" && (
-                mediationOpen
-                  ? <button disabled={!!busy}
-                      onClick={() => act("mediate", () => mediate(pending.month, pending.proposed), `${L} 조정인 확정 ${won(pending.proposed)}원`)}>
-                      조정안으로 확정 ({won(pending.proposed)}원)
-                    </button>
-                  : <span className="hint">교착 {MEDIATION_DAYS}일이 지나야 개입할 수 있습니다 — {new Date(pending.disputedAt + MEDIATION_DAYS * 86400000).toLocaleDateString("ko-KR")}부터</span>
-              )}
-              <span className="hint">둘 다 동의해야 정산이 풀립니다 (2-of-2). 게이트웨이는 개입할 수 없습니다.</span>
-            </>}
-          </div>
-        </div>
-      )}
+      {active && pending && <PendingMonth pending={pending} role={role} busy={busy} act={act} lease={lease} />}
 
       {active && !pending && next && (
         <div className="runbox">
@@ -450,8 +562,9 @@ function Gateway({ next, pending, role, setRole, act, busy, lease }) {
             {monthLabel(next.month)} 확정 매출 (결제망 집계)
             {dueInfo && <span className={`due ${dueInfo.late ? "late" : ""}`}>{dueInfo.text}</span>}
           </label>
-          <input type="range" min="4" max="40" value={rev} onChange={(e) => setRev(Number(e.target.value))} />
-          <span className="revv">{won(revenue)}원</span>
+          <input type="range" min="4" max="40" value={Number(revenue / 1_000_000n)}
+            onChange={(e) => setRevenue(BigInt(e.target.value) * 1_000_000n)} />
+          <MoneyField label="정확한 금액 (결제망 집계값)" value={revenue} onChange={setRevenue} />
           <QuotePreview revenue={revenue} terms={lease.terms} />
           <div className="escrow">임차인 예치금 <b>{won(next.escrow)}원</b></div>
           <div className="proofbox">
@@ -557,7 +670,7 @@ function Evidence({ market, terms, validation }) {
             {Math.abs(gap) < 0.05 ? <>권장 범위 안입니다.</>
               : gap > 0 ? <>권장보다 <b className="bad">{(Math.abs(gap) * 100).toFixed(0)}%p 낮습니다</b> — 임대인 고정수입이 과소합니다.</>
               : <>권장보다 <b className="bad">{(Math.abs(gap) * 100).toFixed(0)}%p 높습니다</b> — 임차인 하방 위험이 큽니다.</>}
-            {terms.pctBps > 0 && <> 연동률 {(terms.pctBps / 100).toFixed(1)}%는 월매출 <b>{won(Math.round(breakEvenRev))}원</b>에서 연동 임대료가 시세와 같아지도록 잡은 값입니다.</>}
+            {terms.pctBps > 0 && <> 연동률 {bpsPct(terms.pctBps)}%는 월매출 <b>{won(Math.round(breakEvenRev))}원</b>에서 연동 임대료가 시세와 같아지도록 잡은 값입니다.</>}
           </div>
         </>
       ) : (

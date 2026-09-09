@@ -23,23 +23,25 @@
 ## 왜 블록체인 신뢰 인프라인가
 
 매출연동 임대차가 골목상권에 없는 이유는 금융 상품이 없어서가 아니다. **양측이 서로를 못 믿어서**다.
-못 믿는 것이 정확히 네 가지이고, 이 저장소는 그 넷을 각각 검증 가능하게 만든다.
+못 믿는 것이 정확히 여섯 가지이고, 이 저장소는 그 여섯을 각각 검증 가능하게 만든다.
 
 | 못 믿는 것 | 이 인프라가 하는 일 | 구현 |
 |---|---|---|
+| 무엇을 빌리는 계약인가 | 목적물을 양측 서명 해시에 포함해 확정 후 변경 불가 | `activate()` 가 목적물 문자열을 받아 저장 |
 | 임차인이 매출을 축소 신고할까 | 매출 게시 주체를 은행으로 못 박고, 그 외 주소의 게시를 거부 | `postRevenue()` 는 게이트웨이 전용 |
 | 임대인이 산정식을 사후에 바꿀까 | 조건을 양측 서명 해시로 확정. 변경 함수가 ABI에 존재하지 않음 | `activate()` 의 2-of-2 서명 검증 |
 | 은행이 준 정산 원본이 진짜인가 | 원본 파일의 해시만 체인에 남기고 원본은 은행이 보관 | `postRevenue(period, revenue, proof)` |
 | 정산이 제대로 됐나 | 예치·지급·미납·분쟁이 전부 이벤트로 남아 원본 없이 검증 가능 | 온체인 원장 + 활동 피드 |
+| 그 해시가 진짜 그 원본의 것인가 | 원본을 넣으면 체인의 해시와 대조해 준다 | 명세서 탭의 증빙 대조 (붙여넣기·파일) |
 
 이것이 공모주제 ❺의 "**자산·거래·증명서 블록체인 검증 인프라**"에 해당한다.
-DB로 만들면 "그 DB를 왜 믿나"로 되돌아오고, 네 항목 중 어느 것도 해결되지 않는다.
+DB로 만들면 "그 DB를 왜 믿나"로 되돌아오고, 여섯 항목 중 어느 것도 해결되지 않는다.
 
 ## 실행
 
 ```bash
 npm install
-npm test          # 컨트랙트 테스트 10개
+npm test          # 컨트랙트 테스트 27개
 npm run sim       # 12개월 정산 시뮬레이션 (콘솔)
 npm run market    # 상권 분석 (data/raw/ 에 CSV를 넣은 뒤)
 node scripts/analyze/build-dataset.js && python scripts/analyze/train_risk.py   # 예측 가능성 검증
@@ -61,6 +63,15 @@ cd web && npm install && npm run dev   # 3) http://localhost:5173
 npm run keys:new                 # 데모 전용 계정 4개 생성 → 출력을 .env 에 넣는다
 #   → 첫 계정(LANDLORD) 주소로 https://faucet.kaia.io 에서 테스트 KAIA 를 받는다
 npm run deploy:kairos            # 배포 + 나머지 계정에 가스 분배
+```
+
+화면은 Render 정적 사이트로 올린다. 저장소를 연결하면 뿌리의 `render.yaml` 을 읽어
+푸시할 때마다 자동 배포된다. `web/src/deployed.json` 은 저장소에 없으므로 대시보드
+환경변수 `DEPLOYED_JSON` 으로 넘긴다 — 절차는 **[docs/05-배포.md](docs/05-배포.md)**.
+
+GitHub Pages 경로도 대비책으로 남겨 뒀다.
+
+```
 npm run build:pages              # BASE=/IM/ 로 빌드
 npm run publish:pages            # gh-pages 브랜치로 푸시
 ```
@@ -75,14 +86,20 @@ npm run publish:pages            # gh-pages 브랜치로 푸시
 
 | 경로 | 내용 |
 |---|---|
-| `contracts/RevenueLease.sol` | 컨트랙트 본체 (196줄) |
-| `test/RevenueLease.test.js` | 테스트 10개 |
+| `contracts/RevenueLease.sol` | 컨트랙트 본체 (330줄) |
+| `test/RevenueLease.test.js` | 테스트 27개 |
 | `scripts/simulate.js` | 12개월 온체인 정산 시뮬레이션 |
 | `scripts/deploy-dev.js` | 배포 + 프런트 설정 생성 (`ACTIVATE=1`이면 활성화까지) |
 | `web/src/Statement.jsx` | 계약 요약 + 월별 정산 명세서 (인쇄하면 PDF) |
 | `scripts/fast-forward.js` | 시연용: 로컬 체인 시간을 앞으로 돌려 기한 규칙을 보여준다 |
 | `scripts/new-keys.js` | 공개 테스트넷 데모 계정 생성 |
 | `scripts/publish-pages.js` | 빌드 결과를 gh-pages 브랜치로 배포 |
+| `scripts/prepare-web-config.js` | 빌드 서버에서 `deployed.json` 을 환경변수로부터 복원 |
+| `scripts/make-proposal-docx.js` | 제안요약서(붙임4) 워드 파일 생성 — `npm run proposal` |
+| `scripts/svg-to-png.py` | 구조도 SVG 를 인쇄용 PNG 로 변환 — `npm run diagram` |
+| `scripts/count-summary.js` | 과제요약 500자 제한 검사 |
+| `scripts/make-submission-zip.py` | 제출용 프로토타입 ZIP 생성 — `npm run submit` |
+| `render.yaml` | Render 정적 사이트 설정 |
 | `scripts/analyze/build-dataset.js` | 점포 단위 학습 데이터셋 생성 (밀도·버스 접근성 피처 포함) |
 | `scripts/analyze/train_risk.py` | 폐업 예측 가능성 시점 분리 검증. 결과를 화면이 읽는다 |
 | `data/external/daegu_bus_stops.csv` | 대구 시내버스 정류소 위치 (공공데이터포털 15050946) |
@@ -91,7 +108,7 @@ npm run publish:pages            # gh-pages 브랜치로 푸시
 | `web/src/lease.js` | 체인 연결 계층 |
 | `web/src/App.jsx` | 임차인 / 임대인 / 결제 게이트웨이 3화면 |
 | `scripts/analyze/` | 상가정보 분기 비교 → 업종별 소멸률·권장 연동률 산출 |
-| `docs/` | 대회 요건, 선정 근거, 발표 대비, 법적 검토 |
+| `docs/` | 대회 요건, 선정 근거, 발표 대비, 법적 검토, 배포, 제안요약서, 시연영상 대본 |
 | `data/` | 공공데이터 원본 자리 (gitignore) |
 
 ## 컨트랙트 설계 요지
@@ -139,4 +156,5 @@ npm run publish:pages            # gh-pages 브랜치로 푸시
 ## 주의
 
 프로토타입에서 **1 wei = 1 원**으로 취급한다. 실서비스에서는 원화 스테이블 토큰 또는 은행 원장 연동으로 대체된다.
-`web/src/lease.js`의 개인키는 **하드햇 기본 테스트 계정으로 공개된 값**이다. 실제 자산이 있는 네트워크에 절대 사용하지 말 것.
+화면이 쓰는 개인키는 배포 스크립트가 `web/src/deployed.json` 에 넣는다. 로컬은 **하드햇 기본 테스트 계정으로 공개된 값**이고,
+공개 테스트넷은 `npm run keys:new` 가 만든 데모 전용 계정이다. 어느 쪽이든 실제 자산이 있는 네트워크에 절대 사용하지 말 것.

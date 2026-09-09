@@ -17,10 +17,12 @@ async function main() {
 
   const NO_MEDIATOR = "0x0000000000000000000000000000000000000000";
   const DEPOSIT = 10_000_000n;
+  const SITE = "동성로 15평 매장 · 대구 중구 동성로";
   const digest = ethers.keccak256(ethers.AbiCoder.defaultAbiCoder().encode(
-    ["address","uint256","uint16","uint256","uint256","uint16","uint256","address"],
-    [await c.getAddress(), T.baseRent, T.pctBps, T.floorRent, T.capRent, T.totalPeriods, DEPOSIT, NO_MEDIATOR]));
-  await c.activate(T.baseRent, T.pctBps, T.floorRent, T.capRent, T.totalPeriods, DEPOSIT, NO_MEDIATOR,
+    ["address","uint256","uint16","uint256","uint256","uint16","uint256","address","bytes32"],
+    [await c.getAddress(), T.baseRent, T.pctBps, T.floorRent, T.capRent, T.totalPeriods, DEPOSIT, NO_MEDIATOR,
+     ethers.keccak256(ethers.toUtf8Bytes(SITE))]));
+  await c.activate([T.baseRent, T.pctBps, T.floorRent, T.capRent, T.totalPeriods, DEPOSIT], NO_MEDIATOR, SITE,
     await landlord.signMessage(ethers.getBytes(digest)),
     await tenant.signMessage(ethers.getBytes(digest)));
 
