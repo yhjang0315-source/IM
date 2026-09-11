@@ -95,7 +95,10 @@ npm run publish:pages            # gh-pages 브랜치로 푸시
 | `scripts/new-keys.js` | 공개 테스트넷 데모 계정 생성 |
 | `scripts/publish-pages.js` | 빌드 결과를 gh-pages 브랜치로 배포 |
 | `scripts/prepare-web-config.js` | 빌드 서버에서 `deployed.json` 을 환경변수로부터 복원 |
-| `scripts/make-proposal-docx.js` | 제안요약서(붙임4) 워드 파일 생성 — `npm run proposal` |
+| `docs/proposal.json` | 제안요약서 원고 — 워드와 PDF 가 이 한 파일을 읽는다 |
+| `scripts/build-submission.py` | **제출 폴더 전체 생성 — `npm run bundle`** |
+| `scripts/make-proposal-pdf.py` | 제안요약서 PDF (쪽수 고정·자동 검사) |
+| `scripts/make-proposal-docx.js` | 제안요약서 워드판 |
 | `scripts/svg-to-png.py` | 구조도 SVG 를 인쇄용 PNG 로 변환 — `npm run diagram` |
 | `scripts/count-summary.js` | 과제요약 500자 제한 검사 |
 | `scripts/make-submission-zip.py` | 제출용 프로토타입 ZIP 생성 — `npm run submit` |
